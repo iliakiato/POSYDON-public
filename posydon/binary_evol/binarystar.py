@@ -721,6 +721,8 @@ class BinaryStar:
                             np.array(binary.orbital_period_history),
                             np.array(binary.star_1.mass_history),
                             np.array(binary.star_2.mass_history),)
+            if not isinstance(separation, (list, np.ndarray)):
+                separation = list([separation]) #CHANGED THIS (Kyle, Ilia)
             setattr(binary, 'separation_history', list(separation))
             setattr(binary, 'separation', list(separation)[-1])
         if ('orbital_period_history' not in bp_keys
