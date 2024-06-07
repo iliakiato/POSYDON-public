@@ -283,12 +283,14 @@ class BinaryPopulation:
         filenames = []
 
         for j, index in enumerate(indices_for_iter):
-
+            
             if kwargs.get('from_hdf', False):
                 #generator
-                binary = self.manager.from_hdf(index, restore=True).pop()
+#                 from_hdf_restore = kwargs.get('from_hdf_restore', True)
+                binary = self.manager.from_hdf(index, restore=False).pop() #changed this to False
             else:
                 binary = self.manager.generate(index=index, **self.kwargs)
+            
             binary.properties = self.population_properties
 
             with warnings.catch_warnings(record=True) as w:
