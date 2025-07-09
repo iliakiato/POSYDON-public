@@ -16,7 +16,7 @@ Before contributing, it's essential to familiarize yourself with:
 
 Setting Up Your Development Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1. **Fork the Repository**: Navigate to `POSYDON's GitHub page <https://github.com/POSYDON-code/POSYDON.git>` and click the 'Fork' button to create a copy of the repository in your personal GitHub account.
+1. **Fork the Repository**: Navigate to `issues on our GitHub repository <https://github.com/POSYDON-code/POSYDON>`_ and click the 'Fork' button to create a copy of the repository in your personal GitHub account.
 2. **Clone Your Fork**: Once forked, clone the repository to your local machine:
 
 .. code-block:: bash

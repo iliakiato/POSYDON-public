@@ -8,7 +8,7 @@ If you encounter any problems while using POSYDON, we encourage you to report th
 Before Reporting an Issue
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. **Check the FAQ**: Before submitting a new issue, please review our [FAQ](link-to-faq-page) to see if your problem has been addressed before.
+1. **Check the FAQ**: Before submitting a new issue, please review `FAQ <https://posydon.org/POSYDON/troubleshooting-faqs/code-questions.html>`_  to see if your problem has been addressed before.
 
 2. **Update to the Latest Version**: Ensure that you're using the latest version of POSYDON. Some issues may have been resolved in newer releases.
 
