@@ -436,10 +436,10 @@ def initial_values_from_dirname(mesa_dir):
         else:
             variable_names = ["initial_mass", "initial_z"]
     else:                                                   # binary-star grid
-        if "v1/" in mesa_dir: # version 1 dirnames don't contain initial_z
-            variable_names = ["m1", "m2", "initial_period_in_days"]
-        else:
-            variable_names = ["m1", "m2", "initial_period_in_days", "initial_z"]
+#         if "v1/" in mesa_dir: # version 1 dirnames don't contain initial_z
+#             variable_names = ["m1", "m2", "initial_period_in_days"]
+#         else:
+        variable_names = ["m1", "m2", "initial_period_in_days", "initial_eccentricity", "initial_z", "Zbase"]
         for variable_name in variable_names:
             assert variable_name in dirname
 

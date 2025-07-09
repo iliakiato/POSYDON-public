@@ -2341,13 +2341,21 @@ def join_grids(input_paths, output_path,
 
         new_mesa_dirs = np.array(new_mesa_dirs, dtype=H5_UNICODE_DTYPE)
         new_initial_values = np.array(new_initial_values, dtype=initial_dtype)
+#         new_final_dtype = []
+#         for dtype in final_dtype.descr:
+#             if (dtype[0].startswith("termination_flag") or
+#                 ("SN_type" in dtype[0]) or ("_state" in dtype[0]) or
+#                 ("_class" in dtype[0])):
+#                 dtype = (dtype[0], H5_REC_STR_DTYPE.replace("U", "S"))
+#             new_final_dtype.append(dtype)
         new_final_dtype = []
-        for dtype in final_dtype.descr:
-            if (dtype[0].startswith("termination_flag") or
-                ("SN_type" in dtype[0]) or ("_state" in dtype[0]) or
-                ("_class" in dtype[0])):
-                dtype = (dtype[0], H5_REC_STR_DTYPE.replace("U", "S"))
-            new_final_dtype.append(dtype)
+        for name, field_dtype in final_dtype.descr:
+            if field_dtype.startswith('|U') or field_dtype.startswith('<U'):  # Unicode string
+                byte_length = int(field_dtype[2:])  # e.g. 'U70' → 70
+                new_final_dtype.append((name, f'S{byte_length}'))  # Fixed-length ASCII
+            else:
+                new_final_dtype.append((name, field_dtype))
+
         new_final_values = np.array(new_final_values, dtype=new_final_dtype)
 
         new_grid.attrs["config"] = json.dumps(str(dict(newconfig)))
