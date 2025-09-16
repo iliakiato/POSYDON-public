@@ -852,7 +852,7 @@ class MesaGridStep:
                 current = getattr(self.binary, key)
                 setattr(self.binary, key, current + fv[key_p])
             elif key == 'nearest_neighbour_distance':
-                setattr(self.binary, key, ['None', 'None', 'None'])
+                setattr(self.binary, key, [np.nan, np.nan, np.nan])
             elif key in ['eccentricity', 'V_sys']:
                 current = getattr(self.binary, key + '_history')[-1]
                 setattr(self.binary, key, current)

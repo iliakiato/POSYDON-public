@@ -18,6 +18,24 @@ __authors__ = [
 from posydon.utils.limits_thresholds import (STATE_NS_STARMASS_UPPER_LIMIT,
                                              NEUTRINO_MASS_LOSS_UPPER_LIMIT)
 
+# DEFAULT_SN_MODEL = {
+#     "mechanism": "Fryer+12-delayed",
+#     "engine": "",
+#     "PISN": "Hendriks+23",
+#     "PISN_CO_shift": 0.0,
+#     "PPI_extra_mass_loss": -20.0,
+#     "ECSN": "Tauris+15",
+#     "conserve_hydrogen_envelope" : False,
+#     "conserve_hydrogen_PPI" : False,
+#     "max_neutrino_mass_loss": NEUTRINO_MASS_LOSS_UPPER_LIMIT,
+#     "max_NS_mass": STATE_NS_STARMASS_UPPER_LIMIT,
+#     "use_interp_values": True,
+#     "use_profiles": True,
+#     "use_core_masses": True,
+#     "allow_spin_None" : False,
+#     "approx_at_he_depletion": False,
+#     }
+
 DEFAULT_SN_MODEL = {
     "mechanism": "Fryer+12-delayed",
     "engine": "",
