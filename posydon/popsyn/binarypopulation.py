@@ -323,7 +323,7 @@ class BinaryPopulation:
 
             if kwargs.get('from_hdf', False):
                 #generator
-                binary = self.manager.from_hdf(index, restore=True).pop()
+                binary = self.manager.from_hdf(index, restore=False).pop()
             else:
                 binary = self.manager.generate(index=index, **self.kwargs)
             binary.properties = self.population_properties

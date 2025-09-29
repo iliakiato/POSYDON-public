@@ -83,6 +83,8 @@ SN_MODEL = {
     "sigma_kick_ECSN": 20.0,
     # other
     "verbose": False,
+    "max_BH_mass": None,
+    "max_Vkick": 500      #MODIFIED
 }
 # add core collapse physics
 SN_MODEL.update(DEFAULT_SN_MODEL)
@@ -268,6 +270,7 @@ class StepSN(object):
         self.Sukhbold16_engines = "Sukhbold+16-engine"
         self.Patton20_engines = "Patton&Sukhbold20-engine"
         self.Couch20_engines = "Couch+20-engine"
+        self.Agnostic = "Agnostic"     #MODIFIED
 
         self.mechanisms = [
             self.Fryer12_rapid,
@@ -276,7 +279,8 @@ class StepSN(object):
             self.direct_collapse_hecore,
             self.Sukhbold16_engines,
             self.Patton20_engines,
-            self.Couch20_engines
+            self.Couch20_engines,
+            self.Agnostic     #MODIFIED
         ]
 
         if self.mechanism in self.mechanisms:
@@ -407,17 +411,38 @@ class StepSN(object):
         # Check if the binary event is calling correctly the SN_step,
         # this should occour only on the first or second core-collapse
         # CC1 and CC2 respectively.
+        
+        #MODIFIED#
+        
         if binary.event == "CC1":
             # collapse star
-            self.collapse_star(star=binary.star_1)
-            self._reset_other_star_properties(star=binary.star_2)
+            if self.mechanism == "Agnostic":
+                if self.max_BH_mass:
+                    binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_1.mass,self.max_BH_mass ))
+                else:
+                    binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_1.mass)
+                binary.star_1.state = 'BH'
+            else:
+                self.collapse_star(star=binary.star_1)
+                self._reset_other_star_properties(star=binary.star_2)
+                
             binary.update_star_states()
 
+        #MODIFIED#
+        
         elif binary.event == "CC2":
-            # collapse star
-            self.collapse_star(star=binary.star_2)
-            self._reset_other_star_properties(star=binary.star_1)
+            if self.mechanism == 'Agnostic':
+                if self.max_BH_mass:
+                    binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_1.mass, self.max_BH_mass ))
+                else:
+                    binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_2.mass)
+                binary.star_2.state = 'BH'
+            else: 
+                self.collapse_star(star=binary.star_2)
+                self._reset_other_star_properties(star=binary.star_1)
+                
             binary.update_star_states()
+            
         else:
             raise ValueError("Something went wrong: "
                              "invalid call of supernova step!")
@@ -1477,8 +1502,11 @@ class StepSN(object):
                 # Draw a random orbital kick
                 # Vkick is the kick velocity with components Vkx, Vky, Vkz in
                 # the above coordinate system
+                
+                if self.mechanism == 'Agnostic':
+                    Vkick = np.random.uniform(low = 0, high = self.max_Vkick) #MODIFIED
 
-                if binary.star_1.SN_type == "ECSN":
+                elif binary.star_1.SN_type == "ECSN":
                     # Kick for electron-capture SN
                     Vkick = self.generate_kick(
                         star=binary.star_1, sigma=self.sigma_kick_ECSN
@@ -1577,8 +1605,11 @@ class StepSN(object):
                 # Draw a random orbital kick
                 # Vkick is the kick velocity with components Vkx, Vky, Vkz in
                 # the above coordinate system
+                
+                if self.mechanism == 'Agnostic':
+                    Vkick = np.random.uniform(low = 0, high = self.max_Vkick) #MODIFIED                
 
-                if binary.star_2.SN_type == "ECSN":
+                elif binary.star_2.SN_type == "ECSN":
                     # Kick for electron-capture SN
                     Vkick = self.generate_kick(star=binary.star_2,
                                                sigma=self.sigma_kick_ECSN)
