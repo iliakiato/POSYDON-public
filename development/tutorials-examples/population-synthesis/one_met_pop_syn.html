@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Explore the assumption of star-formation history and DCO compute rates at one single metallicity 📖 &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>Explore the assumption of star-formation history and DCO compute rates at one single metallicity 📖 &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -143,7 +143,7 @@ run a population containing more binaries, if you want to do a more thorough ana
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.synthetic_population</span><span class="w"> </span><span class="kn">import</span> <span class="n">Population</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">PATH_TO_POSYDON_DATA</span>
 
-<span class="n">data_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PATH_TO_POSYDON_DATA</span><span class="si">}</span><span class="s1">/tutorial_populations/&#39;</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PATH_TO_POSYDON_DATA</span><span class="si">}</span><span class="s1">/../tutorial_populations/&#39;</span>
 
 <span class="n">pop</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="n">data_path</span><span class="o">+</span><span class="s1">&#39;1e+00_Zsun_population.h5&#39;</span><span class="p">)</span>
 
@@ -229,7 +229,7 @@ Madau &amp; Fragos (2018) metallicity evolution (dashed line) in Fig. 22 of (see
 </div>
 </div>
 <p>Even though we have a single metallicity, we can still calculate the efficiency per <span class="math notranslate nohighlight">\(M_\odot\)</span> for it.</p>
-<p>We still have to calculate the <code class="docutils literal notranslate"><span class="pre">underlying_mass</span></code> for the population before calculating the efficiency.</p>
+<p>We still have to calculate the <code class="docutils literal notranslate"><span class="pre">model_weights</span></code> again for the population before calculating the efficiency.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -238,10 +238,21 @@ Madau &amp; Fragos (2018) metallicity evolution (dashed line) in Fig. 22 of (see
 
 <span class="n">BBH_mergers</span> <span class="o">=</span> <span class="n">TransientPopulation</span><span class="p">(</span><span class="s1">&#39;Zsun_BBH_contact.h5&#39;</span><span class="p">,</span> <span class="s1">&#39;BBH&#39;</span><span class="p">)</span>
 
-<span class="c1"># returns the underlying mass and stores it in the mass_per_metallicity attribute</span>
-<span class="n">BBH_mergers</span><span class="o">.</span><span class="n">calculate_underlying_mass</span><span class="p">(</span><span class="n">f_bin</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">pop_params</span> <span class="o">=</span> <span class="n">BBH_mergers</span><span class="o">.</span><span class="n">ini_params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1"># extending the IMF to higher and lower masses</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;primary_mass_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;primary_mass_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="c1"># changing the slope of the IMF to be more top-heavy</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;q_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;q_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># binary fraction</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;binary_fraction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.7</span>
 
-<span class="n">BBH_mergers</span><span class="o">.</span><span class="n">get_efficiency_over_metallicity</span><span class="p">()</span>
+<span class="c1"># returns the underlying mass and stores it in the mass_per_metallicity attribute</span>
+<span class="n">BBH_mergers</span><span class="o">.</span><span class="n">calculate_model_weights</span><span class="p">(</span><span class="n">model_weights_identifier</span><span class="o">=</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">,</span>
+                                    <span class="n">population_parameters</span><span class="o">=</span><span class="n">pop_params</span><span class="p">)</span>
+
+<span class="n">BBH_mergers</span><span class="o">.</span><span class="n">efficiency</span><span class="p">(</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -262,7 +273,9 @@ Madau &amp; Fragos (2018) metallicity evolution (dashed line) in Fig. 22 of (see
     <span class="s1">&#39;dlogZ&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.0142</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.0142</span><span class="o">*</span><span class="mi">2</span><span class="p">)],</span>
 <span class="p">}</span>
 
-<span class="n">rates</span> <span class="o">=</span> <span class="n">BBH_mergers</span><span class="o">.</span><span class="n">calculate_cosmic_weights</span><span class="p">(</span><span class="s1">&#39;IllustrisTNG&#39;</span><span class="p">,</span> <span class="n">MODEL_in</span><span class="o">=</span><span class="n">MODEL_in</span><span class="p">)</span>
+<span class="n">rates</span> <span class="o">=</span> <span class="n">BBH_mergers</span><span class="o">.</span><span class="n">calculate_cosmic_weights</span><span class="p">(</span><span class="s1">&#39;IllustrisTNG&#39;</span><span class="p">,</span>
+                                             <span class="n">model_weights</span><span class="o">=</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">,</span>
+                                             <span class="n">MODEL_in</span><span class="o">=</span><span class="n">MODEL_in</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -367,7 +380,7 @@ Madau &amp; Fragos (2018) metallicity evolution (dashed line) in Fig. 22 of (see
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

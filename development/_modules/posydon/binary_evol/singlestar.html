@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.singlestar &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.binary_evol.singlestar &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
@@ -13,7 +13,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -129,13 +129,20 @@
     <span class="s2">&quot;Jeffrey Andrews &lt;jeffrey.andrews@northwestern.edu&gt;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Emmanouil Zapartas &lt;ezapartas@gmail.com&gt;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Devina Misra &lt;devina.misra@unige.ch&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Seth Gossage &lt;seth.gossage@northwestern.edu&gt;&quot;</span>
 <span class="p">]</span>
 
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_state_of_star</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">check_state_of_star</span><span class="p">,</span>
+                                            <span class="n">infer_star_state</span><span class="p">,</span>
+                                            <span class="n">CO_radius</span><span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.SN_MODELS</span><span class="w"> </span><span class="kn">import</span> <span class="n">SN_MODELS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">STARPROPERTIES_DTYPES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Zsun</span><span class="p">,</span> <span class="n">zams_table</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.limits_thresholds</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
 
 
 
@@ -253,12 +260,174 @@
 <span class="sd">        **kwargs : dict</span>
 <span class="sd">          List of initialization parameters for a star.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Set the initial star properties</span>
+
+        <span class="c1"># Initialize composition and radius at least.</span>
+        <span class="c1"># This is needed to match to a star and for </span>
+        <span class="c1"># evolution to be possible. Ideally the matcher </span>
+        <span class="c1"># would check things like burning luminosity and more </span>
+        <span class="c1"># elements beyong He. So, in the future we might</span>
+        <span class="c1"># consider making more robust matching criteria.</span>
+
+        <span class="c1"># (This only comes into play if a user doesn&#39;t set these)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;metallicity&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;metallicity&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;H-rich_Core_H_burning&#39;</span><span class="p">)</span>
+        <span class="n">CO_states</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;massless_remnant&#39;</span><span class="p">,</span> <span class="s1">&#39;WD&#39;</span><span class="p">,</span> <span class="s1">&#39;NS&#39;</span><span class="p">,</span> <span class="s1">&#39;BH&#39;</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">CO_states</span><span class="p">:</span>
+            <span class="n">Z_div_Zsun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metallicity</span>
+            <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>     
+            <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">LOW_ABUNDANCE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="c1"># a low/high value to guess with, seems to work well</span>
+            <span class="n">LOW_LOGR_GUESS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">HIGH_LOGR_GUESS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    
+            <span class="c1"># start by guessing a smallish radius and no He core</span>
+            <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Z_div_Zsun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metallicity</span>
+            <span class="k">if</span> <span class="n">Z_div_Zsun</span> <span class="ow">in</span> <span class="n">zams_table</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">Y</span> <span class="o">=</span> <span class="n">zams_table</span><span class="p">[</span><span class="n">Z_div_Zsun</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Z_div_Zsun</span><span class="si">}</span><span class="s2"> is a not defined metallicity&quot;</span><span class="p">)</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">Z_div_Zsun</span><span class="o">*</span><span class="n">Zsun</span>        
+            <span class="n">X</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">Y</span> <span class="o">-</span> <span class="n">Z</span>
+            <span class="n">LOW_ABUNDANCE</span> <span class="o">=</span> <span class="mf">1e-6</span>
+            <span class="c1"># a low/high value to guess with, seems to work well</span>
+            <span class="n">LOW_LOGR_GUESS</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">HIGH_LOGR_GUESS</span> <span class="o">=</span> <span class="mf">4.0</span>
+
+            <span class="c1"># start by guessing a smallish radius and no He core</span>
+            <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">LOW_LOGR_GUESS</span>
+            <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+        <span class="c1"># MAIN SEQUENCE</span>
+        <span class="k">if</span> <span class="s2">&quot;Core_H_burning&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+            <span class="c1"># default HMS ZAMS</span>
+            <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">X</span>
+            <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">Y</span>
+        <span class="c1"># POST-MS</span>
+        <span class="k">elif</span> <span class="s2">&quot;burning&quot;</span> <span class="ow">in</span> <span class="n">state</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;_Shell_&quot;</span> <span class="ow">in</span> <span class="n">state</span> <span class="ow">or</span> <span class="s2">&quot;_non_&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">):</span>
+            <span class="c1"># default TAMS, either accreted He or H-rich, low core X, high Y</span>
+            <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span>
+            <span class="n">default_core_Y</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">default_core_X</span> <span class="o">-</span> <span class="n">Z</span>
+            <span class="k">if</span> <span class="s2">&quot;stripped_He&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+                <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
+                <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>  
+                <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">)</span>             
+
+        <span class="c1"># ADVANCED BURNING</span>
+        <span class="k">elif</span> <span class="s2">&quot;Core_He_burning&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+            <span class="c1"># default to start of He burn</span>
+            <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
+            <span class="n">default_core_Y</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">default_core_X</span> <span class="o">-</span> <span class="n">Z</span>
+            <span class="c1"># make radius big to encourage match to giant</span>
+            <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">HIGH_LOGR_GUESS</span>
+            <span class="k">if</span> <span class="s1">&#39;stripped_He&#39;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+                <span class="c1"># unless it is a stripped He star</span>
+                <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">LOW_LOGR_GUESS</span>
+            <span class="c1"># large He core mass to encourage maximal He core size</span>
+            <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s2">&quot;Core_C_burning&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+            <span class="c1"># default to start of He burn</span>
+            <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
+            <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
+            <span class="c1"># make radius big to encourage match to giant</span>
+            <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">HIGH_LOGR_GUESS</span>
+            <span class="c1"># This stays big after He core forms</span>
+            <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">)</span>     
+        <span class="k">elif</span> <span class="p">(</span><span class="s2">&quot;Core_&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;_depleted&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">):</span>
+            <span class="c1"># core He or heavier depleted</span>
+            <span class="c1"># default to end of He burn. Matching does not check</span>
+            <span class="c1"># other elements havier than He, so this is best </span>
+            <span class="c1"># we can do.</span>
+            <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
+            <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
+            <span class="c1"># This stays big after He core forms</span>
+            <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">)</span>
+        <span class="c1"># COMPACT OBJECT</span>
+        <span class="k">elif</span> <span class="n">state</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;WD&#39;</span><span class="p">,</span> <span class="s1">&#39;NS&#39;</span><span class="p">,</span> <span class="s1">&#39;BH&#39;</span><span class="p">]:</span>
+            <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">CO_radius</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">),</span> <span class="n">state</span><span class="p">))</span>
+            <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="c1"># If a user gives a mass that does not comply with our </span>
+            <span class="c1"># CO star state logic, you can get weird stuff like a</span>
+            <span class="c1"># BH or NS turning into a WD.</span>
+            <span class="n">inferred_state</span> <span class="o">=</span> <span class="n">infer_star_state</span><span class="p">(</span><span class="n">star_mass</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">),</span> 
+                             <span class="n">surface_h1</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;surface_h1&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span> 
+                             <span class="n">center_h1</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;center_h1&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span> 
+                             <span class="n">center_he4</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;center_he4&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span> 
+                             <span class="n">center_c12</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;center_c12&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+                             <span class="n">star_CO</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">!=</span> <span class="n">inferred_state</span><span class="p">:</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inferred_state</span>
+        <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;massless_remnant&#39;</span><span class="p">:</span>
+            <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># some state not caught above, default HMS ZAMS</span>
+            <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The initial state </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2"> was not caught in &quot;</span>
+                  <span class="s2">&quot;SingleStar.__init__() so it was initialized &quot;</span> \
+                  <span class="s2">&quot;as an H-rich_Core_H_burning star.&quot;</span><span class="p">,</span> 
+                  <span class="s2">&quot;InitializationWarning&quot;</span><span class="p">)</span>
+            <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">X</span>
+            <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">Y</span>
+
+
+        <span class="c1"># Done setting initial values, assign everything to SingleStar next</span>
+
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">STARPROPERTIES</span><span class="p">:</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+
+            <span class="c1"># set default values when a kwarg is absent</span>
+            <span class="c1"># matching at least needs these initiailized to non-null values</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">&#39;log_R&#39;</span><span class="p">:</span>
+                <span class="c1"># initiate log radius</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">default_log_R</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">&#39;center_h1&#39;</span><span class="p">:</span>
+                <span class="c1"># initialize surface and center h1</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">default_core_X</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">&#39;center_he4&#39;</span><span class="p">:</span>
+                <span class="c1"># initialize surface and center he4</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">default_core_Y</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="s1">&#39;core_mass&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                <span class="c1"># intiailize all core_mass values to 0</span>
+                <span class="c1"># they are used in matching, but we will rely on </span>
+                <span class="c1"># abundances set above to find a good match</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">&#39;he_core_mass&#39;</span><span class="p">:</span>
+                    <span class="n">default_core_mass</span> <span class="o">=</span> <span class="n">default_He_core_mass</span> 
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">CO_states</span><span class="p">:</span>
+                        <span class="n">default_core_mass</span> <span class="o">=</span> <span class="mf">0.0</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">default_core_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">default_core_mass</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">&#39;metallicity&#39;</span><span class="p">:</span>
+                <span class="c1"># already set</span>
+                <span class="k">pass</span>
+
+            <span class="c1"># everything else, set it according to stored dtype:</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dtype</span> <span class="o">=</span> <span class="n">STARPROPERTIES_DTYPES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;float64&#39;</span> <span class="ow">or</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
+                    <span class="n">default</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+                <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;string&#39;</span><span class="p">:</span>
+                    <span class="n">default</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># if we haven&#39;t defined a dtype for this prop</span>
+                    <span class="n">default</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">default</span><span class="p">))</span>
+
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span> <span class="o">+</span> <span class="s1">&#39;_history&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)])</span>
-        <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;_history&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">val</span><span class="p">])</span>
 
         <span class="c1"># store extra values in the star object without a history</span>
 
@@ -588,7 +757,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

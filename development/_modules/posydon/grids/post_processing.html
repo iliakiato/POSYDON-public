@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.grids.post_processing &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.grids.post_processing &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
@@ -13,7 +13,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -367,18 +367,26 @@
                     <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;pure_He_star_10&#39;</span><span class="p">]:</span>
                         <span class="n">EXTRA_COLUMNS</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">quantity</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">cent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                             <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">quantity</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">cent&#39;</span><span class="p">))</span>
-                <span class="c1"># aboundances</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">s_o</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">surface_h1</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">surface_he4</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">surface_c12</span>
+                
+                <span class="c1"># abundances</span>
+                <span class="c1"># now that np.nan is used as default, this won&#39;t throw TypeError</span>
+                <span class="c1">#try:</span>
+                <span class="n">s_o</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">surface_h1</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">surface_he4</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">surface_c12</span>
                            <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">surface_n14</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">surface_o16</span><span class="p">)</span>
-                    <span class="n">c_o</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">center_h1</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">center_he4</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">center_c12</span>
+                <span class="n">c_o</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">center_h1</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">center_he4</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">center_c12</span>
                            <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">center_n14</span> <span class="o">-</span> <span class="n">star</span><span class="o">.</span><span class="n">center_o16</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">s_o</span><span class="p">):</span>
                     <span class="n">s_o</span> <span class="o">=</span> <span class="mf">0.</span>
+                    <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;While accessing abundances in star_</span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, surface abundances&#39;</span><span class="o">+</span>\
+                      <span class="sa">f</span><span class="s1">&#39;were NaN. We have set s_o to 0.&#39;</span><span class="p">,</span> 
+                      <span class="s2">&quot;ReplaceValueWarning&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">c_o</span><span class="p">):</span>
                     <span class="n">c_o</span> <span class="o">=</span> <span class="mf">0.</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The error was raised by </span><span class="si">{</span><span class="n">grid</span><span class="o">.</span><span class="n">MESA_dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1"> &#39;</span>
-                           <span class="sa">f</span><span class="s1">&#39;while accessing aboundances in star_</span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+                    <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;While accessing abundances in star_</span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, central abundances&#39;</span><span class="o">+</span>\
+                      <span class="sa">f</span><span class="s1">&#39;were NaN. We have set c_o to 0.&#39;</span><span class="p">,</span> 
+                      <span class="s2">&quot;ReplaceValueWarning&quot;</span><span class="p">)</span>
+
                 <span class="n">EXTRA_COLUMNS</span><span class="p">[</span><span class="s1">&#39;S</span><span class="si">%s</span><span class="s1">_surface_other&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s_o</span><span class="p">)</span>
                 <span class="n">EXTRA_COLUMNS</span><span class="p">[</span><span class="s1">&#39;S</span><span class="si">%s</span><span class="s1">_center_other&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_o</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -659,7 +667,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

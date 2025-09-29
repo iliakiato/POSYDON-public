@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.popsyn.io &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.popsyn.io &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
@@ -13,7 +13,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -123,9 +123,6 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.simulationproperties</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationProperties</span>
-
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">POSYDON Data Types are enforced when converting BinaryStar</span>
@@ -521,7 +518,7 @@
 
 <div class="viewcode-block" id="simprop_kwargs_from_ini">
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.io.simprop_kwargs_from_ini">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">simprop_kwargs_from_ini</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">simprop_kwargs_from_ini</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">only</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert an inifile into kwargs for the SimulationProperties class.</span>
 
 <span class="sd">    Parameters</span>
@@ -530,6 +527,10 @@
 <span class="sd">        Path to inifile. If multiple files are given,</span>
 <span class="sd">        duplicate args are overwritten (stacked) first</span>
 <span class="sd">        to last.</span>
+
+<span class="sd">    only : str</span>
+<span class="sd">        Name of a section to limit getting kwargs from, e.g., </span>
+<span class="sd">        step_SN, step_CE, step_detached, etc. </span>
 
 <span class="sd">    verbose : bool</span>
 <span class="sd">        Print helpful info.</span>
@@ -545,6 +546,9 @@
         <span class="c1"># skip default section</span>
         <span class="k">if</span> <span class="n">section</span> <span class="o">==</span> <span class="s1">&#39;DEFAULT&#39;</span><span class="p">:</span>
             <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">only</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">section</span> <span class="o">!=</span> <span class="n">only</span><span class="p">:</span>
+                <span class="k">continue</span>
 
         <span class="c1"># evaluate str values as literal python and put</span>
         <span class="c1"># into dict because parser only handles strings</span>
@@ -696,11 +700,6 @@
             <span class="k">if</span> <span class="n">pop_kwargs</span><span class="p">[</span><span class="s1">&#39;include_S2&#39;</span><span class="p">]:</span>
                 <span class="n">pop_kwargs</span><span class="p">[</span><span class="s1">&#39;S2_kwargs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">S2_kwargs</span>
 
-    <span class="c1"># finally get the population properties</span>
-    <span class="n">sim_prop_kwargs</span> <span class="o">=</span> <span class="n">simprop_kwargs_from_ini</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="n">pop_kwargs</span><span class="p">[</span><span class="s1">&#39;population_properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SimulationProperties</span><span class="p">(</span>
-        <span class="o">**</span><span class="n">sim_prop_kwargs</span><span class="p">)</span>
-
     <span class="k">return</span> <span class="n">pop_kwargs</span></div>
 
 
@@ -713,6 +712,7 @@
     <span class="n">text</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;from posydon.popsyn.binarypopulation import BinaryPopulation&quot;</span><span class="p">,</span>
          <span class="s2">&quot;from posydon.popsyn.io import binarypop_kwargs_from_ini&quot;</span><span class="p">,</span>
          <span class="s2">&quot;from posydon.utils.common_functions import convert_metallicity_to_string&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;from posydon.binary_evol.simulationproperties import SimulationProperties&quot;</span><span class="p">,</span>
          <span class="s2">&quot;import argparse&quot;</span><span class="p">,</span>
 
          <span class="s1">&#39;if __name__ == &quot;__main__&quot;:&#39;</span><span class="p">,</span>
@@ -723,7 +723,8 @@
          <span class="s2">&quot;    ini_kw[&#39;metallicity&#39;] = args.metallicity&quot;</span><span class="p">,</span>
          <span class="s2">&quot;    str_met = convert_metallicity_to_string(args.metallicity)&quot;</span><span class="p">,</span>
          <span class="s2">&quot;    ini_kw[&#39;temp_directory&#39;] = str_met+&#39;_Zsun_&#39; + ini_kw[&#39;temp_directory&#39;]&quot;</span><span class="p">,</span>
-         <span class="s2">&quot;    synpop = BinaryPopulation(**ini_kw)&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;    sim_props = SimulationProperties.from_ini(&#39;</span><span class="si">{</span><span class="n">ini_file</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;    synpop = BinaryPopulation(population_properties=sim_props, **ini_kw)&quot;</span><span class="p">,</span> 
          <span class="s2">&quot;    synpop.evolve()&quot;</span><span class="p">]</span>
 
     <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
@@ -782,7 +783,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

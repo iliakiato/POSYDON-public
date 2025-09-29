@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.MESA.step_mesa &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.binary_evol.MESA.step_mesa &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d66fa8e6" />
@@ -13,7 +13,7 @@
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -130,6 +130,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.interpolation.interpolation</span><span class="w"> </span><span class="kn">import</span> <span class="n">psyTrackInterp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.binarystar</span><span class="w"> </span><span class="kn">import</span> <span class="n">BINARYPROPERTIES</span>
@@ -442,6 +443,11 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">binary</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Evolve a binary using the MESA step.&quot;&quot;&quot;</span>
 
+        <span class="c1"># everytime this step is called, we need to make sure to reset</span>
+        <span class="c1"># self.flush_sntries to a null value, otherwise entries from a previous entry</span>
+        <span class="c1"># may be used</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flush_entries</span> <span class="o">=</span> <span class="kc">None</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">BinaryStar</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must be an instance of BinaryStar&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;step&#39;</span><span class="p">):</span>
@@ -451,7 +457,7 @@
             <span class="n">flip_stars</span><span class="p">(</span><span class="n">binary</span><span class="p">)</span>
         <span class="n">max_MESA_sim_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_final_MESA_step_time</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">max_MESA_sim_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">max_MESA_sim_time</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flip_stars_before_step</span><span class="p">:</span>
                 <span class="n">flip_stars</span><span class="p">(</span><span class="n">binary</span><span class="p">)</span>
             <span class="n">binary</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;initial_RLOF&#39;</span>
@@ -601,7 +607,7 @@
             <span class="n">length_binary_hist</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cb_bh</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
             <span class="n">length_star_hist</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cb_hs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;center_he4&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
             <span class="n">length_hist</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">length_binary_hist</span><span class="p">,</span> <span class="n">length_star_hist</span><span class="p">)</span>
-            <span class="n">empy_h</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">length_hist</span>
+            <span class="n">empty_h</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">length_hist</span>
             <span class="n">MESA_history_bug_fix</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">if</span> <span class="n">length_binary_hist</span> <span class="o">!=</span> <span class="n">length_star_hist</span><span class="p">:</span>
                 <span class="n">MESA_history_bug_fix</span> <span class="o">=</span> <span class="kc">True</span>
@@ -617,12 +623,13 @@
         <span class="c1"># update properties</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">BINARYPROPERTIES</span><span class="p">:</span>
             <span class="n">key_h</span> <span class="o">=</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;_history&quot;</span>
+            <span class="n">old_h</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">key</span><span class="p">)]</span> <span class="o">*</span> <span class="n">length_hist</span>
             <span class="k">if</span> <span class="n">POSYDON_TO_MESA</span><span class="p">[</span><span class="s1">&#39;binary&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_initial_conditions</span><span class="p">:</span>
-                    <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">empy_h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">empty_h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="k">if</span> <span class="n">track_interpolation</span><span class="p">:</span>
-                    <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">empy_h</span><span class="p">)</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">empty_h</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span>
                 <span class="n">key_p</span> <span class="o">=</span> <span class="n">POSYDON_TO_MESA</span><span class="p">[</span><span class="s1">&#39;binary&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
                 <span class="n">current</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
@@ -669,13 +676,14 @@
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">star</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">stars</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">STARPROPERTIES</span><span class="p">:</span>
                 <span class="n">key_h</span> <span class="o">=</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;_history&quot;</span>
+                <span class="n">old_h</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key</span><span class="p">)]</span> <span class="o">*</span> <span class="n">length_hist</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">stars_CO</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
                     <span class="k">if</span> <span class="n">POSYDON_TO_MESA</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="nb">setattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_initial_conditions</span><span class="p">:</span>
-                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">empy_h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">empty_h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                         <span class="k">if</span> <span class="n">track_interpolation</span><span class="p">:</span>
-                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">empy_h</span><span class="p">)</span>
+                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">empty_h</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span>
                         <span class="n">key_p</span> <span class="o">=</span> <span class="s1">&#39;star_</span><span class="si">%d</span><span class="s1">_mass&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
                         <span class="nb">setattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">cb_bh</span><span class="p">[</span><span class="n">key_p</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -696,9 +704,9 @@
                     <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;profile&#39;</span><span class="p">:</span>
                         <span class="nb">setattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">cb_fps</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_initial_conditions</span><span class="p">:</span>
-                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">empy_h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">empty_h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                         <span class="k">if</span> <span class="n">track_interpolation</span><span class="p">:</span>
-                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">empy_h</span><span class="p">)</span>
+                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">empty_h</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;lg_mdot&#39;</span><span class="p">,</span> <span class="s1">&#39;lg_system_mdot&#39;</span><span class="p">,</span> <span class="s1">&#39;lg_wind_mdot&#39;</span><span class="p">]:</span>
                         <span class="n">key_p</span> <span class="o">=</span> <span class="n">POSYDON_TO_MESA</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
                         <span class="nb">setattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">cb_bh</span><span class="p">[</span><span class="n">key_p</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -792,14 +800,11 @@
                             <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cb_bh</span><span class="p">[</span><span class="n">key_p</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
                     <span class="k">elif</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;lg_mdot&#39;</span><span class="p">]:</span>
                         <span class="k">continue</span>
-                    <span class="k">elif</span> <span class="n">star</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;WD&#39;</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;co_core_mass&#39;</span><span class="p">,</span><span class="s1">&#39;he_core_mass&#39;</span><span class="p">,</span><span class="s1">&#39;center_h1&#39;</span><span class="p">,</span><span class="s1">&#39;center_he4&#39;</span><span class="p">,</span><span class="s1">&#39;center_c12&#39;</span><span class="p">,</span><span class="s1">&#39;center_n14&#39;</span><span class="p">,</span><span class="s1">&#39;center_o16&#39;</span><span class="p">]:</span>
-                        <span class="k">continue</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="nb">setattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_initial_conditions</span><span class="p">:</span>
-                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">empy_h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">old_h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                         <span class="k">if</span> <span class="n">track_interpolation</span><span class="p">:</span>
-                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">empy_h</span><span class="p">)</span>
+                            <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key_h</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">old_h</span><span class="p">)</span>
 
 
                 <span class="k">if</span> <span class="n">track_interpolation</span><span class="p">:</span>
@@ -863,23 +868,27 @@
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s2">&quot;event_history&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">binary_event</span><span class="p">)</span>
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s2">&quot;mass_transfer_case_history&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">MT_case</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">flush_entries</span> <span class="o">=</span> <span class="n">len_binary_hist</span>   <span class="c1"># this is needded!</span>
+
                 <span class="c1"># this is to prevent the flushin of the initial value which is</span>
                 <span class="c1"># appended twice</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_initial_conditions</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">flush_entries</span> <span class="o">+=</span> <span class="mi">1</span>
+
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># the history is going to be flushed in self.stop</span>
                 <span class="c1"># append None for a faster computation</span>
-                <span class="n">state1_hist</span> <span class="o">=</span> <span class="n">empy_h</span>
-                <span class="n">state2_hist</span> <span class="o">=</span> <span class="n">empy_h</span>
+                <span class="n">state1_hist</span> <span class="o">=</span> <span class="n">empty_h</span>
+                <span class="n">state2_hist</span> <span class="o">=</span> <span class="n">empty_h</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">flush_entries</span> <span class="o">=</span> <span class="n">len_binary_hist</span>
+
                 <span class="c1"># this is to prevent the flushin of the initial value which is</span>
                 <span class="c1"># appended twice</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_initial_conditions</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">flush_entries</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">binary_state</span> <span class="o">=</span> <span class="n">empy_h</span>
-                <span class="n">binary_event</span> <span class="o">=</span> <span class="n">empy_h</span>
-                <span class="n">MT_case</span> <span class="o">=</span> <span class="n">empy_h</span>
+
+                <span class="n">binary_state</span> <span class="o">=</span> <span class="n">empty_h</span>
+                <span class="n">binary_event</span> <span class="o">=</span> <span class="n">empty_h</span>
+                <span class="n">MT_case</span> <span class="o">=</span> <span class="n">empty_h</span>
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">stars</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;state_history&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">state1_hist</span><span class="p">)</span>
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">stars</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;state_history&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">state2_hist</span><span class="p">)</span>
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s2">&quot;state_history&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">binary_state</span><span class="p">)</span>
@@ -1049,10 +1058,6 @@
                         <span class="nb">setattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">fv</span><span class="p">[</span><span class="n">key_p</span><span class="p">])</span>
                     <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;state&#39;</span><span class="p">:</span>
                         <span class="k">continue</span>
-                    <span class="k">elif</span> <span class="n">star</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;WD&#39;</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;co_core_mass&#39;</span><span class="p">,</span><span class="s1">&#39;he_core_mass&#39;</span><span class="p">,</span><span class="s1">&#39;center_h1&#39;</span><span class="p">,</span><span class="s1">&#39;center_he4&#39;</span><span class="p">,</span><span class="s1">&#39;center_c12&#39;</span><span class="p">,</span><span class="s1">&#39;center_n14&#39;</span><span class="p">,</span><span class="s1">&#39;center_o16&#39;</span><span class="p">]:</span>
-                        <span class="k">continue</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="nb">setattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="c1"># infer stellar states</span>
         <span class="n">interpolation_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="s1">&#39;interpolation_class&#39;</span><span class="p">]</span>
@@ -1169,7 +1174,26 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the binary event if max time has been exceeded.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">binary</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">max_simulation_time</span> <span class="o">-</span> <span class="n">binary</span><span class="o">.</span><span class="n">time</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
             <span class="n">binary</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="s1">&#39;MaxTime_exceeded&#39;</span>
-            <span class="k">return</span></div>
+            <span class="k">return</span>
+        
+        <span class="c1"># In cases where we are using IF or kNN interpolation, </span>
+        <span class="c1"># we may track interpolate if the final track time exceeds </span>
+        <span class="c1"># the Hubble time, and we may envounter a new binary event </span>
+        <span class="c1"># during that intepolation. In these cases, we still need </span>
+        <span class="c1"># to check if we should flush the history.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flush_history</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">flush_entries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">STARPROPERTIES</span><span class="p">:</span>
+                <span class="n">key_history</span> <span class="o">=</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;_history&#39;</span>
+                <span class="k">for</span> <span class="n">star</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;star_1&#39;</span><span class="p">,</span> <span class="s1">&#39;star_2&#39;</span><span class="p">]:</span>
+                    <span class="n">star_obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">star</span><span class="p">)</span>
+                    <span class="c1"># detele last N entries from history</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="n">star_obj</span><span class="p">,</span> <span class="n">key_history</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span>
+                        <span class="n">star_obj</span><span class="p">,</span> <span class="n">key_history</span><span class="p">)[:</span><span class="bp">self</span><span class="o">.</span><span class="n">flush_entries</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">BINARYPROPERTIES</span><span class="p">:</span>
+                <span class="n">key_history</span> <span class="o">=</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;_history&#39;</span>
+                <span class="c1"># detele last N entries from history</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">key_history</span><span class="p">,</span>
+                        <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">key_history</span><span class="p">)[:</span><span class="bp">self</span><span class="o">.</span><span class="n">flush_entries</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="MesaGridStep.stop_at_condition">
@@ -1994,7 +2018,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

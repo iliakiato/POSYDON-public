@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.DT.winds.default_winds &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.binary_evol.DT.winds.default_winds &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=d66fa8e6" />
@@ -13,7 +13,7 @@
   
       <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../../../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -118,27 +118,53 @@
 <a class="viewcode-back" href="../../../../../api_reference/posydon.binary_evol.DT.winds.html#posydon.binary_evol.DT.winds.default_winds.default_spin_from_winds">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">default_spin_from_winds</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 
-    <span class="n">R1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">mdot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
-    <span class="n">Idot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;Idot&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function calculates the change in angular rotation rates </span>
+<span class="sd">    from wind loss.</span>
 
-    <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">mdot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
-    <span class="n">Idot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;Idot&quot;</span><span class="p">]</span>
-    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">mdot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
-    <span class="n">Idot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;Idot&quot;</span><span class="p">]</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        a : float</span>
+<span class="sd">            The current orbital separation (unused in calculation, </span>
+<span class="sd">            and only present in debugging output). [Rsolar]</span>
 
-    <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">mdot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
-    <span class="n">Idot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;Idot&quot;</span><span class="p">]</span>
+<span class="sd">        e : float</span>
+<span class="sd">            The current orbital eccentricity (unused in calculation, </span>
+<span class="sd">            and only present in debugging output).</span>
+
+<span class="sd">        primary : SingleStar object</span>
+<span class="sd">            A single star object, representing the primary (more evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+<span class="sd">        </span>
+<span class="sd">        secondary : SingleStar object</span>
+<span class="sd">            A single star object, representing the secondary (less evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+
+<span class="sd">        verbose : bool</span>
+<span class="sd">            True if we want to print stuff.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        dOmega_sec : float</span>
+<span class="sd">            The change in rotation rate of the secondary (less evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
+<span class="sd">        </span>
+<span class="sd">        dOmega_pri : float</span>
+<span class="sd">            The change in rotation rate of the primary (more evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">R1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
+    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">mdot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
+    <span class="n">Idot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;Idot&quot;</span><span class="p">]</span>
+
+    <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
+    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">mdot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
+    <span class="n">Idot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;Idot&quot;</span><span class="p">]</span>
 
     <span class="c1"># Due to the secondary&#39;s own evolution, we have:</span>
     <span class="c1"># domega_spin/dt = d(Jspin/I)/dt = dJspin/dt * 1/I + Jspin*d(1/I)/dt.</span>
@@ -188,15 +214,48 @@
 <a class="viewcode-back" href="../../../../../api_reference/posydon.binary_evol.DT.winds.html#posydon.binary_evol.DT.winds.default_winds.default_sep_from_winds">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">default_sep_from_winds</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This function calculates the change in orbital separation from </span>
-<span class="sd">    wind loss.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function calculates the change in orbital separation from </span>
+<span class="sd">    wind loss, as e.g., in:</span>
+
+<span class="sd">        Tauris, T. M., &amp; van den Heuvel, E. 2006,</span>
+<span class="sd">                Compact stellar X-ray sources, 1, 623</span>
+
+<span class="sd">        from simple arguments regarding the balance of orbital angular </span>
+<span class="sd">    momentum.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        a : float</span>
+<span class="sd">            The current orbital separation. [Rsolar]</span>
+
+<span class="sd">        e : float</span>
+<span class="sd">            The current orbital eccentricity.</span>
+
+<span class="sd">        primary : SingleStar object</span>
+<span class="sd">            A single star object, representing the primary (more evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+<span class="sd">        </span>
+<span class="sd">        secondary : SingleStar object</span>
+<span class="sd">            A single star object, representing the secondary (less evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+
+<span class="sd">        verbose : bool</span>
+<span class="sd">            True if we want to print stuff.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        da_mt_tot : float</span>
+<span class="sd">            The change in orbital separation from both stars </span>
+<span class="sd">        for a time step in step_detached&#39;s solve_ivp(). [Rsolar/yr]</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span> <span class="c1"># Msol</span>
-    <span class="n">mdot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span> <span class="c1"># Msol/yr</span>
+    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span> <span class="c1"># Msol</span>
+    <span class="n">mdot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span> <span class="c1"># Msol/yr</span>
 
-    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span> <span class="c1"># Msol</span>
-    <span class="n">mdot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span> <span class="c1"># Msol/yr</span>
+    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span> <span class="c1"># Msol</span>
+    <span class="n">mdot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span> <span class="c1"># Msol/yr</span>
 
     <span class="n">q1</span> <span class="o">=</span> <span class="n">m2</span> <span class="o">/</span> <span class="n">m1</span>
     <span class="n">k11</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">q1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">mdot_2</span> <span class="o">/</span> <span class="n">m2</span><span class="p">)</span>
@@ -240,7 +299,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

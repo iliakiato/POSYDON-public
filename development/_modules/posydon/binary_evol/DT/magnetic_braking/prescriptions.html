@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.DT.magnetic_braking.prescriptions &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.binary_evol.DT.magnetic_braking.prescriptions &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=d66fa8e6" />
@@ -13,7 +13,7 @@
   
       <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../../../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -119,73 +119,136 @@
 <div class="viewcode-block" id="RVJ83_braking">
 <a class="viewcode-back" href="../../../../../api_reference/posydon.binary_evol.DT.magnetic_braking.html#posydon.binary_evol.DT.magnetic_braking.prescriptions.RVJ83_braking">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">RVJ83_braking</span><span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-        
-        <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-        <span class="n">R1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-        <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-        <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the change in spin of each star due </span>
+<span class="sd">    to magnetic braking, according to: </span>
+<span class="sd">    </span>
+<span class="sd">        Rappaport, S., Joss, P. C., &amp; Verbunt, F. 1983, ApJ, 275, 713</span>
 
-        <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-        <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-        <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-        <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        primary : SingleStar object</span>
+<span class="sd">            A single star object, representing the primary (more evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+<span class="sd">        </span>
+<span class="sd">        secondary : SingleStar object</span>
+<span class="sd">            A single star object, representing the secondary (less evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
 
-        <span class="c1"># Torque from Rappaport, Verbunt, and Joss 1983, ApJ, 275, 713</span>
-        <span class="c1"># The torque is eq.36 of Rapport+1983, with γ = 4. Torque units</span>
-        <span class="c1"># converted from cgs units to [Msol], [Rsol], [yr] as all stellar</span>
-        <span class="c1"># parameters are given in units of [Msol], [Rsol], [yr] and so that</span>
-        <span class="c1"># dOmega_mb/dt is in units of [yr^-2].</span>
-        <span class="n">dOmega_mb_sec</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="o">-</span><span class="mf">3.8e-30</span> <span class="o">*</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rsol</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">secyer</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">m2</span>
-            <span class="o">*</span> <span class="n">R2</span><span class="o">**</span><span class="mi">4</span>
-            <span class="o">*</span> <span class="n">omega2</span><span class="o">**</span><span class="mi">3</span>
-            <span class="o">/</span> <span class="n">MOI_2</span>
-            <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="mf">1.5</span> <span class="o">-</span> <span class="n">m2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.5</span> <span class="o">-</span> <span class="mf">1.3</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="n">dOmega_mb_pri</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="o">-</span><span class="mf">3.8e-30</span> <span class="o">*</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rsol</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">secyer</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">m1</span>
-            <span class="o">*</span> <span class="n">R1</span><span class="o">**</span><span class="mi">4</span>
-            <span class="o">*</span> <span class="n">omega1</span><span class="o">**</span><span class="mi">3</span>
-            <span class="o">/</span> <span class="n">MOI_1</span>
-            <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="mf">1.5</span> <span class="o">-</span> <span class="n">m1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.5</span> <span class="o">-</span> <span class="mf">1.3</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="c1"># Converting units:</span>
-        <span class="c1"># The constant 3.8e-30 from Rappaport+1983 has units of [cm^-2 s]</span>
-        <span class="c1"># which need to be converted...</span>
-        <span class="c1">#</span>
-        <span class="c1"># -3.8e-30 [cm^-2 s] * (const.rsol**2/const.secyer) -&gt; [Rsol^-2 yr]</span>
-        <span class="c1"># * M [Msol]</span>
-        <span class="c1"># * R ** 4 [Rsol^4]</span>
-        <span class="c1"># * Omega ** 3 [yr^-3]</span>
-        <span class="c1"># / I [Msol Rsol^2 ]</span>
-        <span class="c1">#</span>
-        <span class="c1"># Thus, dOmega/dt comes out to [yr^-2]</span>
+<span class="sd">        verbose : bool</span>
+<span class="sd">            True if we want to print stuff.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        dOmega_sec : float</span>
+<span class="sd">            The change in rotation rate of the secondary (less evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
+<span class="sd">        </span>
+<span class="sd">        dOmega_pri : float</span>
+<span class="sd">            The change in rotation rate of the primary (more evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
 
-        <span class="k">return</span> <span class="n">dOmega_mb_sec</span><span class="p">,</span> <span class="n">dOmega_mb_pri</span></div>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+    <span class="n">R1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
+    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+
+    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+    <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
+    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Torque from Rappaport, Verbunt, and Joss 1983, ApJ, 275, 713</span>
+    <span class="c1"># The torque is eq.36 of Rapport+1983, with γ = 4. Torque units</span>
+    <span class="c1"># converted from cgs units to [Msol], [Rsol], [yr] as all stellar</span>
+    <span class="c1"># parameters are given in units of [Msol], [Rsol], [yr] and so that</span>
+    <span class="c1"># dOmega_mb/dt is in units of [yr^-2].</span>
+    <span class="n">dOmega_mb_sec</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="o">-</span><span class="mf">3.8e-30</span> <span class="o">*</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rsol</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">secyer</span><span class="p">)</span>
+        <span class="o">*</span> <span class="n">m2</span>
+        <span class="o">*</span> <span class="n">R2</span><span class="o">**</span><span class="mi">4</span>
+        <span class="o">*</span> <span class="n">omega2</span><span class="o">**</span><span class="mi">3</span>
+        <span class="o">/</span> <span class="n">MOI_2</span>
+        <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="mf">1.5</span> <span class="o">-</span> <span class="n">m2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.5</span> <span class="o">-</span> <span class="mf">1.3</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">dOmega_mb_pri</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="o">-</span><span class="mf">3.8e-30</span> <span class="o">*</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rsol</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">secyer</span><span class="p">)</span>
+        <span class="o">*</span> <span class="n">m1</span>
+        <span class="o">*</span> <span class="n">R1</span><span class="o">**</span><span class="mi">4</span>
+        <span class="o">*</span> <span class="n">omega1</span><span class="o">**</span><span class="mi">3</span>
+        <span class="o">/</span> <span class="n">MOI_1</span>
+        <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="mf">1.5</span> <span class="o">-</span> <span class="n">m1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.5</span> <span class="o">-</span> <span class="mf">1.3</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="c1"># Converting units:</span>
+    <span class="c1"># The constant 3.8e-30 from Rappaport+1983 has units of [cm^-2 s]</span>
+    <span class="c1"># which need to be converted...</span>
+    <span class="c1">#</span>
+    <span class="c1"># -3.8e-30 [cm^-2 s] * (const.rsol**2/const.secyer) -&gt; [Rsol^-2 yr]</span>
+    <span class="c1"># * M [Msol]</span>
+    <span class="c1"># * R ** 4 [Rsol^4]</span>
+    <span class="c1"># * Omega ** 3 [yr^-3]</span>
+    <span class="c1"># / I [Msol Rsol^2 ]</span>
+    <span class="c1">#</span>
+    <span class="c1"># Thus, dOmega/dt comes out to [yr^-2]</span>
+
+    <span class="k">return</span> <span class="n">dOmega_mb_sec</span><span class="p">,</span> <span class="n">dOmega_mb_pri</span></div>
 
 
 <div class="viewcode-block" id="M15_braking">
 <a class="viewcode-back" href="../../../../../api_reference/posydon.binary_evol.DT.magnetic_braking.html#posydon.binary_evol.DT.magnetic_braking.prescriptions.M15_braking">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">M15_braking</span><span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the change in spin of each star due </span>
+<span class="sd">    to magnetic braking, according to: </span>
+<span class="sd">    </span>
+<span class="sd">        Matt et al. 2015, ApJ, 799, L23</span>
 
-    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-    <span class="n">R1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">tau_conv_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
+<span class="sd">        Free parameters calibrated to match the Solar rotation </span>
+<span class="sd">    rate by Gossage et al. 2021, ApJ, 912, 65.</span>
 
-    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-    <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">tau_conv_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        primary : SingleStar object</span>
+<span class="sd">            A single star object, representing the primary (more evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+<span class="sd">        </span>
+<span class="sd">        secondary : SingleStar object</span>
+<span class="sd">            A single star object, representing the secondary (less evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+
+<span class="sd">        verbose : bool</span>
+<span class="sd">            True if we want to print stuff.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        dOmega_sec : float</span>
+<span class="sd">            The change in rotation rate of the secondary (less evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
+<span class="sd">        </span>
+<span class="sd">        dOmega_pri : float</span>
+<span class="sd">            The change in rotation rate of the primary (more evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+    <span class="n">R1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
+    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">tau_conv_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
+
+    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+    <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
+    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">tau_conv_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
 
     <span class="c1"># Torque prescription from Matt et al. 2015, ApJ, 799, L23</span>
     <span class="c1"># Constants:</span>
     <span class="c1"># [erg] or [g cm^2 s^-2] -&gt; [Msol Rsol^2 yr^-2]</span>
-    <span class="n">K</span> <span class="o">=</span> <span class="mf">1.4e30</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">secyer</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">msol</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rsol</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.4e30</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">secyer</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">msol</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rsol</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="c1"># m = 0.22</span>
     <span class="c1"># p = 2.6</span>
     <span class="c1"># Above constants were calibrated as in</span>
@@ -254,22 +317,55 @@
 <div class="viewcode-block" id="G18_braking">
 <a class="viewcode-back" href="../../../../../api_reference/posydon.binary_evol.DT.magnetic_braking.html#posydon.binary_evol.DT.magnetic_braking.prescriptions.G18_braking">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">G18_braking</span><span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the change in spin of each star due </span>
+<span class="sd">    to magnetic braking, according to: </span>
+<span class="sd">    </span>
+<span class="sd">        Garraffo et al. 2018, ApJ, 862, 90</span>
 
-    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">tau_conv_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
+<span class="sd">        Free parameters calibrated to match the Solar rotation </span>
+<span class="sd">    rate by Gossage et al. 2021, ApJ, 912, 65.</span>
 
-    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">tau_conv_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        primary : SingleStar object</span>
+<span class="sd">            A single star object, representing the primary (more evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+<span class="sd">        </span>
+<span class="sd">        secondary : SingleStar object</span>
+<span class="sd">            A single star object, representing the secondary (less evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+
+<span class="sd">        verbose : bool</span>
+<span class="sd">            True if we want to print stuff.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        dOmega_sec : float</span>
+<span class="sd">            The change in rotation rate of the secondary (less evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
+<span class="sd">        </span>
+<span class="sd">        dOmega_pri : float</span>
+<span class="sd">            The change in rotation rate of the primary (more evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">tau_conv_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
+
+    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">tau_conv_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
      
     <span class="c1"># Torque prescription from Garraffo et al. 2018, ApJ, 862, 90</span>
     <span class="c1"># a = 0.03</span>
     <span class="c1"># b = 0.5</span>
     <span class="c1"># [g cm^2] -&gt; [Msol Rsol^2]</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="mf">3e41</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">msol</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rsol</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3e41</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">msol</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rsol</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="c1"># Above are as calibrated in Gossage et al. 2021, ApJ, 912, 65</span>
 
     <span class="n">Prot_pri</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">omega1</span>            <span class="c1"># [yr]</span>
@@ -299,20 +395,50 @@
 <div class="viewcode-block" id="CARB_braking">
 <a class="viewcode-back" href="../../../../../api_reference/posydon.binary_evol.DT.magnetic_braking.html#posydon.binary_evol.DT.magnetic_braking.prescriptions.CARB_braking">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">CARB_braking</span><span class="p">(</span><span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the change in spin of each star due </span>
+<span class="sd">    to magnetic braking, according to: </span>
+<span class="sd">    </span>
+<span class="sd">        Van &amp; Ivanova 2019, ApJ, 886, L31</span>
 
-    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-    <span class="n">R1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">tau_conv_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
-    <span class="n">mdot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        primary : SingleStar object</span>
+<span class="sd">            A single star object, representing the primary (more evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+<span class="sd">        </span>
+<span class="sd">        secondary : SingleStar object</span>
+<span class="sd">            A single star object, representing the secondary (less evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
 
-    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-    <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
-    <span class="n">tau_conv_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
-    <span class="n">mdot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
+<span class="sd">        verbose : bool</span>
+<span class="sd">            True if we want to print stuff.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        dOmega_sec : float</span>
+<span class="sd">            The change in rotation rate of the secondary (less evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
+<span class="sd">        </span>
+<span class="sd">        dOmega_pri : float</span>
+<span class="sd">            The change in rotation rate of the primary (more evolved) </span>
+<span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+    <span class="n">R1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
+    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">tau_conv_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
+    <span class="n">mdot_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
+
+    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+    <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
+    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">tau_conv_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_env_turnover_time_l_b&quot;</span><span class="p">]</span>
+    <span class="n">mdot_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mdot&quot;</span><span class="p">]</span>
 
     <span class="c1"># Torque prescription from Van &amp; Ivanova 2019, ApJ, 886, L31</span>
     <span class="c1"># Based on files hosted on Zenodo:</span>
@@ -373,7 +499,7 @@
         <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="mf">1.5</span> <span class="o">-</span> <span class="n">m2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.5</span> <span class="o">-</span> <span class="mf">1.3</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">dOmega_mb_sec</span><span class="p">,</span> <span class="n">dOmega_mb_pri</span></div>
+    <span class="k">return</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">dOmega_mb_sec</span><span class="p">),</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">dOmega_mb_pri</span><span class="p">)</span></div>
 
 </pre></div>
 
@@ -396,7 +522,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

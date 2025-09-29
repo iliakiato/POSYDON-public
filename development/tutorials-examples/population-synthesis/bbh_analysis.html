@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stellar Transient Populations 🔍 &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>Stellar Transient Populations 🔍 &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -151,17 +151,18 @@
 <p class="admonition-title fa fa-exclamation-circle">No indices?</p>
 <p>It might be that the population you generated does not contain any merging BBHs, they’re rare after all. You can download an example population, which contains 10,000 binaries at each of the 8 metallicities.</p>
 <p><code class="docutils literal notranslate"><span class="pre">get-posydon-data</span> <span class="pre">v2_tutorial_populations</span></code></p>
-<p>This automatically downloads the tutorial populations from <a class="reference external" href="https://zenodo.org/communities/posydon">Zenodo</a> into <code class="docutils literal notranslate"><span class="pre">$PATH_TO_POSYDON_DATA/tutorial_populations</span></code></p>
+<p>This automatically downloads the tutorial populations from <a class="reference external" href="https://zenodo.org/communities/posydon">Zenodo</a> into <code class="docutils literal notranslate"><span class="pre">$PATH_TO_POSYDON_DATA/../tutorial_populations</span></code></p>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.synthetic_population</span><span class="w"> </span><span class="kn">import</span> <span class="n">Population</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">posydon.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">PATH_TO_POSYDON_DATA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.synthetic_population</span><span class="w"> </span><span class="kn">import</span> <span class="n">Population</span>
 
 <span class="c1"># change the path to $PATH_TO_POSYDON_DATA/tutorial_populations/1e+00_Zsun_population.h5</span>
 <span class="c1"># when using the example population file.</span>
-<span class="n">pop</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="s1">&#39;1e+00_Zsun_population.h5&#39;</span><span class="p">)</span>
+<span class="n">pop</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PATH_TO_POSYDON_DATA</span><span class="si">}</span><span class="s1">/../tutorial_populations/1e+00_Zsun_population.h5&#39;</span><span class="p">)</span>
 <span class="n">tmp_data</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;S1_state&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_state&#39;</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">])</span>
 <br/></pre></div>
 </div>
@@ -214,9 +215,8 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.synthetic_population</span><span class="w"> </span><span class="kn">import</span> <span class="n">Population</span>
 
 <span class="c1"># Change the path to the data you want to use</span>
-<span class="c1"># or the path to the tutorial data: # $PATH_TO_POSYDON_DATA/tutorial_populations/</span>
-<span class="n">data_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;PATH/TO/TUTORIAL/DATA/&#39;</span>
-<span class="c1"># change to PATH_TO_POSYDON_DATA/tutorial_populations/ for the tutorial data</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PATH_TO_POSYDON_DATA</span><span class="si">}</span><span class="s1">/../tutorial_populations/&#39;</span>
+<span class="c1"># change to PATH_TO_POSYDON_DATA/../tutorial_populations/ for the tutorial data</span>
 <span class="c1"># and add &quot;from posydon.config import PATH_TO_POSYDON_DATA&quot; to the imports above</span>
 
 <span class="c1"># Let&#39;s load one of the populations</span>
@@ -290,35 +290,6 @@
 </pre></div>
 </div>
 </div>
-<section id="Underlying-mass">
-<h3>Underlying mass<a class="headerlink" href="#Underlying-mass" title="Link to this heading"></a></h3>
-<p>Before we move on, we have to discuss the occurrence rate of each binary in the population.</p>
-<p>We have sampled several distributions at the start of our simulations. These include:</p>
-<ul class="simple">
-<li><p>Initial mass function</p></li>
-<li><p>Period</p></li>
-<li><p>Mass ratio</p></li>
-<li><p>Binary fraction</p></li>
-</ul>
-<p>The default parameters do not sample the complete distributions. For example, we sample binaries with primary masses between 7 and 150 <span class="math notranslate nohighlight">\(M_\odot\)</span>, and a binary fraction of 1. While you can use the population as it is, you should consider the weight of the unsampled distributions.</p>
-<p>You can calculate the underlying mass of these distributions, which is the actual weight of the binary in our population. Since we’ve stored essential information about the population run, we are able to calculate this even after our selection. This will return the <code class="docutils literal notranslate"><span class="pre">underlying_mass</span></code> of the sampled population and add it to the population file.</p>
-<p>We will need these weights to be able to continue with the rest of the calculations.</p>
-<div class="admonition warning">
-<p class="admonition-title fa fa-exclamation-circle"><strong>Caveats</strong></p>
-<p>Currently, only changing the binary fraction (<code class="docutils literal notranslate"><span class="pre">f_bin</span></code>) is supported in the calculation of the underlying mass! The initially sampled population can have any binary fraction.</p>
-<p>Additionally, only parts of the period, IMF, and mass ratio distribution are included. We allow for different parameter limits to be set for sampling, but these are not included in this normalization!</p>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This will calculate the underlying mass for the population</span>
-<span class="c1"># with a binary fraction of 0.7 (default value)</span>
-<span class="n">BBH_pop</span><span class="o">.</span><span class="n">calculate_underlying_mass</span><span class="p">(</span><span class="n">f_bin</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</section>
 </section>
 <hr class="docutils" />
 <section id="Transient-population">
@@ -562,17 +533,48 @@ as long as it outputs a pandas DataFrame with a ‘time’ and ‘metallicity’
 </pre></div>
 </div>
 </div>
-<p>With <code class="docutils literal notranslate"><span class="pre">TransientPopulation</span></code> class you can compute the efficiency of the transient population at a given metallicity, i.e. the number of merging DCO per unit star formation and visualize the results.</p>
-<div class="admonition note">
-<p class="admonition-title fa fa-exclamation-circle"><strong>Underlying mass</strong></p>
-<p>Make sure you’ve calculated the underlying mass for the population, as done earlier in this tutorial.</p>
-</div>
-<p>Applying the underlying mass normalization assumes that no events occur outside the sampled parameter space.</p>
+<section id="Model-weights">
+<h3>Model weights<a class="headerlink" href="#Model-weights" title="Link to this heading"></a></h3>
+<p>Before we move on, we have to discuss the occurrence rate of each binary/event in the population.</p>
+<p>We have sampled several distributions at the start of our simulations. These include:</p>
+<ul class="simple">
+<li><p>Initial mass function</p></li>
+<li><p>Period</p></li>
+<li><p>Mass ratio</p></li>
+<li><p>Binary fraction</p></li>
+</ul>
+<p>The default parameters do not sample the complete distributions. For example, we sample binaries with primary masses between 7 and 150 <span class="math notranslate nohighlight">\(M_\odot\)</span>, and a binary fraction of 1. While you can use the population as it is, you should consider the weight of the unsampled distributions.</p>
+<p>You can calculate the weight of each system in an actual population using the <code class="docutils literal notranslate"><span class="pre">calculate_model_weights</span></code> function. Since we’ve stored essential information about the population run, we are able to calculate this even after our selection. We will need these weights to be able to continue with the rest of the calculations.</p>
+<p><code class="docutils literal notranslate"><span class="pre">calculate_model_weights</span></code> allows you to resample your population as well. In this tutorial, we will just extend the IMF, flatten the mass ratio, and set the binary fraction to 70%.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BBH_mergers</span><span class="o">.</span><span class="n">get_efficiency_over_metallicity</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pop_params</span> <span class="o">=</span> <span class="n">BBH_mergers</span><span class="o">.</span><span class="n">ini_params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1"># extending the IMF to higher and lower masses</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;primary_mass_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;primary_mass_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="c1"># use a flat mass ratio distribution</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;q_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;q_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># binary fraction</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;binary_fraction_const&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.7</span>
+
+<span class="c1"># model_weights_identifier is an arbitrary name for the set of weights</span>
+<span class="c1"># you are calculating. You can use it to keep track of different</span>
+<span class="c1"># sets of weights you might want to calculate.</span>
+<span class="n">BBH_mergers</span><span class="o">.</span><span class="n">calculate_model_weights</span><span class="p">(</span><span class="n">model_weights_identifier</span><span class="o">=</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">,</span>
+                                    <span class="n">population_parameters</span><span class="o">=</span><span class="n">pop_params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>With the <code class="docutils literal notranslate"><span class="pre">model_weights</span></code> computed you can now compute the efficiency of the transient population at a given metallicity, i.e. the number of merging DCO per unit star formation and visualize the results. Applying the reweighting assumes that no events occur outside the sampled parameter space.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BBH_mergers</span><span class="o">.</span><span class="n">efficiency</span><span class="p">(</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -581,28 +583,8 @@ as long as it outputs a pandas DataFrame with a ‘time’ and ‘metallicity’
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># if you want to plot the channels, you can set channels=True</span>
-<span class="n">BBH_mergers</span><span class="o">.</span><span class="n">plot_efficiency_over_metallicity</span><span class="p">(</span><span class="n">channels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BBH_mergers</span><span class="o">.</span><span class="n">efficiency</span>
-</pre></div>
-</div>
-</div>
-<p>You can also plot the delay time distribution based on the time column in the TransientPopulation.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mf">6.5</span><span class="p">,</span><span class="mf">10.5</span><span class="p">)</span>
-<span class="n">BBH_mergers</span><span class="o">.</span><span class="n">plot_delay_time_distribution</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
-<span class="c1"># you can also set a specific metallicity. However, this normalises the rate with only the mass of the selected metallicity.</span>
-<span class="n">BBH_mergers</span><span class="o">.</span><span class="n">plot_delay_time_distribution</span><span class="p">(</span><span class="n">metallicity</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+<span class="n">BBH_mergers</span><span class="o">.</span><span class="n">plot_efficiency_over_metallicity</span><span class="p">(</span><span class="n">model_weight_identifier</span><span class="o">=</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">,</span>
+                                             <span class="n">channels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -626,6 +608,7 @@ as long as it outputs a pandas DataFrame with a ‘time’ and ‘metallicity’
 </pre></div>
 </div>
 </div>
+</section>
 </section>
 <hr class="docutils" />
 <section id="Cosmic-Rate">
@@ -663,7 +646,10 @@ as long as it outputs a pandas DataFrame with a ‘time’ and ‘metallicity’
     <span class="s1">&#39;sigma_SFR&#39;</span> <span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="n">rates</span> <span class="o">=</span> <span class="n">BBH_mergers</span><span class="o">.</span><span class="n">calculate_cosmic_weights</span><span class="p">(</span><span class="s1">&#39;IllustrisTNG&#39;</span><span class="p">,</span> <span class="n">MODEL_in</span><span class="o">=</span><span class="n">MODEL</span><span class="p">)</span>
+
+<span class="n">rates</span> <span class="o">=</span> <span class="n">BBH_mergers</span><span class="o">.</span><span class="n">calculate_cosmic_weights</span><span class="p">(</span><span class="s1">&#39;IllustrisTNG&#39;</span><span class="p">,</span>
+                                             <span class="n">model_weights</span><span class="o">=</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">,</span> <span class="c1"># we need to specify the weights we calculated before</span>
+                                             <span class="n">MODEL_in</span><span class="o">=</span><span class="n">MODEL</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -845,7 +831,7 @@ as long as it outputs a pandas DataFrame with a ‘time’ and ‘metallicity’
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

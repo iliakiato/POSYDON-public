@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.popsyn.synthetic_population &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.popsyn.synthetic_population &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
@@ -13,7 +13,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -154,6 +154,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Zsun</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">binarypop_kwargs_from_ini</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.simulationproperties</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationProperties</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">posydon.visualization.plot_pop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plot_pop</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_metallicity_to_string</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
@@ -179,32 +180,12 @@
     <span class="n">BinaryPopulation</span><span class="p">,</span>
     <span class="n">HISTORY_MIN_ITEMSIZE</span><span class="p">,</span>
     <span class="n">ONELINE_MIN_ITEMSIZE</span><span class="p">,</span>
+    <span class="n">saved_ini_parameters</span><span class="p">,</span>
 <span class="p">)</span>
 
 
 <span class="c1">###############################################################################</span>
 
-<span class="n">parameter_array</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;number_of_binaries&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;binary_fraction_scheme&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;binary_fraction_const&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;star_formation&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;max_simulation_time&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;primary_mass_scheme&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;primary_mass_min&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;primary_mass_max&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;secondary_mass_scheme&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;secondary_mass_min&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;secondary_mass_max&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;orbital_scheme&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;orbital_period_scheme&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;orbital_period_min&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;orbital_period_max&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;orbital_separation_scheme&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;orbital_separation_min&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;orbital_separation_max&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;eccentricity_scheme&quot;</span><span class="p">,</span>
-<span class="p">]</span>
 
 
 <div class="viewcode-block" id="PopulationRunner">
@@ -274,6 +255,8 @@
                     <span class="o">+</span> <span class="s2">&quot;_Zsun_&quot;</span>
                     <span class="o">+</span> <span class="n">ini_kw</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
+                <span class="n">simprops</span> <span class="o">=</span> <span class="n">SimulationProperties</span><span class="o">.</span><span class="n">from_ini</span><span class="p">(</span><span class="n">path_to_ini</span><span class="p">)</span>
+                <span class="n">ini_kw</span><span class="p">[</span><span class="s1">&#39;population_properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">simprops</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">binary_populations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BinaryPopulation</span><span class="p">(</span><span class="o">**</span><span class="n">ini_kw</span><span class="p">))</span>
 
 <div class="viewcode-block" id="PopulationRunner.evolve">
@@ -1029,7 +1012,7 @@
 <span class="sd">    mass_per_metallicity : pandas.DataFrame</span>
 <span class="sd">        A DataFrame containing mass per metallicity data.</span>
 <span class="sd">    ini_params : dict</span>
-<span class="sd">        A dictionary containing some ini parameters, described in parameter_array.</span>
+<span class="sd">        A dictionary containing some ini parameters, described in saved_ini_parameters.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1099,7 +1082,7 @@
         <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
             <span class="c1"># write ini parameters to file</span>
             <span class="n">tmp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">parameter_array</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">saved_ini_parameters</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">tmp_df</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ini_params</span><span class="p">[</span><span class="n">c</span><span class="p">]]</span>
                 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
@@ -1109,7 +1092,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_ini_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Load the ini parameters from the file.</span>
 
-<span class="sd">        The values loaded from file are stored in the parameter_array.</span>
+<span class="sd">        The values loaded from file are stored in the saved_ini_parameters.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1121,7 +1104,7 @@
         <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
             <span class="n">tmp_df</span> <span class="o">=</span> <span class="n">store</span><span class="p">[</span><span class="s2">&quot;ini_parameters&quot;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ini_params</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">parameter_array</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">saved_ini_parameters</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">ini_params</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_df</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
@@ -3147,7 +3130,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

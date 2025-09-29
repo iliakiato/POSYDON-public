@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.binarystar &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.binary_evol.binarystar &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
@@ -13,7 +13,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -263,8 +263,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
 
         <span class="c1"># Create the two stars</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">star_1</span> <span class="o">=</span> <span class="n">star_1</span> <span class="k">if</span> <span class="n">star_1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">SingleStar</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">star_2</span> <span class="o">=</span> <span class="n">star_2</span> <span class="k">if</span> <span class="n">star_2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">SingleStar</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">star_1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">star_1</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">star_1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">star_1</span> <span class="o">=</span> <span class="n">SingleStar</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">star_2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">star_2</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">star_2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">star_2</span> <span class="o">=</span> <span class="n">SingleStar</span><span class="p">()</span>
 
         <span class="c1"># Stars now exist</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">companion_1_exists</span> <span class="o">=</span> <span class="kc">True</span>
@@ -283,20 +290,27 @@
                 <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">binary_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span>
                                                              <span class="mf">0.0</span><span class="p">,</span>
                                                              <span class="mf">0.0</span><span class="p">]))</span>
+            <span class="k">elif</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">&#39;eccentricity&#39;</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">binary_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">binary_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span> <span class="o">+</span> <span class="s1">&#39;_history&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)])</span>
 
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">binary_kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;_history&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">val</span><span class="p">])</span>
 
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">star_1</span><span class="p">,</span> <span class="s2">&quot;mass&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">star_2</span><span class="p">,</span> <span class="s2">&quot;mass&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;separation&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;orbital_period&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">star_1</span><span class="p">,</span> <span class="s2">&quot;mass&quot;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">star_2</span><span class="p">,</span> <span class="s2">&quot;mass&quot;</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;separation&quot;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;orbital_period&quot;</span><span class="p">)):</span>
                 <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;separation&quot;</span><span class="p">,</span> 
                         <span class="n">orbital_separation_from_period</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">orbital_period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">star_1</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">star_2</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span>
-            <span class="k">elif</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;orbital_period&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;separation&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;separation_history&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;separation&quot;</span><span class="p">)])</span>
+
+            <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;orbital_period&quot;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;separation&quot;</span><span class="p">)):</span>
                 <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;orbital_period&quot;</span><span class="p">,</span> 
                         <span class="n">orbital_period_from_separation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">separation</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">star_1</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">star_2</span><span class="o">.</span><span class="n">mass</span><span class="p">))</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;orbital_period_history&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;orbital_period&quot;</span><span class="p">)])</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;inspiral_time&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inspiral_time</span> <span class="o">=</span> <span class="kc">None</span>
@@ -805,8 +819,8 @@
         <span class="c1"># set some orbital parameters that should exist by hand</span>
         <span class="n">bp_keys</span> <span class="o">=</span> <span class="n">binary_params</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         <span class="k">if</span> <span class="s1">&#39;eccentricity_history&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">bp_keys</span><span class="p">:</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;eccentricity_history&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">history_length</span><span class="p">)</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;eccentricity&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;eccentricity_history&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="n">history_length</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;eccentricity&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;separation_history&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">bp_keys</span>
                 <span class="ow">and</span> <span class="s1">&#39;orbital_period_history&#39;</span> <span class="ow">in</span> <span class="n">bp_keys</span><span class="p">):</span>
             <span class="n">separation</span> <span class="o">=</span> <span class="n">orbital_separation_from_period</span><span class="p">(</span>
@@ -1030,8 +1044,8 @@
         <span class="c1"># set some orbital parameters that should exist by hand</span>
         <span class="n">bp_keys</span> <span class="o">=</span> <span class="n">binary_params</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         <span class="k">if</span> <span class="s1">&#39;eccentricity_history&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">bp_keys</span><span class="p">:</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;eccentricity_history&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;eccentricity&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;eccentricity_history&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">])</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;eccentricity&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;separation_history&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">bp_keys</span>
                 <span class="ow">and</span> <span class="s1">&#39;orbital_period_history&#39;</span> <span class="ow">in</span> <span class="n">bp_keys</span><span class="p">):</span>
             <span class="n">separation</span> <span class="o">=</span> <span class="n">orbital_separation_from_period</span><span class="p">(</span>
@@ -1288,7 +1302,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

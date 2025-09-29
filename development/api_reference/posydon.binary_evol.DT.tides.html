@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.DT.tides &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.binary_evol.DT.tides &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d66fa8e6" />
@@ -14,7 +14,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -159,7 +159,40 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="posydon.binary_evol.DT.tides.default_tides.default_tides">
 <span class="sig-prename descclassname"><span class="pre">posydon.binary_evol.DT.tides.default_tides.</span></span><span class="sig-name descname"><span class="pre">default_tides</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secondary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/posydon/binary_evol/DT/tides/default_tides.html#default_tides"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#posydon.binary_evol.DT.tides.default_tides.default_tides" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><blockquote>
+<div><p>Calculates the change in orbital separation and eccentricity,</p>
+</div></blockquote>
+<p>plus change in spin of each star due to tides, according to:</p>
+<blockquote>
+<div><p>Hut, P. 1981, A&amp;A, 99, 126</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The current orbital separation. [Rsolar]</p></li>
+<li><p><strong>e</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The current orbital eccentricity.</p></li>
+<li><p><strong>primary</strong> (<em>SingleStar object</em>) – A single star object, representing the primary (more evolved) star
+in the binary and containing its properties.</p></li>
+<li><p><strong>secondary</strong> (<em>SingleStar object</em>) – A single star object, representing the secondary (less evolved) star
+in the binary and containing its properties.</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – True if we want to print stuff.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>da</strong> (<em>float</em>) – The change in orbital separation for a time step in</p></li>
+<li><p><em>step_detached’s solve_ivp(). [Rsolar/yr]</em></p></li>
+<li><p><strong>de</strong> (<em>float</em>) – The change in orbital eccentricity for a time step in</p></li>
+<li><p><em>step_detached’s solve_ivp().</em></p></li>
+<li><p><strong>dOmega_sec</strong> (<em>float</em>) – The change in rotation rate of the secondary (less evolved)</p></li>
+<li><p><em>star for a time step in step_detached’s solve_ivp(). [rad/yr^2]</em></p></li>
+<li><p><strong>dOmega_pri</strong> (<em>float</em>) – The change in rotation rate of the primary (more evolved)</p></li>
+<li><p><em>star for a time step in step_detached’s solve_ivp(). [rad/yr^2]</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 </section>
@@ -187,7 +220,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

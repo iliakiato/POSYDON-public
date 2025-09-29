@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.DT.gravitational_radiation.default_gravrad &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>posydon.binary_evol.DT.gravitational_radiation.default_gravrad &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=d66fa8e6" />
@@ -13,7 +13,7 @@
   
       <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../../../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -117,9 +117,45 @@
 <div class="viewcode-block" id="default_gravrad">
 <a class="viewcode-back" href="../../../../../api_reference/posydon.binary_evol.DT.gravitational_radiation.html#posydon.binary_evol.DT.gravitational_radiation.default_gravrad.default_gravrad">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">default_gravrad</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the change in orbital separation and eccentricity </span>
+<span class="sd">    due to gravitational wave radiation, according to: </span>
+<span class="sd">    </span>
+<span class="sd">        Junker, W., &amp; Schafer, G. 1992, MNRAS, 254, 146</span>
 
-    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        a : float</span>
+<span class="sd">            The current orbital separation. [Rsolar]</span>
+
+<span class="sd">        e : float</span>
+<span class="sd">            The current orbital eccentricity.</span>
+
+<span class="sd">        primary : SingleStar object</span>
+<span class="sd">            A single star object, representing the primary (more evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+<span class="sd">        </span>
+<span class="sd">        secondary : SingleStar object</span>
+<span class="sd">            A single star object, representing the secondary (less evolved) star </span>
+<span class="sd">            in the binary and containing its properties.</span>
+
+<span class="sd">        verbose : bool</span>
+<span class="sd">            True if we want to print stuff.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        da : float</span>
+<span class="sd">            The change in orbital separation for a time step in </span>
+<span class="sd">        step_detached&#39;s solve_ivp(). [Rsolar/yr]</span>
+
+<span class="sd">        de : float</span>
+<span class="sd">            The change in orbital eccentricity for a time step in </span>
+<span class="sd">        step_detached&#39;s solve_ivp().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
+    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
 
     <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">m1</span> <span class="o">*</span> <span class="n">m2</span> <span class="o">/</span> <span class="p">(</span><span class="n">m1</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
     
@@ -150,7 +186,7 @@
     <span class="c1"># eq. (36) of Junker et al. 1992, 254, 146</span>
 
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;da,de_gr = &quot;</span><span class="p">,</span> <span class="n">da_gr</span><span class="p">,</span> <span class="n">de_gr</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;da, de_gr = &quot;</span><span class="p">,</span> <span class="n">da_gr</span><span class="p">,</span> <span class="n">de_gr</span><span class="p">)</span>
 
     <span class="n">da</span> <span class="o">=</span> <span class="n">da_gr</span>
     <span class="n">de</span> <span class="o">=</span> <span class="n">de_gr</span>
@@ -178,7 +214,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

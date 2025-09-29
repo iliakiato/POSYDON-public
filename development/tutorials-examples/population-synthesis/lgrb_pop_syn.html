@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Computing Long-Duration Gamma-Ray Bursts from Double Compact Object Populations 🌌 &mdash; posydon 0+untagged.71.gbe272b6 documentation</title>
+  <title>Computing Long-Duration Gamma-Ray Bursts from Double Compact Object Populations 🌌 &mdash; posydon 0+untagged.80.g03690af documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=d9a5aa09"></script>
+      <script src="../../_static/documentation_options.js?v=0a757c66"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -214,12 +214,27 @@
 </div>
 <p>You’ve now created a LGRB population, where either the first and/or second star has some amount of radiative disk.</p>
 <p>This is, of course, just an example and the actual amount of disk required to power a LGRB will be higher than some of the values included in our “LGRB” rate. Moreover, the number of binaries in this population is insufficient to actually see all unique events.</p>
-<p>For now, let’s continue and calculate the metallicity bias function for the LGRBs. We don’t need to calculate the <code class="docutils literal notranslate"><span class="pre">underlying_mass</span></code> of the population, because we already did this in the <a class="reference internal" href="bbh_analysis.html"><span class="doc">BBH tutorial</span></a>.</p>
+<p>For now, let’s continue and calculate the metallicity bias function for the LGRBs. We need to recalculate the <code class="docutils literal notranslate"><span class="pre">model_weights</span></code> for this new population.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">LGRB</span><span class="o">.</span><span class="n">get_efficiency_over_metallicity</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pop_params</span> <span class="o">=</span> <span class="n">LGRB</span><span class="o">.</span><span class="n">ini_params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1"># extending the IMF to higher and lower masses</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;primary_mass_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;primary_mass_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="c1"># use a flat mass ratio distribution</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;q_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;q_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># binary fraction</span>
+<span class="n">pop_params</span><span class="p">[</span><span class="s1">&#39;binary_fraction_const&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.7</span>
+
+<span class="c1"># model_weights_identifier is an arbitrary name for the set of weights</span>
+<span class="c1"># you are calculating. You can use it to keep track of different</span>
+<span class="c1"># sets of weights you might want to calculate.</span>
+<span class="n">LGRB</span><span class="o">.</span><span class="n">calculate_model_weights</span><span class="p">(</span><span class="n">model_weights_identifier</span><span class="o">=</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">,</span>
+                                <span class="n">population_parameters</span><span class="o">=</span><span class="n">pop_params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -227,7 +242,15 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">LGRB</span><span class="o">.</span><span class="n">plot_efficiency_over_metallicity</span><span class="p">(</span><span class="n">channels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">LGRB</span><span class="o">.</span><span class="n">efficiency</span><span class="p">(</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">LGRB</span><span class="o">.</span><span class="n">plot_efficiency_over_metallicity</span><span class="p">(</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -237,7 +260,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">LGRB_rates</span> <span class="o">=</span> <span class="n">LGRB</span><span class="o">.</span><span class="n">calculate_cosmic_weights</span><span class="p">(</span><span class="s1">&#39;IllustrisTNG&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">LGRB_rates</span> <span class="o">=</span> <span class="n">LGRB</span><span class="o">.</span><span class="n">calculate_cosmic_weights</span><span class="p">(</span><span class="s1">&#39;IllustrisTNG&#39;</span><span class="p">,</span>
+                                           <span class="n">model_weights</span><span class="o">=</span><span class="s1">&#39;extended_IMF&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -334,7 +358,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.71.gbe272b6
+      Version: 0+untagged.80.g03690af
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
