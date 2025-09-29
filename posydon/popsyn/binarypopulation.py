@@ -256,9 +256,19 @@ class BinaryPopulation:
             # do local MPI or cluster job array evolution
             indices = kw.get('indices',
                             list(range(self.number_of_binaries)))
-            indices_split = np.array_split(indices, self.size)
-            batch_indices = indices_split[self.rank]
-            mpi_tqdm_bool = True if (tqdm_bool and self.rank == 0) else False
+            
+            ##MODIFIED
+            if kw.get('distribute_indices_across_jobarray', True):
+                #default
+                
+                indices_split = np.array_split(indices, self.size)
+                batch_indices = indices_split[self.rank]
+                mpi_tqdm_bool = True if (tqdm_bool and self.rank == 0) else False
+                
+            else:
+                batch_indices = indices
+                mpi_tqdm_bool = tqdm_bool
+                
 
             params = {'indices':batch_indices,
                       'tqdm':mpi_tqdm_bool,
