@@ -317,8 +317,14 @@ class SimulationProperties:
             print(step_name, step_tup, end='\n')
 
         step_func, kwargs = step_tup
-        setattr(self, step_name, step_func(**kwargs))
+#         print('debug', step_name, step_tup)
 
+        try:
+            setattr(self, step_name, step_func(**kwargs))
+            
+        except TypeError:
+            setattr(self, step_name, step_func())
+            
         # check if all steps have been loaded
         for name, tup in self.kwargs.items():
             if isinstance(tup, tuple):
