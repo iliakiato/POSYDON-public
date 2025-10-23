@@ -417,11 +417,22 @@ class StepSN(object):
         if binary.event == "CC1":
             # collapse star
             if self.mechanism == "Agnostic":
-                if self.max_BH_mass:
-                    binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_1.mass,self.max_BH_mass ))
+                if binary.star_1.co_core_mass > 0.:
+                    if self.max_BH_mass:
+                        binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_1.co_core_mass,self.max_BH_mass ))
+                    else:
+                        binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_1.co_core_mass)
+                    binary.star_1.state = 'BH'
+
+                elif binary.star_1.he_core_mass > 0.:
+                    if self.max_BH_mass:
+                        binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_1.he_core_mass,self.max_BH_mass ))
+                    else:
+                        binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_1.he_core_mass)
+                    binary.star_1.state = 'BH'
                 else:
-                    binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_1.mass)
-                binary.star_1.state = 'BH'
+                    print('No CO/HE core!')
+
             else:
                 self.collapse_star(star=binary.star_1)
                 self._reset_other_star_properties(star=binary.star_2)
@@ -431,13 +442,24 @@ class StepSN(object):
         #MODIFIED#
         
         elif binary.event == "CC2":
-            if self.mechanism == 'Agnostic':
-                if self.max_BH_mass:
-                    binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_1.mass, self.max_BH_mass ))
+            if self.mechanism == "Agnostic":
+                if binary.star_2.co_core_mass > 0.:
+                    if self.max_BH_mass:
+                        binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_2.co_core_mass,self.max_BH_mass ))
+                    else:
+                        binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_2.co_core_mass)
+                    binary.star_2.state = 'BH'
+
+                elif binary.star_2.he_core_mass > 0.:
+                    if self.max_BH_mass:
+                        binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_2.he_core_mass,self.max_BH_mass ))
+                    else:
+                        binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_2.he_core_mass)
+                    binary.star_2.state = 'BH'
                 else:
-                    binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_2.mass)
-                binary.star_2.state = 'BH'
-            else: 
+                    print('No CO/HE core!')
+                    
+            else:
                 self.collapse_star(star=binary.star_2)
                 self._reset_other_star_properties(star=binary.star_1)
                 
