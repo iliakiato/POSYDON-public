@@ -441,23 +441,26 @@ class StepSN(object):
         #MODIFIED#
         
         if binary.event == "CC1":
-            # collapse star
             if self.mechanism == "Agnostic":
+                # pick core: prefer CO, else He
                 if binary.star_1.co_core_mass > 0.:
-                    if self.max_BH_mass:
-                        binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_1.co_core_mass,self.max_BH_mass ))
-                    else:
-                        binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_1.co_core_mass)
-                    binary.star_1.state = 'BH'
-
+                    core = binary.star_1.co_core_mass
+                    core_label = "CO"
                 elif binary.star_1.he_core_mass > 0.:
-                    if self.max_BH_mass:
-                        binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_1.he_core_mass,self.max_BH_mass ))
-                    else:
-                        binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_1.he_core_mass)
-                    binary.star_1.state = 'BH'
+                    core = binary.star_1.he_core_mass
+                    core_label = "He"
                 else:
-                    print('No CO/HE core!')
+                    print("No CO/HE core!")
+                    return
+
+                # skip BH formation if core is below max NS mass
+                if core <= self.max_NS_mass:
+                    print(f"{core_label} core not massive enough to form a BH")
+                    return
+
+                high = min(core, self.max_BH_mass) if self.max_BH_mass else core
+                binary.star_1.mass  = np.random.uniform(low=self.max_NS_mass, high=high)
+                binary.star_1.state = "BH"
 
             else:
                 self.collapse_star(star=binary.star_1)
@@ -469,21 +472,25 @@ class StepSN(object):
         
         elif binary.event == "CC2":
             if self.mechanism == "Agnostic":
+                # pick core: prefer CO, else He
                 if binary.star_2.co_core_mass > 0.:
-                    if self.max_BH_mass:
-                        binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_2.co_core_mass,self.max_BH_mass ))
-                    else:
-                        binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_2.co_core_mass)
-                    binary.star_2.state = 'BH'
-
+                    core = binary.star_2.co_core_mass
+                    core_label = "CO"
                 elif binary.star_2.he_core_mass > 0.:
-                    if self.max_BH_mass:
-                        binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = min(binary.star_2.he_core_mass,self.max_BH_mass ))
-                    else:
-                        binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_2.he_core_mass)
-                    binary.star_2.state = 'BH'
+                    core = binary.star_2.he_core_mass
+                    core_label = "He"
                 else:
-                    print('No CO/HE core!')
+                    print("No CO/HE core!")
+                    return
+
+                # skip BH formation if core is below max NS mass
+                if core <= self.max_NS_mass:
+                    print(f"{core_label} core not massive enough to form a BH")
+                    return
+
+                high = min(core, self.max_BH_mass) if self.max_BH_mass else core
+                binary.star_2.mass  = np.random.uniform(low=self.max_NS_mass, high=high)
+                binary.star_2.state = "BH"
                     
             else:
                 self.collapse_star(star=binary.star_2)
