@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.visualization.plot2D &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.visualization.plot2D &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -127,17 +131,22 @@
     <span class="s2">&quot;Matthias Kruckow &lt;Matthias.Kruckow@unige.ch&gt;&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.gridutils</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_field</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Zsun</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.plot_defaults</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">DEFAULT_MARKERS_COLORS_LEGENDS</span><span class="p">,</span> <span class="n">add_flag_to_MARKERS_COLORS_LEGENDS</span><span class="p">,</span>
-    <span class="n">PLOT_PROPERTIES</span><span class="p">,</span> <span class="n">DEFAULT_LABELS</span><span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.combine_TF</span><span class="w"> </span><span class="kn">import</span> <span class="n">combine_TF12</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.gridutils</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_field</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.combine_TF</span><span class="w"> </span><span class="kn">import</span> <span class="n">combine_TF12</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.plot_defaults</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DEFAULT_LABELS</span><span class="p">,</span>
+    <span class="n">DEFAULT_MARKERS_COLORS_LEGENDS</span><span class="p">,</span>
+    <span class="n">PLOT_PROPERTIES</span><span class="p">,</span>
+    <span class="n">add_flag_to_MARKERS_COLORS_LEGENDS</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="plot2D">
@@ -466,8 +475,8 @@
             <span class="s2">&quot;debug&quot;</span><span class="p">,</span>
             <span class="s2">&quot;interpolation_class&quot;</span><span class="p">,</span>
             <span class="s2">&quot;interpolation_class_errors&quot;</span><span class="p">,</span>
-        <span class="p">]</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;SN_type&#39;</span> <span class="ow">in</span> <span class="n">termination_flag</span> <span class="ow">or</span> 
-              <span class="s1">&#39;CO_type&#39;</span> <span class="ow">in</span> <span class="n">termination_flag</span> <span class="ow">or</span> 
+        <span class="p">]</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;SN_type&#39;</span> <span class="ow">in</span> <span class="n">termination_flag</span> <span class="ow">or</span>
+              <span class="s1">&#39;CO_type&#39;</span> <span class="ow">in</span> <span class="n">termination_flag</span> <span class="ow">or</span>
               <span class="s1">&#39;state&#39;</span> <span class="ow">in</span> <span class="n">termination_flag</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">all_termination_flags</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">if</span> <span class="s1">&#39;SN_type&#39;</span> <span class="ow">in</span> <span class="n">termination_flag</span><span class="p">:</span>
@@ -510,9 +519,9 @@
             <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_cols</span><span class="p">,</span>
                                <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
             <span class="n">l_ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_rows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">legend_pos</span><span class="p">)</span>
-            
+
             <span class="bp">self</span><span class="o">.</span><span class="n">plot_panels</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="n">l_ax</span><span class="p">,</span> <span class="n">legend_idxs</span><span class="o">=</span><span class="n">l_idxs</span><span class="p">)</span>
-            
+
             <span class="c1"># adjust spacing</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wspace</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hspace</span><span class="p">)</span>
 
@@ -562,7 +571,7 @@
 
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">figsize</span><span class="p">)</span>
-            
+
             <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">plot_panel</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
 
@@ -1306,10 +1315,10 @@
 <span class="sd">            matplotlib scatter object.</span>
 <span class="sd">        ax : object</span>
 <span class="sd">            matplotlib figure axes.</span>
-<span class="sd">        </span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorbar</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">z_var_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorbar</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>         
+            <span class="n">z_var_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorbar</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>
             <span class="n">z_var_str</span> <span class="o">=</span> <span class="n">z_var_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;INTERP_ERROR_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="n">z_var_str</span> <span class="o">=</span> <span class="n">z_var_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;CLASS_ERROR_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="n">z_var_str</span> <span class="o">=</span> <span class="n">z_var_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;VIOLIN_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -1331,7 +1340,7 @@
                 <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
-        
+
         <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">inset_axes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colorbar</span><span class="p">[</span><span class="s2">&quot;bounds&quot;</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1610,7 +1619,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

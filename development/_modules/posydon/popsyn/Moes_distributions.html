@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.popsyn.Moes_distributions &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.popsyn.Moes_distributions &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -141,7 +145,7 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.Moes_distributions.Moe_17_PsandQs">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Moe_17_PsandQs</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate initial parameters following Moe &amp; Di Stefano (2017) [1]_.</span>
-<span class="sd">    </span>
+
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
 <span class="sd">    .. [1] Moe, M. and Di Stefano, R., “Mind Your Ps and Qs: The Interrelation</span>
@@ -414,7 +418,7 @@
                     <span class="c1"># maximum eccentricity for given P</span>
                     <span class="n">e_max</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="n">mylogP</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="o">/</span><span class="mf">3.0</span><span class="p">)</span>
                     <span class="c1"># set distribution = 0 for e &gt; e_max</span>
-                    <span class="n">fe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ev</span> <span class="o">&gt;=</span> <span class="n">e_max</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>                         
+                    <span class="n">fe</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ev</span> <span class="o">&gt;=</span> <span class="n">e_max</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
                     <span class="c1"># Assume e distribution has power-law slope eta for</span>
                     <span class="c1"># 0.0 &lt; e / e_max &lt; 0.8 and then linear turnover between</span>
                     <span class="c1"># 0.8 &lt; e / e_max &lt; 1.0 so that distribution is continuous</span>
@@ -583,8 +587,6 @@
             <span class="n">Zs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">M2s</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">logPs</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">es</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Zs</span><span class="p">)</span></div>
 
-
-
 </pre></div>
 
            </div>
@@ -606,7 +608,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

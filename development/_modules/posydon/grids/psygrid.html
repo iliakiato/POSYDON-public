@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.grids.psygrid &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.grids.psygrid &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -293,42 +297,60 @@
 <span class="p">]</span>
 
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">tqdm</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_state_of_star_history_array</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.io</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">GridReader</span><span class="p">,</span> <span class="n">read_initial_values</span><span class="p">,</span>
-                              <span class="n">initial_values_from_dirname</span><span class="p">,</span> <span class="n">EEP_FILE_EXTENSIONS</span><span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.termination_flags</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">get_flags_from_MESA_run</span><span class="p">,</span>
-                                             <span class="n">check_state_from_history</span><span class="p">,</span>
-                                             <span class="n">get_flag_from_MESA_output</span><span class="p">,</span>
-                                             <span class="n">infer_interpolation_class</span><span class="p">,</span>
-                                             <span class="n">get_detected_initial_RLO</span><span class="p">,</span>
-                                             <span class="n">get_nearest_known_initial_RLO</span><span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.configfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigFile</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">orbital_separation_from_period</span><span class="p">,</span>
-                                            <span class="n">initialize_empty_array</span><span class="p">,</span>
-                                            <span class="n">infer_star_state</span><span class="p">,</span>
-                                            <span class="n">get_i_He_depl</span><span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.limits_thresholds</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span><span class="p">,</span>
-    <span class="n">THRESHOLD_CENTRAL_ABUNDANCE_LOOSE_C</span>
-<span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.gridutils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">read_MESA_data_file</span><span class="p">,</span> <span class="n">read_EEP_data_file</span><span class="p">,</span>
-                                     <span class="n">add_field</span><span class="p">,</span> <span class="n">join_lists</span><span class="p">,</span> <span class="n">fix_He_core</span><span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.plot2D</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot2D</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.plot1D</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot1D</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.downsampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrackDownsampler</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.scrubbing</span><span class="w"> </span><span class="kn">import</span> <span class="n">scrub</span><span class="p">,</span> <span class="n">keep_after_RLO</span><span class="p">,</span> <span class="n">keep_till_central_abundance_He_C</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.io</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">EEP_FILE_EXTENSIONS</span><span class="p">,</span>
+    <span class="n">GridReader</span><span class="p">,</span>
+    <span class="n">initial_values_from_dirname</span><span class="p">,</span>
+    <span class="n">read_initial_values</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.scrubbing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">keep_after_RLO</span><span class="p">,</span>
+    <span class="n">keep_till_central_abundance_He_C</span><span class="p">,</span>
+    <span class="n">scrub</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.termination_flags</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">check_state_from_history</span><span class="p">,</span>
+    <span class="n">get_detected_initial_RLO</span><span class="p">,</span>
+    <span class="n">get_flag_from_MESA_output</span><span class="p">,</span>
+    <span class="n">get_flags_from_MESA_run</span><span class="p">,</span>
+    <span class="n">get_nearest_known_initial_RLO</span><span class="p">,</span>
+    <span class="n">infer_interpolation_class</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">check_state_of_star_history_array</span><span class="p">,</span>
+    <span class="n">get_i_He_depl</span><span class="p">,</span>
+    <span class="n">infer_star_state</span><span class="p">,</span>
+    <span class="n">initialize_empty_array</span><span class="p">,</span>
+    <span class="n">orbital_separation_from_period</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.configfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.gridutils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">add_field</span><span class="p">,</span>
+    <span class="n">fix_He_core</span><span class="p">,</span>
+    <span class="n">join_lists</span><span class="p">,</span>
+    <span class="n">read_EEP_data_file</span><span class="p">,</span>
+    <span class="n">read_MESA_data_file</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.ignorereason</span><span class="w"> </span><span class="kn">import</span> <span class="n">IgnoreReason</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">Pwarn</span><span class="p">,</span> <span class="n">Catch_POSYDON_Warnings</span><span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonerror</span><span class="w"> </span><span class="kn">import</span> <span class="n">POSYDONError</span><span class="p">,</span> <span class="n">GridError</span>
-
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.limits_thresholds</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span><span class="p">,</span>
+    <span class="n">THRESHOLD_CENTRAL_ABUNDANCE_LOOSE_C</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonerror</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridError</span><span class="p">,</span> <span class="n">POSYDONError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Catch_POSYDON_Warnings</span><span class="p">,</span> <span class="n">Pwarn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.plot1D</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot1D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.plot2D</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot2D</span>
 
 <span class="n">HDF5_MEMBER_SIZE</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">31</span> <span class="o">-</span> <span class="mi">1</span>            <span class="c1"># maximum HDF5 file size when splitting</span>
 <span class="n">H5_UNICODE_DTYPE</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">string_dtype</span><span class="p">()</span>  <span class="c1"># dtype for unicode strings in the HDF5</span>
@@ -2754,7 +2776,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

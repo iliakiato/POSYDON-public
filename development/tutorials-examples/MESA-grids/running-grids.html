@@ -6,15 +6,15 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Architecting MESA Simulation Grids with POSYDON &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>Architecting MESA Simulation Grids with POSYDON &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -69,6 +69,10 @@
 <li class="toctree-l2"><a class="reference internal" href="running_single_hms.html">Running Single Stars with POSYDON</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -125,21 +129,24 @@
 <p>You can use POSYDON framework to run your own, customized MESA simulations of single and binary systems. Here we will go through POSYDON’s dedicated MESA configuration repository and infrastructure for one or even big grids of MESA runs.</p>
 <section id="getting-started-tutorials">
 <h2>Getting Started Tutorials<a class="headerlink" href="#getting-started-tutorials" title="Link to this heading"></a></h2>
-<p>The POSYDON MESA simulation parameters are stored in <a class="reference external" href="https://github.com/POSYDON-code/POSYDON-MESA-INLISTS">POSYDON-MESA-INLISTS</a> GitHub submodule. To obtain the submodule, clone the POSYDON repository with the following command in your terminal:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$PATH_TO_POSYDON</span>
-git<span class="w"> </span>submodule<span class="w"> </span>init
-git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>grid_params/POSYDON-MESA-INLISTS/
+<p>The POSYDON MESA simulation parameters are stored in <a class="reference external" href="https://github.com/POSYDON-code/POSYDON-MESA-INLISTS">POSYDON-MESA-INLISTS</a> Github repository.
+To get the latest version of the POSYDON-MESA-INLISTS repository, you need to clone the POSYDON-MESA-INLISTS repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/POSYDON-code/POSYDON-MESA-INLISTS.git
+<span class="nb">cd</span><span class="w"> </span>POSYDON-MESA-INLISTS
 </pre></div>
 </div>
-<p>Similarly to the POSYDON code repository, there is a <cite>main</cite> branch that points to the latest stable version of the POSYDON-MESA-INLISTS repository associated to a POSYDON code release and a <cite>development</cite> branch that contains the latest stable version of our fiducial MESA configurations, run the following command to get the lates development version of the sumodule:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>grid_params/POSYDON-MESA-INLISTS/
-git<span class="w"> </span>checkout<span class="w"> </span>development
-</pre></div>
+<p>This repository contains the MESA inlists used by POSYDON to run single and binary star simulations.
+At the time of writing, the POSYDON v2.0.0 code is compatible with MESA r11701 and the inlists are formatted as such.
+Additionally, multiple changes were made to the MESA source code to fix bugs, including reverse mass transfer in binaries (where the secondary star fills its Roche lobe).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please contact us if you want to run MESA grids with this adapted version of MESA.</p>
 </div>
+<p>Each branch and commit in the  POSYDON-MESA-INLISTS repository contains a specific set of MESA inlists associated to a POSYDON rerun.</p>
 <p>To follow the next step of the tutorial, you will need to have a MESA version compatible with POSYDON installed on your machine. If you do not have MESA installed, please follow the instructions on the <a class="reference external" href="https://docs.mesastar.org/en/release-r23.05.1/">MESA website</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The POSYDON v2.0.0 code is compatible with MESA r11701. Support might not be available for the latest MacOS version.</p>
+<p>The POSYDON v2.0.0 code is compatible with MESA r11701 inlists. Support might not be available for the latest MacOS version.</p>
 </div>
 <section id="i-running-your-first-mesa-simulation-using-posydon">
 <h3>I. Running your first MESA simulation using POSYDON<a class="headerlink" href="#i-running-your-first-mesa-simulation-using-posydon" title="Link to this heading"></a></h3>
@@ -242,7 +249,7 @@ git<span class="w"> </span>checkout<span class="w"> </span>development
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

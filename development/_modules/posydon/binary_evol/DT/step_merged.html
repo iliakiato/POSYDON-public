@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.DT.step_merged &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.binary_evol.DT.step_merged &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -125,18 +129,20 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">PATH_TO_POSYDON_DATA</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.singlestar</span><span class="w"> </span><span class="kn">import</span> <span class="n">STARPROPERTIES</span><span class="p">,</span> <span class="n">convert_star_to_massless_remnant</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_state_of_star</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.DT.step_isolated</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsolatedStep</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonerror</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelError</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.flow_chart</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">STAR_STATES_H_RICH</span><span class="p">,</span>
     <span class="n">STAR_STATES_HE_RICH</span><span class="p">,</span>
-    <span class="n">STAR_STATES_NOT_CO</span>
-    <span class="p">)</span>
+    <span class="n">STAR_STATES_NOT_CO</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.singlestar</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">STARPROPERTIES</span><span class="p">,</span>
+    <span class="n">convert_star_to_massless_remnant</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">PATH_TO_POSYDON_DATA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_state_of_star</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonerror</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
 
 <span class="n">LIST_ACCEPTABLE_STATES_FOR_HMS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;H-rich_Core_H_burning&quot;</span><span class="p">]</span>
 <span class="n">LIST_ACCEPTABLE_STATES_FOR_HeMS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;stripped_He_Core_He_burning&quot;</span><span class="p">]</span>
@@ -214,7 +220,7 @@
                   <span class="s2">&quot;star_2.surface_he4: &quot;</span><span class="p">,</span> <span class="n">binary</span><span class="o">.</span><span class="n">star_1</span><span class="o">.</span><span class="n">center_he4</span><span class="p">,</span>
                   <span class="n">binary</span><span class="o">.</span><span class="n">star_2</span><span class="o">.</span><span class="n">center_he4</span><span class="p">,</span> <span class="n">binary</span><span class="o">.</span><span class="n">star_1</span><span class="o">.</span><span class="n">surface_he4</span><span class="p">,</span>
                   <span class="n">binary</span><span class="o">.</span><span class="n">star_2</span><span class="o">.</span><span class="n">surface_he4</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="n">binary</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;merged&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">binary</span><span class="o">.</span><span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;oMerging1&#39;</span><span class="p">:</span>
                 <span class="n">binary</span><span class="o">.</span><span class="n">star_1</span><span class="p">,</span> <span class="n">binary</span><span class="o">.</span><span class="n">star_2</span> <span class="o">=</span> <span class="n">merged_star_properties</span><span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">star_1</span><span class="p">,</span> <span class="n">binary</span><span class="o">.</span><span class="n">star_2</span><span class="p">)</span>
@@ -223,7 +229,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;binary.state=&#39;merged&#39; but binary.event != &#39;oMerging1/2&#39;&quot;</span><span class="p">)</span>
 
-        <span class="c1">## assume that binaries in RLO with two He-rich stars always merge   </span>
+        <span class="c1">## assume that binaries in RLO with two He-rich stars always merge</span>
         <span class="k">elif</span> <span class="n">binary</span><span class="o">.</span><span class="n">star_1</span><span class="o">.</span><span class="n">state</span> <span class="ow">in</span> <span class="n">STAR_STATES_HE_RICH</span> <span class="ow">and</span> <span class="n">binary</span><span class="o">.</span><span class="n">star_2</span><span class="o">.</span><span class="n">state</span> <span class="ow">in</span> <span class="n">STAR_STATES_HE_RICH</span><span class="p">:</span>
             <span class="n">binary</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;merged&quot;</span>
             <span class="k">if</span> <span class="n">binary</span><span class="o">.</span><span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;oRLO1&#39;</span><span class="p">:</span>
@@ -347,7 +353,7 @@
         <span class="c1"># as above but opposite stars</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">s1</span> <span class="ow">in</span> <span class="n">LIST_ACCEPTABLE_STATES_FOR_HMS</span>
             <span class="ow">and</span> <span class="n">s2</span> <span class="ow">in</span> <span class="n">LIST_ACCEPTABLE_STATES_FOR_POSTMS</span><span class="p">):</span>
-            
+
                 <span class="n">merged_star</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="n">star_base</span><span class="o">.</span><span class="n">mass</span> <span class="o">+</span> <span class="n">comp</span><span class="o">.</span><span class="n">mass</span>
 
                 <span class="n">merged_star</span><span class="o">.</span><span class="n">surface_h1</span> <span class="o">=</span> <span class="n">mass_weighted_avg</span><span class="p">(</span><span class="n">abundance_name</span> <span class="o">=</span> <span class="s2">&quot;surface_h1&quot;</span><span class="p">,</span> <span class="n">mass_weight2</span><span class="o">=</span><span class="s2">&quot;H-rich_envelope_mass&quot;</span><span class="p">,</span> <span class="n">mass_weight1</span><span class="o">=</span><span class="s2">&quot;mass&quot;</span><span class="p">)</span>
@@ -484,7 +490,7 @@
                         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span> <span class="s2">&quot;c12_c12&quot;</span><span class="p">,</span> <span class="s2">&quot;center_gamma&quot;</span><span class="p">,</span>
                                    <span class="s2">&quot;avg_c_in_c_core&quot;</span><span class="p">,</span> <span class="s2">&quot;total_moment_of_inertia&quot;</span><span class="p">,</span> <span class="s2">&quot;spin&quot;</span><span class="p">]:</span>
                             <span class="nb">setattr</span><span class="p">(</span><span class="n">merged_star</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-                            
+
                 <span class="n">merged_star</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">check_state_of_star</span><span class="p">(</span><span class="n">merged_star</span><span class="p">,</span> <span class="n">star_CO</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># TODO for sure this needs testing!</span>
                 <span class="n">massless_remnant</span> <span class="o">=</span> <span class="n">convert_star_to_massless_remnant</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
 
@@ -699,7 +705,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.utils.posydonwarning &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.utils.posydonwarning &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -145,7 +149,7 @@
     <span class="s2">&quot;Monica Gallegos-Garcia &lt;monicagallegosgarcia@u.northwestern.edu&gt;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Camille Liotine &lt;cliotine@u.northwestern.edu&gt;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Matthias Kruckow &lt;Matthias.Kruckow@unige.ch&gt;&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Seth Gossage &lt;seth.gossage@northwestern.edu&gt;&quot;</span>   
+    <span class="s2">&quot;Seth Gossage &lt;seth.gossage@northwestern.edu&gt;&quot;</span>
 <span class="p">]</span>
 
 
@@ -173,7 +177,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;General POSYDON warning class.&quot;&quot;&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">)</span></div>
 
@@ -210,7 +214,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="InappropriateValueWarning">
 <a class="viewcode-back" href="../../../api_reference/posydon.utils.html#posydon.utils.posydonwarning.InappropriateValueWarning">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">InappropriateValueWarning</span><span class="p">(</span><span class="n">POSYDONWarning</span><span class="p">):</span>
@@ -266,7 +270,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="SFHModelWarning">
 <a class="viewcode-back" href="../../../api_reference/posydon.utils.html#posydon.utils.posydonwarning.SFHModelWarning">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SFHModelWarning</span><span class="p">(</span><span class="n">POSYDONWarning</span><span class="p">):</span>
@@ -274,7 +278,15 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-        
+
+<div class="viewcode-block" id="DeprecationWarning">
+<a class="viewcode-back" href="../../../api_reference/posydon.utils.html#posydon.utils.posydonwarning.DeprecationWarning">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DeprecationWarning</span><span class="p">(</span><span class="n">POSYDONWarning</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Warnings related to deprecated features.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="ValueWarning">
 <a class="viewcode-back" href="../../../api_reference/posydon.utils.html#posydon.utils.posydonwarning.ValueWarning">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ValueWarning</span><span class="p">(</span><span class="n">POSYDONWarning</span><span class="p">):</span>
@@ -290,7 +302,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="StepWarning">
 <a class="viewcode-back" href="../../../api_reference/posydon.utils.html#posydon.utils.posydonwarning.StepWarning">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StepWarning</span><span class="p">(</span><span class="n">POSYDONWarning</span><span class="p">):</span>
@@ -502,7 +514,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filter_first must be a boolean.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;registry must be a dictionary.&quot;</span><span class="p">)</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the status of the object as a string.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">:</span>
@@ -603,7 +615,7 @@
                 <span class="c1"># Issue warning</span>
                 <span class="n">new_warning</span><span class="p">[</span><span class="s2">&quot;stacklevel&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">2</span>
                 <span class="n">_issue_warn</span><span class="p">(</span><span class="n">new_warning</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="p">)</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Destructor of the object. It will issue still recorded warnings.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">caught_warnings</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
@@ -616,11 +628,11 @@
                     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="o">**</span><span class="n">w</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">_issue_warn</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="p">)</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="nf">got_called</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns, whether the object got called.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_got_called</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="nf">has_records</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks whether there are records of caught warnings.</span>
 
@@ -629,7 +641,7 @@
 <span class="sd">        True if there are recorded warnings otherwise False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">caught_warnings</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="nf">get_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">empty_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get caught warnings.</span>
 
@@ -646,7 +658,7 @@
         <span class="k">if</span> <span class="n">empty_cache</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reset_cache</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">cache</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="nf">reset_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Resets the caught warnings.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">caught_warnings</span> <span class="o">=</span> <span class="p">[]</span>
@@ -710,7 +722,7 @@
             <span class="c1"># enter catch of python as well (should be done last)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">python_catch</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">_CAUGHT_POSYDON_WARNINGS</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_traceback</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Disable catching.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">python_catch</span><span class="p">,</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">):</span>
@@ -832,7 +844,7 @@
 <span class="c1"># SyntaxWarning: Base category for warnings about dubious syntactic features.</span>
 <span class="c1"># UnicodeWarning: Base category for warnings related to Unicode.</span>
 <span class="c1"># UserWarning: The default category for warn().</span>
-<span class="c1"># </span>
+<span class="c1">#</span>
 <span class="c1"># for more details see https://docs.python.org/3/library/exceptions.html#warnings</span>
 <span class="c1"># and https://docs.python.org/3/library/warnings.html</span>
 <span class="c1"># https://github.com/python/cpython/blob/3.11/Lib/warnings.py</span>
@@ -857,7 +869,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

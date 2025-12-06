@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>Index &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9430f4b5" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=0a757c66"></script>
+      <script src="_static/documentation_options.js?v=9afea0b4"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -163,6 +167,8 @@
 </li>
       <li><a href="api_reference/posydon.visualization.html#posydon.visualization.plot2D.plot2D.add_properties_to_initial_values">add_properties_to_initial_values() (posydon.visualization.plot2D.plot2D method)</a>
 </li>
+      <li><a href="api_reference/posydon.binary_evol.CE.html#posydon.binary_evol.CE.step_CEE.StepCEE.adjust_secondary_radius">adjust_secondary_radius() (posydon.binary_evol.CE.step_CEE.StepCEE method)</a>
+</li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.posydonwarning.AllPOSYDONWarnings">AllPOSYDONWarnings() (in module posydon.utils.posydonwarning)</a>
 </li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.IMFs.Salpeter.alpha">alpha (posydon.popsyn.IMFs.Salpeter attribute)</a>
@@ -182,6 +188,8 @@
       <li><a href="api_reference/posydon.active_learning.psy_cris.synthetic_data.html#posydon.active_learning.psy_cris.synthetic_data.synth_data_3D.analytic_classification_3D">analytic_classification_3D() (in module posydon.active_learning.psy_cris.synthetic_data.synth_data_3D)</a>
 </li>
       <li><a href="api_reference/posydon.active_learning.psy_cris.synthetic_data.html#posydon.active_learning.psy_cris.synthetic_data.synth_data_3D.analytic_regression_3D">analytic_regression_3D() (in module posydon.active_learning.psy_cris.synthetic_data.synth_data_3D)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.analyze_missing_batch_logs">analyze_missing_batch_logs() (in module posydon.CLI.popsyn.check)</a>
 </li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.binarypopulation.PopulationManager.append">append() (posydon.popsyn.binarypopulation.PopulationManager method)</a>
 </li>
@@ -341,9 +349,9 @@
 </li>
       <li><a href="api_reference/posydon.binary_evol.SN.html#posydon.binary_evol.SN.step_SN.StepSN.check">check() (posydon.binary_evol.SN.step_SN.StepSN method)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.check_batches">check_batches() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.check_batch">check_batch() (in module posydon.CLI.popsyn.check)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.check_binary_counts">check_binary_counts() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.check_binary_counts">check_binary_counts() (in module posydon.CLI.popsyn.check)</a>
 </li>
       <li><a href="api_reference/posydon.active_learning.psy_cris.html#posydon.active_learning.psy_cris.utils.check_dist">check_dist() (in module posydon.active_learning.psy_cris.utils)</a>
 </li>
@@ -351,13 +359,15 @@
 </li>
       <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.constraints.check_order_of_constraints">check_order_of_constraints() (in module posydon.interpolation.constraints)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.check_popsyn_function">check_popsyn_function() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.check_popsyn_function">check_popsyn_function() (in module posydon.CLI.popsyn.check)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.check_population_files">check_population_files() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.check_population_files">check_population_files() (in module posydon.CLI.popsyn.check)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.check_run_status">check_run_status() (in module posydon.CLI.popsyn.check)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.SN.html#posydon.binary_evol.SN.step_SN.check_SN_CO_match">check_SN_CO_match() (in module posydon.binary_evol.SN.step_SN)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.check_SN_MODEL_validity">check_SN_MODEL_validity() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.setup.check_SN_MODEL_validity">check_SN_MODEL_validity() (in module posydon.CLI.popsyn.setup)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.SN.html#posydon.binary_evol.SN.step_SN.StepSN.check_SN_type">check_SN_type() (posydon.binary_evol.SN.step_SN.StepSN method)</a>
 </li>
@@ -407,11 +417,9 @@
         <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizercolumn.clear">(posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizercolumn method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.binarypopulation.PopulationManager.clear_dfs">clear_dfs() (posydon.popsyn.binarypopulation.PopulationManager method)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.clear_previous_lines">clear_previous_lines() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.clear_previous_lines">clear_previous_lines() (in module posydon.CLI.io)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.MESA.html#posydon.binary_evol.MESA.step_mesa.MesaGridStep.close">close() (posydon.binary_evol.MESA.step_mesa.MesaGridStep method)</a>
 
@@ -429,6 +437,8 @@
         <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.Presenter.Presenter.close">(posydon.visualization.VH_diagram.Presenter.Presenter method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.MainWindow.MainWindow.closeEvent">closeEvent() (posydon.visualization.VH_diagram.MainWindow.MainWindow method)</a>
 </li>
       <li><a href="api_reference/posydon.active_learning.psy_cris.synthetic_data.html#posydon.active_learning.psy_cris.synthetic_data.synth_data_2D.cls_curve">cls_curve() (in module posydon.active_learning.psy_cris.synthetic_data.synth_data_2D)</a>
@@ -516,6 +526,12 @@
 </li>
       <li><a href="api_reference/posydon.grids.html#posydon.grids.psygrid.PSyGrid.create">create() (posydon.grids.psygrid.PSyGrid method)</a>
 </li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_bash_submit_rescue_script">create_bash_submit_rescue_script() (in module posydon.CLI.io)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_bash_submit_script">create_bash_submit_script() (in module posydon.CLI.io)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_batch_rescue_script">create_batch_rescue_script() (in module posydon.CLI.io)</a>
+</li>
       <li><a href="api_reference/posydon_run_grid.html#posydon_run_grid.create_binary_inlists">create_binary_inlists() (in module posydon_run_grid)</a>
 </li>
       <li><a href="api_reference/posydon_setup_pipeline.html#posydon_setup_pipeline.create_cleanup_slurm_job">create_cleanup_slurm_job() (in module posydon_setup_pipeline)</a>
@@ -528,17 +544,23 @@
 </li>
       <li><a href="api_reference/posydon_setup_pipeline.html#posydon_setup_pipeline.PostProcessingPipeline.create_log_dirs">create_log_dirs() (posydon_setup_pipeline.PostProcessingPipeline method)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.create_merge_script">create_merge_script() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_merge_script">create_merge_script() (in module posydon.CLI.io)</a>
 </li>
-      <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.io.create_merge_script_text">create_merge_script_text() (in module posydon.popsyn.io)</a>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_merge_script_text">create_merge_script_text() (in module posydon.CLI.io)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.create_run_script">create_run_script() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_python_scripts">create_python_scripts() (in module posydon.CLI.io)</a>
 </li>
-      <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.io.create_run_script_text">create_run_script_text() (in module posydon.popsyn.io)</a>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_run_script">create_run_script() (in module posydon.CLI.io)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.create_slurm_merge">create_slurm_merge() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_run_script_text">create_run_script_text() (in module posydon.CLI.io)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.create_slurm_submit">create_slurm_submit() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_slurm_array">create_slurm_array() (in module posydon.CLI.io)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_slurm_merge">create_slurm_merge() (in module posydon.CLI.io)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_slurm_rescue">create_slurm_rescue() (in module posydon.CLI.io)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.create_slurm_scripts">create_slurm_scripts() (in module posydon.CLI.io)</a>
 </li>
       <li><a href="api_reference/posydon_run_grid.html#posydon_run_grid.create_star_formation">create_star_formation() (in module posydon_run_grid)</a>
 </li>
@@ -588,8 +610,6 @@
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.gravitational_radiation.html#posydon.binary_evol.DT.gravitational_radiation.default_gravrad.default_gravrad">default_gravrad() (in module posydon.binary_evol.DT.gravitational_radiation.default_gravrad)</a>
 </li>
-      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.key_library.DEFAULT_PROFILE_KEYS">DEFAULT_PROFILE_KEYS (in module posydon.binary_evol.DT.key_library)</a>
-</li>
       <li><a href="api_reference/posydon.binary_evol.DT.winds.html#posydon.binary_evol.DT.winds.default_winds.default_sep_from_winds">default_sep_from_winds() (in module posydon.binary_evol.DT.winds.default_winds)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.winds.html#posydon.binary_evol.DT.winds.default_winds.default_spin_from_winds">default_spin_from_winds() (in module posydon.binary_evol.DT.winds.default_winds)</a>
@@ -602,6 +622,8 @@
         <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.IF_interpolation.Scaler.denormalize">(posydon.interpolation.IF_interpolation.Scaler method)</a>
 </li>
       </ul></li>
+      <li><a href="api_reference/posydon.utils.html#posydon.utils.posydonwarning.DeprecationWarning">DeprecationWarning</a>
+</li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_evolution">detached_evolution (class in posydon.binary_evol.DT.step_detached)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_step">detached_step (class in posydon.binary_evol.DT.step_detached)</a>
@@ -628,10 +650,10 @@
 </li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.GraphVisualizer.StateInfos.distance">distance (posydon.visualization.VH_diagram.GraphVisualizer.StateInfos attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.OptionsWindow.OptionsWindow.distance_representation_required">distance_representation_required (posydon.visualization.VH_diagram.OptionsWindow.OptionsWindow attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.MainWindow.VisualizerInterface.distance_representation_required">distance_representation_required() (posydon.visualization.VH_diagram.MainWindow.VisualizerInterface method)</a>
 </li>
       <li><a href="api_reference/posydon_run_pipeline.html#posydon_run_pipeline.do_check">do_check() (in module posydon_run_pipeline)</a>
@@ -661,6 +683,8 @@
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_step.do_tides">do_tides (posydon.binary_evol.DT.step_detached.detached_step attribute)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_step.do_wind_loss">do_wind_loss (posydon.binary_evol.DT.step_detached.detached_step attribute)</a>
+</li>
+      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.double_CO.double_CO_evolution">double_CO_evolution (class in posydon.binary_evol.DT.double_CO)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.double_CO.DoubleCO">DoubleCO (class in posydon.binary_evol.DT.double_CO)</a>
 </li>
@@ -706,9 +730,13 @@
       </ul></li>
       <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.eep.EEP">EEP (class in posydon.interpolation.eep)</a>
 </li>
+      <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.transient_select_funcs.effective_precession">effective_precession() (in module posydon.popsyn.transient_select_funcs)</a>
+</li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.TransientPopulation.efficiency">efficiency() (posydon.popsyn.synthetic_population.TransientPopulation method)</a>
 </li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.Presenter.equal_with_epsilon">equal_with_epsilon() (in module posydon.visualization.VH_diagram.Presenter)</a>
+</li>
+      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.double_CO.double_CO_evolution.ev_contact">ev_contact() (posydon.binary_evol.DT.double_CO.double_CO_evolution method)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_evolution.ev_max_time1">ev_max_time1() (posydon.binary_evol.DT.step_detached.detached_evolution method)</a>
 </li>
@@ -722,6 +750,8 @@
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_evolution.ev_rlo2">ev_rlo2() (posydon.binary_evol.DT.step_detached.detached_evolution method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.IF_interpolation.BaseIFInterpolator.evaluate">evaluate() (posydon.interpolation.IF_interpolation.BaseIFInterpolator method)</a>
 
       <ul>
@@ -730,8 +760,6 @@
         <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.interpolation.psyTrackInterp.evaluate">(posydon.interpolation.interpolation.psyTrackInterp method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.IF_interpolation.BaseIFInterpolator.evaluate_mat">evaluate_mat() (posydon.interpolation.IF_interpolation.BaseIFInterpolator method)</a>
 </li>
       <li><a href="api_reference/posydon.visualization.html#posydon.visualization.interpolation.EvaluateIFInterpolator">EvaluateIFInterpolator (class in posydon.visualization.interpolation)</a>
@@ -789,6 +817,8 @@
       <li><a href="api_reference/posydon.utils.html#posydon.utils.gridutils.find_index_nearest_neighbour">find_index_nearest_neighbour() (in module posydon.utils.gridutils)</a>
 </li>
       <li><a href="api_reference/posydon_setup_grid.html#posydon_setup_grid.find_inlist_from_scenario">find_inlist_from_scenario() (in module posydon_setup_grid)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.find_missing_batch_indices">find_missing_batch_indices() (in module posydon.CLI.popsyn.check)</a>
 </li>
       <li><a href="api_reference/posydon.active_learning.psy_cris.html#posydon.active_learning.psy_cris.data.TableData.find_n_neighbors">find_n_neighbors() (posydon.active_learning.psy_cris.data.TableData method)</a>
 </li>
@@ -906,8 +936,6 @@
 </li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.independent_sample.generate_primary_masses">generate_primary_masses() (in module posydon.popsyn.independent_sample)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.generate_rescue_script">generate_rescue_script() (in module posydon_popsyn)</a>
-</li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.independent_sample.generate_secondary_masses">generate_secondary_masses() (in module posydon.popsyn.independent_sample)</a>
 </li>
       <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.interpolation.GRIDInterpolator.get">get() (posydon.interpolation.interpolation.GRIDInterpolator method)</a>
@@ -932,13 +960,15 @@
         <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizerState.get_attach_point_top">(posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizerState method)</a>
 </li>
       </ul></li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.get_batches_status">get_batches_status() (in module posydon.CLI.popsyn.check)</a>
+</li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.binarypopulation.BinaryGenerator.get_binary_by_iter">get_binary_by_iter() (posydon.popsyn.binarypopulation.BinaryGenerator method)</a>
 </li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.norm_pop.get_binary_fraction_pdf">get_binary_fraction_pdf() (in module posydon.popsyn.norm_pop)</a>
 </li>
       <li><a href="api_reference/posydon.active_learning.psy_cris.html#posydon.active_learning.psy_cris.data.TableData.get_binary_mapping_per_class">get_binary_mapping_per_class() (posydon.active_learning.psy_cris.data.TableData method)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.get_binary_params">get_binary_params() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.get_binary_params">get_binary_params() (in module posydon.CLI.popsyn.check)</a>
 </li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.common_functions.get_binary_state_and_event_and_mt_case">get_binary_state_and_event_and_mt_case() (in module posydon.utils.common_functions)</a>
 </li>
@@ -980,6 +1010,8 @@
 </li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.Presenter.get_event_state_filename">get_event_state_filename() (in module posydon.visualization.VH_diagram.Presenter)</a>
 </li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.get_expected_batch_count">get_expected_batch_count() (in module posydon.CLI.popsyn.check)</a>
+</li>
       <li><a href="api_reference/posydon.binary_evol.MESA.html#posydon.binary_evol.MESA.step_mesa.MesaGridStep.get_final_MESA_step_time">get_final_MESA_step_time() (posydon.binary_evol.MESA.step_mesa.MesaGridStep method)</a>
 </li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.gridutils.get_final_proposed_points">get_final_proposed_points() (in module posydon.utils.gridutils)</a>
@@ -1008,7 +1040,7 @@
 </li>
       <li><a href="api_reference/posydon.active_learning.psy_cris.html#posydon.active_learning.psy_cris.data.TableData.get_info">get_info() (posydon.active_learning.psy_cris.data.TableData method)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.get_ini_file">get_ini_file() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.get_ini_file">get_ini_file() (in module posydon.CLI.popsyn.check)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.SN.html#posydon.binary_evol.SN.profile_collapse.get_initial_BH_properties">get_initial_BH_properties() (in module posydon.binary_evol.SN.profile_collapse)</a>
 </li>
@@ -1032,10 +1064,10 @@
 </li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.Presenter.get_max_distance">get_max_distance() (in module posydon.visualization.VH_diagram.Presenter)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.norm_pop.get_mean_mass">get_mean_mass() (in module posydon.popsyn.norm_pop)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.ParseDataFrame.ParseDataFrame.get_most_numpy">get_most_numpy() (posydon.visualization.VH_diagram.ParseDataFrame.ParseDataFrame method)</a>
 </li>
       <li><a href="api_reference/posydon.grids.html#posydon.grids.termination_flags.get_nearest_known_initial_RLO">get_nearest_known_initial_RLO() (in module posydon.grids.termination_flags)</a>
@@ -1107,6 +1139,8 @@
       </ul></li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.track_match.TrackMatcher.get_root0">get_root0() (posydon.binary_evol.DT.track_match.TrackMatcher method)</a>
 </li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.get_run_configuration">get_run_configuration() (in module posydon.CLI.popsyn.check)</a>
+</li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.sample_from_file.get_samples_from_file">get_samples_from_file() (in module posydon.popsyn.sample_from_file)</a>
 </li>
       <li><a href="api_reference/posydon.active_learning.psy_cris.html#posydon.active_learning.psy_cris.sample.Sampler.get_saved_chain_step_history">get_saved_chain_step_history() (posydon.active_learning.psy_cris.sample.Sampler method)</a>
@@ -1145,13 +1179,13 @@
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.track_match.TrackMatcher.get_track_val">get_track_val() (posydon.binary_evol.DT.track_match.TrackMatcher method)</a>
 </li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.get_user_confirmation">get_user_confirmation() (in module posydon.CLI.popsyn.check)</a>
+</li>
       <li><a href="api_reference/posydon.visualization.html#posydon.visualization.plot2D.plot2D.get_x_var">get_x_var() (posydon.visualization.plot2D.plot2D method)</a>
 </li>
       <li><a href="api_reference/posydon.visualization.html#posydon.visualization.plot2D.plot2D.get_y_var">get_y_var() (posydon.visualization.plot2D.plot2D method)</a>
 </li>
       <li><a href="api_reference/posydon.visualization.html#posydon.visualization.plot2D.plot2D.get_z_var">get_z_var() (posydon.visualization.plot2D.plot2D method)</a>
-</li>
-      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.double_CO.gr">gr() (in module posydon.binary_evol.DT.double_CO)</a>
 </li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizer">GraphVisualizer (class in posydon.visualization.VH_diagram.GraphVisualizer)</a>
 </li>
@@ -1171,8 +1205,12 @@
 </li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizerTimeline">GraphVisualizerTimeline (class in posydon.visualization.VH_diagram.GraphVisualizer)</a>
 </li>
-      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_evolution.gravitational_radiation">gravitational_radiation() (posydon.binary_evol.DT.step_detached.detached_evolution method)</a>
+      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.double_CO.double_CO_evolution.gravitational_radiation">gravitational_radiation() (posydon.binary_evol.DT.double_CO.double_CO_evolution method)</a>
+
+      <ul>
+        <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_evolution.gravitational_radiation">(posydon.binary_evol.DT.step_detached.detached_evolution method)</a>
 </li>
+      </ul></li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.transient_select_funcs.GRB_selection">GRB_selection() (in module posydon.popsyn.transient_select_funcs)</a>
 </li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.posydonerror.GridError">GridError</a>
@@ -1187,6 +1225,8 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.handle_batches_complete">handle_batches_complete() (in module posydon.CLI.popsyn.check)</a>
+</li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.common_functions.He_MS_lifetime">He_MS_lifetime() (in module posydon.utils.common_functions)</a>
 </li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.DFInterface.head">head() (posydon.popsyn.synthetic_population.DFInterface method)</a>
@@ -1199,10 +1239,10 @@
       </ul></li>
       <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.IF_interpolation.heatmap">heatmap() (in module posydon.interpolation.IF_interpolation)</a>
 </li>
-      <li><a href="api_reference/posydon.utils.html#posydon.utils.common_functions.histogram_sampler">histogram_sampler() (in module posydon.utils.common_functions)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference/posydon.utils.html#posydon.utils.common_functions.histogram_sampler">histogram_sampler() (in module posydon.utils.common_functions)</a>
+</li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.History">History (class in posydon.popsyn.synthetic_population)</a>
 </li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.Population.history">history (posydon.popsyn.synthetic_population.Population attribute)</a>
@@ -1361,10 +1401,14 @@
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_step.KEYS">KEYS (posydon.binary_evol.DT.step_detached.detached_step attribute)</a>
 </li>
+      <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.interpolation.GRIDInterpolator.keys">keys (posydon.interpolation.interpolation.GRIDInterpolator attribute)</a>
+
+      <ul>
+        <li><a href="api_reference/posydon.utils.html#posydon.utils.interpolators.SingleStarInterpolator.keys">(posydon.utils.interpolators.SingleStarInterpolator property)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference/posydon.interpolation.html#posydon.interpolation.interpolation.GRIDInterpolator.keys">keys (posydon.interpolation.interpolation.GRIDInterpolator attribute)</a>
-</li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.configfile.ConfigFile.keys">keys() (posydon.utils.configfile.ConfigFile method)</a>
 
       <ul>
@@ -1637,6 +1681,16 @@
 </li>
         <li><a href="api_reference/posydon.binary_evol.html#module-posydon.binary_evol.step_end">posydon.binary_evol.step_end</a>
 </li>
+        <li><a href="api_reference/posydon.CLI.html#module-posydon.CLI">posydon.CLI</a>
+</li>
+        <li><a href="api_reference/posydon.CLI.html#module-posydon.CLI.io">posydon.CLI.io</a>
+</li>
+        <li><a href="api_reference/posydon.CLI.popsyn.html#module-posydon.CLI.popsyn">posydon.CLI.popsyn</a>
+</li>
+        <li><a href="api_reference/posydon.CLI.popsyn.html#module-posydon.CLI.popsyn.check">posydon.CLI.popsyn.check</a>
+</li>
+        <li><a href="api_reference/posydon.CLI.popsyn.html#module-posydon.CLI.popsyn.setup">posydon.CLI.popsyn.setup</a>
+</li>
         <li><a href="api_reference/posydon.grids.html#module-posydon.grids">posydon.grids</a>
 </li>
         <li><a href="api_reference/posydon.grids.html#module-posydon.grids.downsampling">posydon.grids.downsampling</a>
@@ -1899,8 +1953,6 @@
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.Presenter.Presenter.PATH_TO_SCREENS">PATH_TO_SCREENS (posydon.visualization.VH_diagram.Presenter.Presenter attribute)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.SN.html#posydon.binary_evol.SN.step_SN.StepSN.Patton20_corecollapse">Patton20_corecollapse() (posydon.binary_evol.SN.step_SN.StepSN method)</a>
-</li>
-      <li><a href="api_reference/posydon.utils.html#posydon.utils.interpolators.PchipInterpolator2">PchipInterpolator2 (class in posydon.utils.interpolators)</a>
 </li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.distributions.FlatMassRatio.pdf">pdf() (posydon.popsyn.distributions.FlatMassRatio method)</a>
 
@@ -2336,6 +2388,41 @@
 </li>
       </ul></li>
       <li>
+    posydon.CLI
+
+      <ul>
+        <li><a href="api_reference/posydon.CLI.html#module-posydon.CLI">module</a>
+</li>
+      </ul></li>
+      <li>
+    posydon.CLI.io
+
+      <ul>
+        <li><a href="api_reference/posydon.CLI.html#module-posydon.CLI.io">module</a>
+</li>
+      </ul></li>
+      <li>
+    posydon.CLI.popsyn
+
+      <ul>
+        <li><a href="api_reference/posydon.CLI.popsyn.html#module-posydon.CLI.popsyn">module</a>
+</li>
+      </ul></li>
+      <li>
+    posydon.CLI.popsyn.check
+
+      <ul>
+        <li><a href="api_reference/posydon.CLI.popsyn.html#module-posydon.CLI.popsyn.check">module</a>
+</li>
+      </ul></li>
+      <li>
+    posydon.CLI.popsyn.setup
+
+      <ul>
+        <li><a href="api_reference/posydon.CLI.popsyn.html#module-posydon.CLI.popsyn.setup">module</a>
+</li>
+      </ul></li>
+      <li>
     posydon.grids
 
       <ul>
@@ -2370,6 +2457,8 @@
         <li><a href="api_reference/posydon.grids.html#module-posydon.grids.psygrid">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     posydon.grids.scrubbing
 
@@ -2377,8 +2466,6 @@
         <li><a href="api_reference/posydon.grids.html#module-posydon.grids.scrubbing">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     posydon.grids.SN_MODELS
 
@@ -2892,11 +2979,21 @@
 </li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.PresenterMode.PresenterMode">PresenterMode (class in posydon.visualization.VH_diagram.PresenterMode)</a>
 </li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.print_batch_status">print_batch_status() (in module posydon.CLI.popsyn.check)</a>
+</li>
       <li><a href="api_reference/posydon.grids.html#posydon.grids.post_processing.print_CC_quantities">print_CC_quantities() (in module posydon.grids.post_processing)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.print_error">print_error() (in module posydon.CLI.io)</a>
 </li>
       <li><a href="api_reference/posydon.grids.html#posydon.grids.io.print_meta_contents">print_meta_contents() (in module posydon.grids.io)</a>
 </li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.print_separator_line">print_separator_line() (in module posydon.CLI.io)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.print_separator_section">print_separator_section() (in module posydon.CLI.io)</a>
+</li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.posydonwarning.print_stats">print_stats() (in module posydon.utils.posydonwarning)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.html#posydon.CLI.io.print_success">print_success() (in module posydon.CLI.io)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.html#posydon.binary_evol.simulationproperties.PrintStepInfoHooks">PrintStepInfoHooks (class in posydon.binary_evol.simulationproperties)</a>
 </li>
@@ -2925,6 +3022,8 @@
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.Rates">Rates (class in posydon.popsyn.synthetic_population)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_isolated.IsolatedStep.re_erase_isolated_binary_orbit">re_erase_isolated_binary_orbit() (posydon.binary_evol.DT.step_isolated.IsolatedStep method)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.read_batch_log_file">read_batch_log_file() (in module posydon.CLI.popsyn.check)</a>
 </li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.gridutils.read_EEP_data_file">read_EEP_data_file() (in module posydon.utils.gridutils)</a>
 </li>
@@ -3084,6 +3183,8 @@
         <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.TransientPopulation.select">(posydon.popsyn.synthetic_population.TransientPopulation method)</a>
 </li>
       </ul></li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.select_job_id">select_job_id() (in module posydon.CLI.popsyn.check)</a>
+</li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.Rates.select_rate_slice">select_rate_slice() (posydon.popsyn.synthetic_population.Rates method)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_evolution.sep_from_winds">sep_from_winds() (posydon.binary_evol.DT.step_detached.detached_evolution method)</a>
@@ -3126,8 +3227,12 @@
 </li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.OptionsWindow.OptionsWindow.set_showed_mode">set_showed_mode() (posydon.visualization.VH_diagram.OptionsWindow.OptionsWindow method)</a>
 </li>
-      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_evolution.set_stars">set_stars() (posydon.binary_evol.DT.step_detached.detached_evolution method)</a>
+      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.double_CO.double_CO_evolution.set_stars">set_stars() (posydon.binary_evol.DT.double_CO.double_CO_evolution method)</a>
+
+      <ul>
+        <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_evolution.set_stars">(posydon.binary_evol.DT.step_detached.detached_evolution method)</a>
 </li>
+      </ul></li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizerPoint.set_text">set_text() (posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizerPoint method)</a>
 </li>
       <li><a href="api_reference/posydon.visualization.html#posydon.visualization.plot1D.plot1D.set_title">set_title() (posydon.visualization.plot1D.plot1D method)</a>
@@ -3178,7 +3283,7 @@
 </li>
       <li><a href="api_reference/posydon.visualization.html#posydon.visualization.plot_pop.setup_grid_slice_plotting">setup_grid_slice_plotting() (in module posydon.visualization.plot_pop)</a>
 </li>
-      <li><a href="api_reference/posydon_popsyn.html#posydon_popsyn.setup_popsyn_function">setup_popsyn_function() (in module posydon_popsyn)</a>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.setup.setup_popsyn_function">setup_popsyn_function() (in module posydon.CLI.popsyn.setup)</a>
 </li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.Rates.SFH_identifier">SFH_identifier (posydon.popsyn.synthetic_population.Rates attribute)</a>
 </li>
@@ -3210,6 +3315,8 @@
 </li>
       <li><a href="api_reference/posydon.binary_evol.html#posydon.binary_evol.singlestar.SingleStar">SingleStar (class in posydon.binary_evol.singlestar)</a>
 </li>
+      <li><a href="api_reference/posydon.utils.html#posydon.utils.interpolators.SingleStarInterpolator">SingleStarInterpolator (class in posydon.utils.interpolators)</a>
+</li>
       <li><a href="api_reference/posydon.visualization.VH_diagram.html#posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizercolumn.skip">skip() (posydon.visualization.VH_diagram.GraphVisualizer.GraphVisualizercolumn method)</a>
 </li>
       <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.distributions.Sana12Period.slope">slope (posydon.popsyn.distributions.Sana12Period attribute)</a>
@@ -3222,8 +3329,12 @@
         <li><a href="api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.PopulationRunner.solar_metallicities">(posydon.popsyn.synthetic_population.PopulationRunner attribute)</a>
 </li>
       </ul></li>
-      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_step.solve_ODEs">solve_ODEs() (posydon.binary_evol.DT.step_detached.detached_step method)</a>
+      <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.double_CO.DoubleCO.solve_ODEs">solve_ODEs() (posydon.binary_evol.DT.double_CO.DoubleCO method)</a>
+
+      <ul>
+        <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_step.solve_ODEs">(posydon.binary_evol.DT.step_detached.detached_step method)</a>
 </li>
+      </ul></li>
       <li><a href="api_reference/posydon.binary_evol.DT.html#posydon.binary_evol.DT.step_detached.detached_evolution.spin_from_winds">spin_from_winds() (posydon.binary_evol.DT.step_detached.detached_evolution method)</a>
 </li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.common_functions.spin_stable_mass_transfer">spin_stable_mass_transfer() (in module posydon.utils.common_functions)</a>
@@ -3257,6 +3368,8 @@
       <li><a href="api_reference/posydon.binary_evol.MESA.html#posydon.binary_evol.MESA.step_mesa.MesaGridStep.stop_at_condition">stop_at_condition() (posydon.binary_evol.MESA.step_mesa.MesaGridStep method)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.MESA.html#posydon.binary_evol.MESA.step_mesa.MesaGridStep.stop_at_end">stop_at_end() (posydon.binary_evol.MESA.step_mesa.MesaGridStep method)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.submit_slurm_job">submit_slurm_job() (in module posydon.CLI.popsyn.check)</a>
 </li>
       <li><a href="api_reference/posydon.binary_evol.SN.html#posydon.binary_evol.SN.step_SN.Sukhbold16_corecollapse">Sukhbold16_corecollapse (class in posydon.binary_evol.SN.step_SN)</a>
 </li>
@@ -3452,6 +3565,10 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.setup.validate_ini_file">validate_ini_file() (in module posydon.CLI.popsyn.setup)</a>
+</li>
+      <li><a href="api_reference/posydon.CLI.popsyn.html#posydon.CLI.popsyn.check.validate_run_folder">validate_run_folder() (in module posydon.CLI.popsyn.check)</a>
+</li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.configfile.ConfigFile.values">values() (posydon.utils.configfile.ConfigFile method)</a>
 </li>
       <li><a href="api_reference/posydon.utils.html#posydon.utils.posydonwarning.ValueWarning">ValueWarning</a>
@@ -3560,7 +3677,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

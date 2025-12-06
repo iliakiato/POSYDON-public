@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.simulationproperties &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.binary_evol.simulationproperties &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -128,11 +132,13 @@
 <span class="p">]</span>
 
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">age_of_universe</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">simprop_kwargs_from_ini</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">age_of_universe</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
+
 
 <div class="viewcode-block" id="NullStep">
 <a class="viewcode-back" href="../../../api_reference/posydon.binary_evol.html#posydon.binary_evol.simulationproperties.NullStep">[docs]</a>
@@ -146,14 +152,14 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">SimulationProperties</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class describing the properties of a population synthesis simulation.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="o">=</span><span class="p">({},</span> <span class="p">{}),</span> 
-                       <span class="n">step_HMS_HMS</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span> 
-                       <span class="n">step_CO_HeMS</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span> 
-                       <span class="n">step_CO_HMS_RLO</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span> 
-                       <span class="n">step_CO_HeMS_RLO</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span> 
-                       <span class="n">step_detached</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span> 
-                       <span class="n">step_disrupted</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span> 
-                       <span class="n">step_merged</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span> 
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="o">=</span><span class="p">({},</span> <span class="p">{}),</span>
+                       <span class="n">step_HMS_HMS</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
+                       <span class="n">step_CO_HeMS</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
+                       <span class="n">step_CO_HMS_RLO</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
+                       <span class="n">step_CO_HeMS_RLO</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
+                       <span class="n">step_detached</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
+                       <span class="n">step_disrupted</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
+                       <span class="n">step_merged</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
                        <span class="n">step_initially_single</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
                        <span class="n">step_dco</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
                        <span class="n">step_SN</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
@@ -195,7 +201,7 @@
 
 <span class="sd">        step_disrupted : tuple</span>
 <span class="sd">            A tuple whose first element is a DisruptedStep class handling</span>
-<span class="sd">            disrupted evolution. The second element is a dictionary of kwargs for </span>
+<span class="sd">            disrupted evolution. The second element is a dictionary of kwargs for</span>
 <span class="sd">            that step.</span>
 
 <span class="sd">        step_merged : tuple</span>
@@ -233,7 +239,7 @@
 <span class="sd">            (e.g., &#39;extra_pre_evolve&#39;, &#39;extra_pre_step&#39;, &#39;extra_post_step&#39;,</span>
 <span class="sd">            &#39;extra_post_evolve&#39;) and the corresponding function.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="c1"># gather kwargs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;flow&quot;</span><span class="p">:</span> <span class="n">flow</span><span class="p">}</span>
 
@@ -253,7 +259,7 @@
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">step_tuple</span> <span class="ow">in</span> <span class="n">step_kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
             <span class="n">step_class</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">step_tuple</span>
-            <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">step_class</span><span class="p">,</span> <span class="n">NullStep</span><span class="p">):</span> 
+            <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">step_class</span><span class="p">,</span> <span class="n">NullStep</span><span class="p">):</span>
                 <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> not provided, skipping it.&quot;</span><span class="p">,</span>
                                 <span class="s2">&quot;StepWarning&quot;</span><span class="p">)</span>
 
@@ -294,7 +300,7 @@
         <span class="c1"># for debugging purposes</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;max_n_steps_per_binary&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">max_n_steps_per_binary</span> <span class="o">=</span> <span class="mi">100</span>
-        
+
         <span class="c1"># Set functions for evolution</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">all_step_names</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1">## list of strings of all evolutionary steps</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -317,8 +323,8 @@
 
 <span class="sd">        metallicity : float</span>
 <span class="sd">            A metallicity (Z) may be provided to automatically assign</span>
-<span class="sd">            to steps as they are loaded. Should be one of e.g., 2.0, 1.0, </span>
-<span class="sd">            4.5e-1, 2e-1, 1e-1, 1e-2, 1e-3, 1e-4, corresponding to </span>
+<span class="sd">            to steps as they are loaded. Should be one of e.g., 2.0, 1.0,</span>
+<span class="sd">            4.5e-1, 2e-1, 1e-1, 1e-2, 1e-3, 1e-4, corresponding to</span>
 <span class="sd">            metallicities available in your POSYDON_DATA grids.</span>
 
 <span class="sd">        load_steps : bool</span>
@@ -338,10 +344,10 @@
         <span class="n">sim_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">sim_kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">override_sim_kwargs</span><span class="p">}</span>
 
         <span class="n">new_instance</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">sim_kwargs</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="n">load_steps</span><span class="p">:</span>
             <span class="c1"># Load the steps and required data</span>
-            <span class="n">new_instance</span><span class="o">.</span><span class="n">load_steps</span><span class="p">(</span><span class="n">metallicity</span><span class="o">=</span><span class="n">metallicity</span><span class="p">,</span> 
+            <span class="n">new_instance</span><span class="o">.</span><span class="n">load_steps</span><span class="p">(</span><span class="n">metallicity</span><span class="o">=</span><span class="n">metallicity</span><span class="p">,</span>
                                     <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">new_instance</span></div>
@@ -356,8 +362,8 @@
 <span class="sd">        ----------</span>
 <span class="sd">        metallicity : float</span>
 <span class="sd">            A metallicity (Z) may be provided to automatically assign</span>
-<span class="sd">            to steps as they are loaded. Should be one of e.g., 2.0, 1.0, </span>
-<span class="sd">            4.5e-1, 2e-1, 1e-1, 1e-2, 1e-3, 1e-4, corresponding to </span>
+<span class="sd">            to steps as they are loaded. Should be one of e.g., 2.0, 1.0,</span>
+<span class="sd">            4.5e-1, 2e-1, 1e-1, 1e-2, 1e-3, 1e-4, corresponding to</span>
 <span class="sd">            metallicities available in your POSYDON_DATA grids.</span>
 
 <span class="sd">        verbose : bool</span>
@@ -390,17 +396,17 @@
 <span class="sd">        ----------</span>
 <span class="sd">        step_name : str</span>
 
-<span class="sd">            This string is the name of the evolution step. See </span>
+<span class="sd">            This string is the name of the evolution step. See</span>
 <span class="sd">            SimulationProperties.__init__ for the full standard set.</span>
 
 <span class="sd">        step_tup : tuple</span>
-<span class="sd">            A tuple whose first element is the step class and whose </span>
+<span class="sd">            A tuple whose first element is the step class and whose</span>
 <span class="sd">            second is a dictionary representing the step&#39;s kwargs.</span>
 
 <span class="sd">        metallicity : float</span>
 <span class="sd">            A metallicity (Z) may be provided to automatically assign</span>
-<span class="sd">            to the step as it is loaded. Should be one of e.g., 2.0, 1.0, </span>
-<span class="sd">            4.5e-1, 2e-1, 1e-1, 1e-2, 1e-3, 1e-4, corresponding to </span>
+<span class="sd">            to the step as it is loaded. Should be one of e.g., 2.0, 1.0,</span>
+<span class="sd">            4.5e-1, 2e-1, 1e-1, 1e-2, 1e-3, 1e-4, corresponding to</span>
 <span class="sd">            metallicities available in your POSYDON_DATA grids.</span>
 
 <span class="sd">        from_ini : str</span>
@@ -415,7 +421,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># these steps and the flow do not require a metallicity</span>
-        <span class="n">ignore_for_met</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;flow&quot;</span><span class="p">,</span> <span class="s2">&quot;step_CE&quot;</span><span class="p">,</span> <span class="s2">&quot;step_SN&quot;</span><span class="p">,</span><span class="s2">&quot;step_dco&quot;</span><span class="p">,</span> <span class="s2">&quot;step_end&quot;</span><span class="p">]</span>
+        <span class="n">ignore_for_met</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;flow&quot;</span><span class="p">,</span> <span class="s2">&quot;step_SN&quot;</span><span class="p">,</span> <span class="s2">&quot;step_end&quot;</span><span class="p">]</span>
 
         <span class="c1"># grab kwargs from ini file for given step</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">from_ini</span><span class="p">):</span>
@@ -428,11 +434,11 @@
                 <span class="k">pass</span>
             <span class="c1"># if still None:</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">step_name</span><span class="si">}</span><span class="s2"> not assigned a metallicity. Defaulting to Z = Zsun (solar).&quot;</span><span class="p">,</span> 
+                <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">step_name</span><span class="si">}</span><span class="s2"> not assigned a metallicity. Defaulting to Z = Zsun (solar).&quot;</span><span class="p">,</span>
                         <span class="s2">&quot;MissingValueWarning&quot;</span><span class="p">)</span>
                 <span class="n">metallicity</span> <span class="o">=</span> <span class="mf">1.0</span>
 
-        <span class="c1"># This if should never trigger after __init__, unless the step is </span>
+        <span class="c1"># This if should never trigger after __init__, unless the step is</span>
         <span class="c1"># entirely new and non-standard</span>
         <span class="k">if</span> <span class="n">step_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="n">step_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">step_tup</span>
@@ -444,7 +450,17 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">step_name</span><span class="p">,</span> <span class="n">step_tup</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">step_func</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">step_tup</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_name</span><span class="p">,</span> <span class="n">step_func</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="c1"># steps like step_end do not take kwargs, so try loading with</span>
+        <span class="c1"># kwargs first, then without if that fails. This mostly matters</span>
+        <span class="c1"># if a user has re-mapped a step to one that does not take kwargs.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_name</span><span class="p">,</span> <span class="n">step_func</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error loading step </span><span class="si">{</span><span class="n">step_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;StepWarning&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading </span><span class="si">{</span><span class="n">step_name</span><span class="si">}</span><span class="s2"> without arguments.&quot;</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_name</span><span class="p">,</span> <span class="n">step_func</span><span class="p">())</span>
 
         <span class="c1"># check if all steps have been loaded</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">tup</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -459,8 +475,8 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.binary_evol.html#posydon.binary_evol.simulationproperties.SimulationProperties.close">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Close hdf5 files before exiting.&quot;&quot;&quot;</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.MESA.step_mesa</span><span class="w"> </span><span class="kn">import</span> <span class="n">MesaGridStep</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.DT.step_detached</span><span class="w"> </span><span class="kn">import</span> <span class="n">detached_step</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.MESA.step_mesa</span><span class="w"> </span><span class="kn">import</span> <span class="n">MesaGridStep</span>
         <span class="n">all_step_funcs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span>
                           <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="s1">&#39;step_&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">step_func</span> <span class="ow">in</span> <span class="n">all_step_funcs</span><span class="p">:</span>
@@ -513,7 +529,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        binary : instance of &lt;class, BinaryStar&gt;</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>   
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">hooks</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_hooks_classes</span><span class="p">:</span>
             <span class="n">hooks</span><span class="o">.</span><span class="n">pre_step</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">step_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;extra_pre_step&#39;</span><span class="p">):</span>
@@ -545,7 +561,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">binary</span><span class="o">.</span><span class="n">history_verbose</span> <span class="ow">and</span> <span class="n">binary</span><span class="o">.</span><span class="n">event</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="s2">&quot;redirect&quot;</span> <span class="ow">in</span> <span class="n">binary</span><span class="o">.</span><span class="n">event</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">binary</span>
-            
+
         <span class="k">for</span> <span class="n">hooks</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_hooks_classes</span><span class="p">:</span>
             <span class="n">hooks</span><span class="o">.</span><span class="n">post_step</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">step_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;extra_post_step&#39;</span><span class="p">):</span>
@@ -584,14 +600,14 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.binary_evol.html#posydon.binary_evol.simulationproperties.EvolveHooks">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">EvolveHooks</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for hooking into binary evolution.&quot;&quot;&quot;</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add any new output columns to the hooks constructor.</span>
-<span class="sd">        Example for extra binary columns: </span>
+<span class="sd">        Example for extra binary columns:</span>
 <span class="sd">            self.extra_binary_col_names = [&quot;column_name_1&quot;, &quot;column_name_2&quot;]</span>
-<span class="sd">        Example for extra star columns: </span>
-<span class="sd">            self.extra_star_col_names = [&quot;column_name_1&quot;, &quot;column_name_2&quot;]           </span>
+<span class="sd">        Example for extra star columns:</span>
+<span class="sd">            self.extra_star_col_names = [&quot;column_name_1&quot;, &quot;column_name_2&quot;]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
@@ -658,7 +674,7 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.binary_evol.html#posydon.binary_evol.simulationproperties.TimingHooks.post_step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">post_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">binary</span><span class="p">,</span> <span class="n">step_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Record the duration of the step.&quot;&quot;&quot;</span>
-            
+
         <span class="n">binary</span><span class="o">.</span><span class="n">step_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_start_time</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">event_history</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">step_times</span><span class="p">):</span>
@@ -715,7 +731,7 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.binary_evol.html#posydon.binary_evol.simulationproperties.StepNamesHooks.post_step">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">post_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">binary</span><span class="p">,</span> <span class="n">step_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Record the step name.&quot;&quot;&quot;</span>
-            
+
         <span class="n">binary</span><span class="o">.</span><span class="n">step_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_name</span><span class="p">)</span>
         <span class="n">len_binary_hist</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">event_history</span><span class="p">)</span>
         <span class="n">len_step_names</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">step_names</span><span class="p">)</span>
@@ -762,7 +778,6 @@
         <span class="k">return</span> <span class="n">binary</span></div>
 </div>
 
-    
 </pre></div>
 
            </div>
@@ -784,7 +799,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

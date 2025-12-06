@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.popsyn.transient_select_funcs &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.popsyn.transient_select_funcs &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -112,13 +116,15 @@
            <div itemprop="articleBody">
              
   <h1>Source code for posydon.popsyn.transient_select_funcs</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">posydon.popsyn.selection_effects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">selection_effects</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">PATH_TO_POSYDON_DATA</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
 
 <span class="c1"># This is to suppress the performance warnings from pandas</span>
@@ -132,13 +138,13 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.transient_select_funcs.GRB_selection">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">GRB_selection</span><span class="p">(</span><span class="n">history_chunk</span><span class="p">,</span> <span class="n">oneline_chunk</span><span class="p">,</span> <span class="n">formation_channels_chunk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S1_S2</span><span class="o">=</span><span class="s1">&#39;S1&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A GRB selection function to create a transient population of LGRBs.</span>
-<span class="sd">    </span>
+
 <span class="sd">    This function requires a wrapper function to be used to create a transient population, because</span>
 <span class="sd">    of the extra parameters that are needed to be passed to the function (S1_S2).</span>
-<span class="sd">    </span>
+
 <span class="sd">    &gt;&gt;&gt; def GRB_selection_wrapper(history_chunk, oneline_chunk, formation_channels_chunk=None):</span>
 <span class="sd">    ...     return GRB_selection(history_chunk, oneline_chunk, formation_channels_chunk, S1_S2=&#39;S1&#39;)</span>
-<span class="sd">        </span>
+
 <span class="sd">    This is an example function for selecting LGRBs and some of their properties.</span>
 <span class="sd">    Additional properties from the history or oneline can be added to the transient population.</span>
 <span class="sd">    The output dataframe contains the following columns:</span>
@@ -146,7 +152,7 @@
 <span class="sd">    - metallicity : the metallicity of the event</span>
 <span class="sd">    - S1_m_disk_radiated : the mass of the disk radiated by the first star</span>
 <span class="sd">    - S2_m_disk_radiated : the mass of the disk radiated by the second star</span>
-<span class="sd">    </span>
+
 <span class="sd">    Columns with pre and post SN data:</span>
 <span class="sd">    - S1_mass : the mass of the first star</span>
 <span class="sd">    - S2_mass : the mass of the second star</span>
@@ -165,22 +171,22 @@
 <span class="sd">        The formation pathway chunk of the population.</span>
 <span class="sd">    S1_S2 : str</span>
 <span class="sd">        The star that will be the progenitor of the GRB. Can be either &#39;S1&#39; or &#39;S2&#39;.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    pd.DataFrame</span>
 <span class="sd">        A DataFrame containing the transient population of LGRBs with the columns mentioned above.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    </span>
+
 <span class="sd">    &gt;&gt;&gt; GRB_selection_wrapper(pop.history[0], pop.oneline[0], pop.formation_channels.loc[0])</span>
 <span class="sd">    &gt;&gt;&gt; pop.create_transient_population(GRB_selection_wrapper, name=&#39;GRB_S1&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">columns_pre_post</span>  <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;orbital_period&#39;</span><span class="p">,</span> <span class="s1">&#39;eccentricity&#39;</span><span class="p">,</span> <span class="s1">&#39;S1_spin&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_spin&#39;</span><span class="p">]</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">oneline_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">,</span> <span class="s1">&#39;S1_m_disk_radiated&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_m_disk_radiated&#39;</span><span class="p">]</span>
-   
+
     <span class="k">if</span> <span class="n">S1_S2</span> <span class="o">==</span> <span class="s1">&#39;S1&#39;</span><span class="p">:</span>
         <span class="n">indices_selection</span> <span class="o">=</span> <span class="n">oneline_chunk</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">oneline_chunk</span><span class="p">[</span><span class="s1">&#39;S1_m_disk_radiated&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
         <span class="n">oneline_chunk</span> <span class="o">=</span> <span class="n">oneline_chunk</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;S2_m_disk_radiated&#39;</span><span class="p">])</span>
@@ -193,48 +199,48 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices_selection</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
     <span class="c1"># filter out the events that are not relevant for the LGRB formation</span>
-    <span class="n">selection</span> <span class="o">=</span> <span class="n">history_chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indices_selection</span><span class="p">]</span>    
+    <span class="n">selection</span> <span class="o">=</span> <span class="n">history_chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indices_selection</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">S1_S2</span> <span class="o">==</span> <span class="s1">&#39;S1&#39;</span><span class="p">:</span>
         <span class="n">S_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="s1">&#39;S1_state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;BH&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="s1">&#39;S1_state&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;BH&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="s1">&#39;step_names&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;step_SN&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">S1_S2</span> <span class="o">==</span> <span class="s1">&#39;S2&#39;</span><span class="p">:</span>
         <span class="n">S_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="s1">&#39;S2_state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;BH&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="s1">&#39;S2_state&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;BH&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="s1">&#39;step_names&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;step_SN&#39;</span><span class="p">)</span>
-    
+
     <span class="n">GRB_df_synthetic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">indices_selection</span><span class="p">)</span>
     <span class="c1"># Pre and post SN data</span>
     <span class="n">post_SN_hist</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="n">S_mask</span><span class="p">]</span>
     <span class="n">pre_mask</span> <span class="o">=</span> <span class="n">S_mask</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">pre_SN_hist</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="n">pre_mask</span><span class="p">]</span>
-    
+
     <span class="k">if</span> <span class="n">S1_S2</span> <span class="o">==</span> <span class="s1">&#39;S1&#39;</span><span class="p">:</span>
         <span class="n">columns_pre_post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;S1_mass&#39;</span><span class="p">)</span>
         <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;S2_mass&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">S1_S2</span> <span class="o">==</span> <span class="s1">&#39;S2&#39;</span><span class="p">:</span>
         <span class="n">columns_pre_post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;S2_mass&#39;</span><span class="p">)</span>
         <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;S1_mass&#39;</span><span class="p">)</span>
-        
-    
+
+
     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns_pre_post</span><span class="p">:</span>
         <span class="n">GRB_df_synthetic</span><span class="p">[</span><span class="n">col</span><span class="o">+</span><span class="s1">&#39;_preSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pre_SN_hist</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="n">GRB_df_synthetic</span><span class="p">[</span><span class="n">col</span><span class="o">+</span><span class="s1">&#39;_postSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">post_SN_hist</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        
+
     <span class="c1"># unchanged columns</span>
     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
         <span class="n">GRB_df_synthetic</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">post_SN_hist</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        
+
     <span class="c1"># oneline data</span>
     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">oneline_chunk</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
         <span class="n">GRB_df_synthetic</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">oneline_chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indices_selection</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-    
+
     <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">formation_channels_chunk</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">formation_channels_chunk</span> <span class="o">=</span> <span class="n">formation_channels_chunk</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indices_selection</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">S1_S2</span> <span class="o">==</span> <span class="s1">&#39;S1&#39;</span><span class="p">:</span>
             <span class="n">GRB_df_synthetic</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">formation_channels_chunk</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_CC1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="s1">&#39;_CC1&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">S1_S2</span> <span class="o">==</span> <span class="s1">&#39;S2&#39;</span><span class="p">:</span>
             <span class="n">GRB_df_synthetic</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">formation_channels_chunk</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_CC2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="s1">&#39;_CC2&#39;</span><span class="p">)</span>
-    
+
     <span class="c1"># calculate the time!</span>
     <span class="n">GRB_df_synthetic</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">post_SN_hist</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="mf">1e-6</span> <span class="c1"># convert to Myr</span>
-        
+
     <span class="k">return</span> <span class="n">GRB_df_synthetic</span></div>
 
 
@@ -243,7 +249,7 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.transient_select_funcs.chi_eff">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">chi_eff</span><span class="p">(</span><span class="n">m_1</span><span class="p">,</span> <span class="n">m_2</span><span class="p">,</span> <span class="n">a_1</span><span class="p">,</span> <span class="n">a_2</span><span class="p">,</span> <span class="n">tilt_1</span><span class="p">,</span> <span class="n">tilt_2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Calculate the effective spin of two masses.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    m_1 : np.ndarray</span>
@@ -258,12 +264,12 @@
 <span class="sd">        The tilt of the first BH.</span>
 <span class="sd">    tilt_2 : np.ndarray</span>
 <span class="sd">        The tilt of the second BH.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    np.ndarray</span>
 <span class="sd">        The effective spin of the BHs.</span>
-<span class="sd">        </span>
+
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">a_1</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
         <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;a_1 contains undefined values, replacing them with 0.0&quot;</span><span class="p">,</span>
@@ -282,6 +288,41 @@
               <span class="s1">&#39;ReplaceValueWarning&#39;</span><span class="p">)</span>
         <span class="n">tilt_2</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">tilt_2</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">m_1</span><span class="o">*</span><span class="n">a_1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">tilt_1</span><span class="p">)</span><span class="o">+</span><span class="n">m_2</span><span class="o">*</span><span class="n">a_2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">tilt_2</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">m_1</span><span class="o">+</span><span class="n">m_2</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="effective_precession">
+<a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.transient_select_funcs.effective_precession">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">effective_precession</span><span class="p">(</span><span class="n">theta_1</span><span class="p">,</span> <span class="n">theta_2</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the effective spin precession.</span>
+
+<span class="sd">    Following Equation 14 in Gerosa+2021, which</span>
+<span class="sd">    is used in the LVK analyses.</span>
+<span class="sd">    https://arxiv.org/abs/2011.11948</span>
+
+<span class="sd">    \chi_p = max(a_1 * sin(theta_1),</span>
+<span class="sd">            q * ((4q + 3)/(4+3q)) * a_2 * sin(theta_2))</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta_1 : float or np.ndarray</span>
+<span class="sd">        Tilt angle of the primary spin (in radians).</span>
+<span class="sd">    theta_2 : float or np.ndarray</span>
+<span class="sd">        Tilt angle of the secondary spin (in radians).</span>
+<span class="sd">    a1 : float or np.ndarray</span>
+<span class="sd">        Dimensionless spin magnitude of the primary.</span>
+<span class="sd">    a2 : float or np.ndarray</span>
+<span class="sd">        Dimensionless spin magnitude of the secondary.</span>
+<span class="sd">    m1 : float or np.ndarray</span>
+<span class="sd">        Mass of the primary.</span>
+<span class="sd">    m2 : float or np.ndarray</span>
+<span class="sd">        Mass of the secondary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">m2</span><span class="o">/</span><span class="n">m1</span>
+    <span class="n">a_1_perp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_1</span><span class="p">))</span>
+    <span class="n">a_2_perp</span> <span class="o">=</span> <span class="n">q</span> <span class="o">*</span> <span class="p">((</span><span class="mi">4</span><span class="o">*</span><span class="n">q</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">q</span><span class="p">))</span> <span class="o">*</span> <span class="n">a2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_2</span><span class="p">)</span>
+    <span class="n">chi_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">a_1_perp</span><span class="p">,</span> <span class="n">a_2_perp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">chi_p</span></div>
 
 
 <div class="viewcode-block" id="m_chirp">
@@ -304,14 +345,14 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.transient_select_funcs.BBH_selection_function">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">BBH_selection_function</span><span class="p">(</span><span class="n">history_chunk</span><span class="p">,</span> <span class="n">oneline_chunk</span><span class="p">,</span> <span class="n">formation_channels_chunk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;A BBH selection function to create a transient population of BBHs mergers.</span>
-<span class="sd">    </span>
+
 <span class="sd">    This is an example function for selecting BBH mergers and some of their properties.</span>
 <span class="sd">    Additional properties from the history or oneline can be added to the transient population.</span>
 <span class="sd">    The output dataframe contains the following columns:</span>
 <span class="sd">    - time : the time of the event</span>
 <span class="sd">    - metallicity : the metallicity of the event</span>
 <span class="sd">    All other columns are optional.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    history_chunk : pd.DataFrame</span>
@@ -320,7 +361,7 @@
 <span class="sd">        The oneline chunk of the DCO population.</span>
 <span class="sd">    formation_channels_chunk : pd.DataFrame (can be made optional)</span>
 <span class="sd">        The formation pathway chunk of the DCO population.</span>
-<span class="sd">        </span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    df_transients : pd.DataFrame</span>
@@ -328,12 +369,12 @@
 <span class="sd">        This DataFrame contains the following columns:</span>
 <span class="sd">        - time : the time of the event</span>
 <span class="sd">        - metallicity : the metallicity of the event</span>
-<span class="sd">    </span>
+
 <span class="sd">    &#39;&#39;&#39;</span>
-    
+
     <span class="n">indices</span> <span class="o">=</span> <span class="n">oneline_chunk</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
     <span class="n">df_transients</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">indices</span><span class="p">)</span>
-    
+
     <span class="n">df_transients</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">history_chunk</span><span class="p">[</span><span class="n">history_chunk</span><span class="p">[</span><span class="s1">&#39;event&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;END&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e-6</span> <span class="c1">#Myr</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">history_chunk</span><span class="p">[</span><span class="s1">&#39;S1_state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;BH&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">history_chunk</span><span class="p">[</span><span class="s1">&#39;S2_state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;BH&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">history_chunk</span><span class="p">[</span><span class="s1">&#39;step_names&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;step_SN&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">history_chunk</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;detached&#39;</span><span class="p">)</span>
 
@@ -355,16 +396,16 @@
 
     <span class="k">if</span> <span class="n">formation_channels_chunk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">df_transients</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_transients</span><span class="p">,</span> <span class="n">formation_channels_chunk</span><span class="p">[[</span><span class="s1">&#39;channel&#39;</span><span class="p">]]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    
+
     <span class="k">return</span> <span class="n">df_transients</span></div>
 
-    
+
 
 <div class="viewcode-block" id="DCO_detectability">
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.transient_select_funcs.DCO_detectability">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">DCO_detectability</span><span class="p">(</span><span class="n">sensitivity</span><span class="p">,</span> <span class="n">transient_pop_chunk</span><span class="p">,</span> <span class="n">z_events_chunk</span><span class="p">,</span> <span class="n">z_weights_chunk</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Calculate the observability of a DCO population.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    sensitivity : float</span>
@@ -374,22 +415,22 @@
 <span class="sd">        - &#39;O4low_H1L1V1&#39; : aligo_O4low.txt, aligo_O4low.txt, avirgo_O4high_NEW.txt</span>
 <span class="sd">        - &#39;O4high_H1L1V1&#39; : aligo_O4high.txt, aligo_O4high.txt, avirgo_O4high_NEW.txt</span>
 <span class="sd">        - &#39;design_H1L1V1&#39; : AplusDesign.txt, AplusDesign.txt, avirgo_O5high_NEW.txt</span>
-<span class="sd">        </span>
+
 <span class="sd">        GW detector sensitivity and network configuration you want to use, see arXiv:1304.0670v3</span>
 <span class="sd">        detector sensitivities are taken from: https://dcc.ligo.org/LIGO-T2000012-v2/public</span>
-<span class="sd">        </span>
+
 <span class="sd">    Note: The population must have the following columns:</span>
 <span class="sd">    - S1_mass : the mass of the first BH</span>
-<span class="sd">    </span>
+
 <span class="sd">    For the following columns, the function will try to calculate them if they are not present:</span>
 <span class="sd">    - q : the mass ratio</span>
 <span class="sd">    - chi_eff : the effective spin of the BHs</span>
-<span class="sd">    </span>
+
 <span class="sd">    For q, S2_mass must be present.</span>
 <span class="sd">    For chi_eff, S1_Mass, S2_mass, S1_spin, S2_spin, S1_spin_orbit_tilt_at_merger, S2_spin_orbit_tilt_at_merger must be present.</span>
 
-<span class="sd">    These have to be present and a valid value. If not, the function will raise an error!        </span>
-<span class="sd">    </span>
+<span class="sd">    These have to be present and a valid value. If not, the function will raise an error!</span>
+
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">available_sensitiveies</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;O3actual_H1L1V1&#39;</span><span class="p">,</span> <span class="s1">&#39;O4low_H1L1V1&#39;</span><span class="p">,</span> <span class="s1">&#39;O4high_H1L1V1&#39;</span><span class="p">,</span> <span class="s1">&#39;design_H1L1V1&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">sensitivity</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_sensitiveies</span><span class="p">:</span>
@@ -397,18 +438,18 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">sel_eff</span> <span class="o">=</span> <span class="n">selection_effects</span><span class="o">.</span><span class="n">KNNmodel</span><span class="p">(</span><span class="n">grid_path</span><span class="o">=</span><span class="n">PATH_TO_PDET_GRID</span><span class="p">,</span>
                                                       <span class="n">sensitivity_key</span><span class="o">=</span><span class="n">sensitivity</span><span class="p">)</span>
-    
+
     <span class="n">data_slice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
     <span class="n">data_slice</span><span class="p">[</span><span class="s1">&#39;m1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;S1_mass&#39;</span><span class="p">]</span>
-    
+
     <span class="k">if</span> <span class="s1">&#39;q&#39;</span> <span class="ow">in</span> <span class="n">transient_pop_chunk</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
         <span class="n">data_slice</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">data_slice</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mass_ratio</span><span class="p">(</span><span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;S1_mass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span>  <span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;S2_mass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
-    
+
     <span class="k">if</span> <span class="s1">&#39;chi_eff&#39;</span> <span class="ow">in</span> <span class="n">transient_pop_chunk</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
         <span class="n">data_slice</span><span class="p">[</span><span class="s1">&#39;chieff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;chi_eff&#39;</span><span class="p">]</span>
-        
+
     <span class="k">else</span><span class="p">:</span>
         <span class="n">data_slice</span><span class="p">[</span><span class="s1">&#39;chieff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chi_eff</span><span class="p">(</span><span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;S1_mass&#39;</span><span class="p">],</span>
                                         <span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;S2_mass&#39;</span><span class="p">],</span>
@@ -416,7 +457,7 @@
                                         <span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;S2_spin&#39;</span><span class="p">],</span>
                                         <span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;S1_spin_orbit_tilt_at_merger&#39;</span><span class="p">],</span>
                                         <span class="n">transient_pop_chunk</span><span class="p">[</span><span class="s1">&#39;S2_spin_orbit_tilt_at_merger&#39;</span><span class="p">])</span>
-    
+
     <span class="n">detectable_weights</span> <span class="o">=</span> <span class="n">z_weights_chunk</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">z_events_chunk</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">total</span><span class="o">=</span><span class="n">z_events_chunk</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">disable</span><span class="o">=</span> <span class="ow">not</span> <span class="n">verbose</span><span class="p">):</span>
         <span class="n">data_slice</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">z_events_chunk</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>
@@ -425,11 +466,9 @@
             <span class="n">detectable_weights</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">detectable_weights</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">detectable_weights</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">sel_eff</span><span class="o">.</span><span class="n">predict_pdet</span><span class="p">(</span><span class="n">data_slice</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
-        
+
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">detectable_weights</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">z_events_chunk</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">z_events_chunk</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span></div>
 
-    
-    
 </pre></div>
 
            </div>
@@ -451,7 +490,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

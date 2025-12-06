@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.DT.tides.default_tides &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.binary_evol.DT.tides.default_tides &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -114,16 +118,18 @@
   <h1>Source code for posydon.binary_evol.DT.tides.default_tides</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">const</span>
+
 
 <div class="viewcode-block" id="default_tides">
 <a class="viewcode-back" href="../../../../../api_reference/posydon.binary_evol.DT.tides.html#posydon.binary_evol.DT.tides.default_tides.default_tides">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">default_tides</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">primary</span><span class="p">,</span> <span class="n">secondary</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculates the change in orbital separation and eccentricity, </span>
-<span class="sd">    plus change in spin of each star due to tides, according to: </span>
-<span class="sd">    </span>
+<span class="sd">        Calculates the change in orbital separation and eccentricity,</span>
+<span class="sd">    plus change in spin of each star due to tides, according to:</span>
+
 <span class="sd">        Hut, P. 1981, A&amp;A, 99, 126</span>
 
 <span class="sd">    Parameters</span>
@@ -135,59 +141,47 @@
 <span class="sd">            The current orbital eccentricity.</span>
 
 <span class="sd">        primary : SingleStar object</span>
-<span class="sd">            A single star object, representing the primary (more evolved) star </span>
+<span class="sd">            A single star object, representing the primary (more evolved) star</span>
 <span class="sd">            in the binary and containing its properties.</span>
-<span class="sd">        </span>
+
 <span class="sd">        secondary : SingleStar object</span>
-<span class="sd">            A single star object, representing the secondary (less evolved) star </span>
+<span class="sd">            A single star object, representing the secondary (less evolved) star</span>
 <span class="sd">            in the binary and containing its properties.</span>
 
 <span class="sd">        verbose : bool</span>
 <span class="sd">            True if we want to print stuff.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">        da : float</span>
-<span class="sd">            The change in orbital separation for a time step in </span>
+<span class="sd">            The change in orbital separation for a time step in</span>
 <span class="sd">        step_detached&#39;s solve_ivp(). [Rsolar/yr]</span>
 
 <span class="sd">        de : float</span>
-<span class="sd">            The change in orbital eccentricity for a time step in </span>
+<span class="sd">            The change in orbital eccentricity for a time step in</span>
 <span class="sd">        step_detached&#39;s solve_ivp().</span>
 
 <span class="sd">        dOmega_sec : float</span>
-<span class="sd">            The change in rotation rate of the secondary (less evolved) </span>
+<span class="sd">            The change in rotation rate of the secondary (less evolved)</span>
 <span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
-<span class="sd">        </span>
+
 <span class="sd">        dOmega_pri : float</span>
-<span class="sd">            The change in rotation rate of the primary (more evolved) </span>
+<span class="sd">            The change in rotation rate of the primary (more evolved)</span>
 <span class="sd">        star for a time step in step_detached&#39;s solve_ivp(). [rad/yr^2]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">m1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-    <span class="n">R1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-    <span class="n">m_env1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass_conv_reg_fortides&quot;</span><span class="p">]</span>
-    <span class="n">dr_env1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;thickness_conv_reg_fortides&quot;</span><span class="p">]</span>
-    <span class="n">rmid_env1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;radius_conv_reg_fortides&quot;</span><span class="p">]</span>
-    <span class="n">omega1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">rtop_env1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_mx1_top_r&quot;</span><span class="p">]</span>
-    <span class="n">rbot_env1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_mx1_bot_r&quot;</span><span class="p">]</span>
-    <span class="n">Xsurf_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;surface_h1&quot;</span><span class="p">]</span>
-    <span class="n">L1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">]</span>
-    <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">primary</span><span class="o">.</span><span class="n">latest</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span>
+    <span class="n">m1</span><span class="p">,</span> <span class="n">R1</span><span class="p">,</span> <span class="n">omega1</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">m_env1</span><span class="p">,</span> <span class="n">dr_env1</span><span class="p">,</span> <span class="n">rmid_env1</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;mass_conv_reg_fortides&quot;</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;thickness_conv_reg_fortides&quot;</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;radius_conv_reg_fortides&quot;</span><span class="p">]</span>
+    <span class="n">rtop_env1</span><span class="p">,</span> <span class="n">rbot_env1</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;conv_mx1_top_r&quot;</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;conv_mx1_bot_r&quot;</span><span class="p">]</span>
+    <span class="n">Xsurf_1</span><span class="p">,</span> <span class="n">L1</span><span class="p">,</span> <span class="n">MOI_1</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;surface_h1&quot;</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
 
-    <span class="n">m2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span>
-    <span class="n">R2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span>
-    <span class="n">m_env2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;mass_conv_reg_fortides&quot;</span><span class="p">]</span>
-    <span class="n">dr_env2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;thickness_conv_reg_fortides&quot;</span><span class="p">]</span>
-    <span class="n">rmid_env2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;radius_conv_reg_fortides&quot;</span><span class="p">]</span>
-    <span class="n">omega2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
-    <span class="n">rtop_env2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_mx1_top_r&quot;</span><span class="p">]</span>
-    <span class="n">rbot_env2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;conv_mx1_bot_r&quot;</span><span class="p">]</span>
-    <span class="n">Xsurf_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;surface_h1&quot;</span><span class="p">]</span>
-    <span class="n">L2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">]</span>
-    <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">secondary</span><span class="o">.</span><span class="n">latest</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
+    <span class="n">m2</span><span class="p">,</span> <span class="n">R2</span><span class="p">,</span> <span class="n">omega2</span> <span class="o">=</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;omega&quot;</span><span class="p">]</span>
+    <span class="n">m_env2</span><span class="p">,</span> <span class="n">dr_env2</span><span class="p">,</span> <span class="n">rmid_env2</span> <span class="o">=</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;mass_conv_reg_fortides&quot;</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;thickness_conv_reg_fortides&quot;</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;radius_conv_reg_fortides&quot;</span><span class="p">]</span>
+    <span class="n">rtop_env2</span><span class="p">,</span> <span class="n">rbot_env2</span> <span class="o">=</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;conv_mx1_top_r&quot;</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;conv_mx1_bot_r&quot;</span><span class="p">]</span>
+    <span class="n">Xsurf_2</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">MOI_2</span> <span class="o">=</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;surface_h1&quot;</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="s2">&quot;inertia&quot;</span><span class="p">]</span>
 
     <span class="n">q1</span> <span class="o">=</span> <span class="n">m1</span><span class="o">/</span> <span class="n">m2</span>
     <span class="n">q2</span> <span class="o">=</span> <span class="n">m2</span> <span class="o">/</span> <span class="n">m1</span>
@@ -251,33 +245,33 @@
     <span class="k">if</span> <span class="n">kT_conv_pri</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">kT_conv_pri</span><span class="p">):</span>
         <span class="n">kT_conv_pri</span> <span class="o">=</span> <span class="mf">0.0</span>
 
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kT_conv_sec is&quot;</span><span class="p">,</span> <span class="n">kT_conv_sec</span><span class="p">,</span> <span class="s2">&quot;, set to 0.&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kT_conv_pri is&quot;</span><span class="p">,</span> <span class="n">kT_conv_pri</span><span class="p">,</span> <span class="s2">&quot;, set to 0.&quot;</span><span class="p">)</span>
+        <span class="c1">#if verbose:</span>
+        <span class="c1">#    print(&quot;kT_conv_sec is&quot;, kT_conv_sec, &quot;, set to 0.&quot;)</span>
+        <span class="c1">#    print(&quot;kT_conv_pri is&quot;, kT_conv_pri, &quot;, set to 0.&quot;)</span>
     <span class="c1"># this is the 1/timescale of all d/dt calculted below in yr^-1</span>
 
-    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;Equilibrium tides in deep convective envelope&quot;</span><span class="p">,</span>
-            <span class="n">m_env2</span><span class="p">,</span>
-            <span class="n">dr_env2</span><span class="p">,</span>
-            <span class="n">rmid_env2</span><span class="p">,</span>
-            <span class="n">R2</span><span class="p">,</span>
-            <span class="n">m2</span><span class="p">,</span>
-            <span class="n">m_env1</span><span class="p">,</span>
-            <span class="n">dr_env1</span><span class="p">,</span>
-            <span class="n">rmid_env1</span><span class="p">,</span>
-            <span class="n">R1</span><span class="p">,</span>
-            <span class="n">m1</span>
-        <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;convective tiimescales and efficiencies&quot;</span><span class="p">,</span>
-            <span class="n">tau_conv_2</span><span class="p">,</span> <span class="n">P_orb</span><span class="p">,</span> <span class="n">P_spin_sec</span><span class="p">,</span> <span class="n">P_tid_sec</span><span class="p">,</span>
-            <span class="n">f_conv_sec</span><span class="p">,</span>
-            <span class="n">F_tid</span><span class="p">,</span>
-            <span class="n">tau_conv_1</span><span class="p">,</span> <span class="n">P_orb</span><span class="p">,</span> <span class="n">P_spin_pri</span><span class="p">,</span> <span class="n">P_tid_pri</span><span class="p">,</span>
-            <span class="n">f_conv_pri</span><span class="p">,</span>
-            <span class="n">F_tid</span><span class="p">,</span>
-            <span class="p">)</span>
+    <span class="c1">#if verbose:</span>
+    <span class="c1">#    print(</span>
+    <span class="c1">#        &quot;Equilibrium tides in deep convective envelope&quot;,</span>
+    <span class="c1">#        m_env2,</span>
+    <span class="c1">#        dr_env2,</span>
+    <span class="c1">#        rmid_env2,</span>
+    <span class="c1">#        R2,</span>
+    <span class="c1">#        m2,</span>
+    <span class="c1">#        m_env1,</span>
+    <span class="c1">#        dr_env1,</span>
+    <span class="c1">#        rmid_env1,</span>
+    <span class="c1">#        R1,</span>
+    <span class="c1">#        m1</span>
+    <span class="c1">#    )</span>
+    <span class="c1">#    print(&quot;convective timescales and efficiencies&quot;,</span>
+    <span class="c1">#        tau_conv_2, P_orb, P_spin_sec, P_tid_sec,</span>
+    <span class="c1">#        f_conv_sec,</span>
+    <span class="c1">#        F_tid,</span>
+    <span class="c1">#        tau_conv_1, P_orb, P_spin_pri, P_tid_pri,</span>
+    <span class="c1">#        f_conv_pri,</span>
+    <span class="c1">#        F_tid,</span>
+    <span class="c1">#        )</span>
 
     <span class="c1"># dynamical timecale</span>
     <span class="n">F_tid</span> <span class="o">=</span> <span class="mi">1</span>
@@ -321,22 +315,22 @@
     <span class="k">if</span> <span class="p">(</span><span class="n">R_conv_pri</span> <span class="o">&gt;</span> <span class="n">R1</span> <span class="ow">or</span> <span class="n">R_conv_pri</span> <span class="o">&lt;=</span> <span class="mf">0.0</span>
             <span class="ow">or</span> <span class="n">rbot_env1</span> <span class="o">/</span> <span class="n">R1</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">):</span>
         <span class="n">E22</span> <span class="o">=</span> <span class="mf">1.592e-9</span> <span class="o">*</span> <span class="n">m1</span> <span class="o">**</span> <span class="p">(</span><span class="mf">2.84</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;R_conv of the convective core is not behaving well or we &quot;</span>
-                <span class="s2">&quot;are not calculating the convective core, we switch to &quot;</span>
-                <span class="s2">&quot;Zahn+1975 calculation of E2&quot;</span><span class="p">,</span>
-                <span class="n">R_conv_sec</span><span class="p">,</span>
-                <span class="n">R2</span><span class="p">,</span>
-                <span class="n">rtop_env2</span><span class="p">,</span>
-                <span class="n">rbot_env2</span><span class="p">,</span>
-                <span class="n">E21</span><span class="p">,</span>
-                <span class="n">R_conv_pri</span><span class="p">,</span>
-                <span class="n">R1</span><span class="p">,</span>
-                <span class="n">rtop_env1</span><span class="p">,</span>
-                <span class="n">rbot_env1</span><span class="p">,</span>
-                <span class="n">E22</span>
-            <span class="p">)</span>
+        <span class="c1">#if verbose:</span>
+        <span class="c1">#    print(</span>
+        <span class="c1">#        &quot;R_conv of the convective core is not behaving well or we &quot;</span>
+        <span class="c1">#        &quot;are not calculating the convective core, we switch to &quot;</span>
+        <span class="c1">#        &quot;Zahn+1975 calculation of E2&quot;,</span>
+        <span class="c1">#        R_conv_sec,</span>
+        <span class="c1">#        R2,</span>
+        <span class="c1">#        rtop_env2,</span>
+        <span class="c1">#        rbot_env2,</span>
+        <span class="c1">#        E21,</span>
+        <span class="c1">#        R_conv_pri,</span>
+        <span class="c1">#        R1,</span>
+        <span class="c1">#        rtop_env1,</span>
+        <span class="c1">#        rbot_env1,</span>
+        <span class="c1">#        E22</span>
+        <span class="c1">#    )</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">R1</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">E22</span> <span class="o">=</span> <span class="mi">0</span>
@@ -365,25 +359,25 @@
         <span class="o">*</span> <span class="n">E22</span>
         <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">secyer</span><span class="p">)</span>
     <span class="c1"># this is the 1/timescale of all d/dt calculted below in yr^-1</span>
-    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;Dynamical tides in radiative envelope&quot;</span><span class="p">,</span>
-            <span class="n">rtop_env2</span><span class="p">,</span>
-            <span class="n">rbot_env2</span><span class="p">,</span>
-            <span class="n">R_conv_sec</span><span class="p">,</span>
-            <span class="n">E21</span><span class="p">,</span>
-            <span class="n">rtop_env1</span><span class="p">,</span>
-            <span class="n">rbot_env1</span><span class="p">,</span>
-            <span class="n">R_conv_pri</span><span class="p">,</span>
-            <span class="n">E22</span><span class="p">,</span>
-            <span class="n">F_tid</span>
-        <span class="p">)</span>
+    <span class="c1">#if verbose:</span>
+    <span class="c1">#    print(</span>
+    <span class="c1">#        &quot;Dynamical tides in radiative envelope&quot;,</span>
+    <span class="c1">#        rtop_env2,</span>
+    <span class="c1">#        rbot_env2,</span>
+    <span class="c1">#        R_conv_sec,</span>
+    <span class="c1">#        E21,</span>
+    <span class="c1">#        rtop_env1,</span>
+    <span class="c1">#        rbot_env1,</span>
+    <span class="c1">#        R_conv_pri,</span>
+    <span class="c1">#        E22,</span>
+    <span class="c1">#        F_tid</span>
+    <span class="c1">#    )</span>
     <span class="n">kT_sec</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">kT_conv_sec</span><span class="p">,</span> <span class="n">kT_rad_sec</span><span class="p">)</span>
     <span class="n">kT_pri</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">kT_conv_pri</span><span class="p">,</span> <span class="n">kT_rad_pri</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kT_conv/rad of tides is &quot;</span><span class="p">,</span> <span class="n">kT_conv_sec</span><span class="p">,</span> <span class="n">kT_rad_sec</span><span class="p">,</span>
-            <span class="n">kT_conv_pri</span><span class="p">,</span> <span class="n">kT_rad_pri</span><span class="p">,</span> <span class="s2">&quot;in 1/yr, and we picked the &quot;</span><span class="p">,</span>
-            <span class="n">kT_sec</span><span class="p">,</span> <span class="n">kT_pri</span><span class="p">)</span>
+    <span class="c1">#if verbose:</span>
+    <span class="c1">#    print(&quot;kT_conv/rad of tides is &quot;, kT_conv_sec, kT_rad_sec,</span>
+    <span class="c1">#        kT_conv_pri, kT_rad_pri, &quot;in 1/yr, and we picked the &quot;,</span>
+    <span class="c1">#        kT_sec, kT_pri)</span>
 
     <span class="n">da_tides_sec</span> <span class="o">=</span> <span class="p">(</span>
             <span class="o">-</span><span class="mi">6</span>
@@ -442,11 +436,11 @@
             <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">6</span>
             <span class="o">*</span> <span class="p">(</span><span class="n">f2</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">f5</span> <span class="o">*</span> <span class="n">omega1</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
     <span class="p">)</span>
-    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;da,de,dOmega_tides = &quot;</span><span class="p">,</span>
-            <span class="n">da_tides_sec</span><span class="p">,</span> <span class="n">de_tides_sec</span><span class="p">,</span> <span class="n">dOmega_tides_sec</span><span class="p">,</span>
-            <span class="n">da_tides_pri</span><span class="p">,</span> <span class="n">de_tides_pri</span><span class="p">,</span> <span class="n">dOmega_tides_pri</span><span class="p">)</span>
-        
+    <span class="c1">#if verbose:</span>
+    <span class="c1">#    print(&quot;da,de,dOmega_tides = &quot;,</span>
+    <span class="c1">#        da_tides_sec, de_tides_sec, dOmega_tides_sec,</span>
+    <span class="c1">#        da_tides_pri, de_tides_pri, dOmega_tides_pri)</span>
+
     <span class="n">da</span> <span class="o">=</span> <span class="n">da_tides_sec</span> <span class="o">+</span> <span class="n">da_tides_pri</span>
     <span class="n">de</span> <span class="o">=</span> <span class="n">de_tides_sec</span> <span class="o">+</span> <span class="n">de_tides_pri</span>
     <span class="n">dOmega_sec</span> <span class="o">=</span> <span class="n">dOmega_tides_sec</span>
@@ -475,7 +469,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

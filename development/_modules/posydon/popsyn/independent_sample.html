@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.popsyn.independent_sample &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.popsyn.independent_sample &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -117,7 +121,7 @@
 
 <span class="n">__authors__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;Devina Misra &lt;devina.misra@unige.ch&gt;&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Jeffrey Andrews &lt;jeffrey.andrews@northwestern.edu&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Jeffrey Andrews &lt;jeffrey.andrews@ufl.edu&gt;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Kyle Akira Rocha &lt;kylerocha2024@u.northwestern.edu&gt;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Konstantinos Kovlakas &lt;Konstantinos.Kovlakas@unige.ch&gt;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Simone Bavera &lt;Simone.Bavera@unige.ch&gt;&quot;</span><span class="p">,</span>
@@ -129,8 +133,9 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">truncnorm</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">rejection_sampler</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.Moes_distributions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Moe_17_PsandQs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">rejection_sampler</span>
 
 <span class="n">_gen_Moe_17_PsandQs</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -175,6 +180,13 @@
         <span class="n">m2_set</span><span class="p">,</span> <span class="n">orbital_scheme_set</span><span class="p">,</span> <span class="n">eccentricity_set</span><span class="p">,</span> <span class="n">metallicity_set</span>\
          <span class="o">=</span> <span class="n">_gen_Moe_17_PsandQs</span><span class="p">(</span><span class="n">m1_set</span><span class="p">,</span> <span class="n">M_min</span><span class="o">=</span><span class="n">M1_min</span><span class="p">,</span> <span class="n">M_max</span><span class="o">=</span><span class="n">M1_max</span><span class="p">,</span>
                                <span class="n">all_binaries</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">ecc_scheme</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;eccentricity_scheme&#39;</span><span class="p">,</span> <span class="s1">&#39;zero&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ecc_scheme</span> <span class="o">!=</span> <span class="s1">&#39;Moe+17-PsandQs&#39;</span><span class="p">:</span>
+            <span class="c1"># ensure that kwargs hold the current retrieved or</span>
+            <span class="c1"># set value of eccentricity_scheme</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;eccentricity_scheme&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ecc_scheme</span>
+            <span class="n">eccentricity_set</span> <span class="o">=</span> <span class="n">generate_eccentricities</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
 
         <span class="c1"># Generate secondary masses</span>
@@ -214,7 +226,7 @@
                        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check whether Moe &amp; Di Stefano (2017) [1]_ should be used for the</span>
 <span class="sd">    initial sampling.</span>
-<span class="sd">    </span>
+
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
 <span class="sd">    .. [1] Moe, M. and Di Stefano, R., “Mind Your Ps and Qs: The Interrelation</span>
@@ -551,24 +563,24 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Getting the binary fraction depending on the scheme. The two possible</span>
 <span class="sd">    option are a constant binary fraction and a binary fraction based on the</span>
-<span class="sd">    values given in Moe and Di Stefano (2017). </span>
+<span class="sd">    values given in Moe and Di Stefano (2017).</span>
 
 <span class="sd">    Parameters:</span>
 <span class="sd">    --------------------</span>
 <span class="sd">    binary scheme: string</span>
 <span class="sd">        Determines if the value of the binary fraction will be constant or not</span>
-<span class="sd">    binary fraction const: int </span>
+<span class="sd">    binary fraction const: int</span>
 <span class="sd">        Gives the value the constant value of the binary if the constant scheme</span>
-<span class="sd">        is choosen. </span>
+<span class="sd">        is choosen.</span>
 
-<span class="sd">    Returns </span>
+<span class="sd">    Returns</span>
 <span class="sd">    ------------------</span>
 <span class="sd">    binary fraction: int</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">binary_fraction_scheme_options</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;const&#39;</span><span class="p">,</span><span class="s1">&#39;Moe+17-massdependent&#39;</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="n">m1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+    <span class="k">if</span> <span class="n">m1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;There was not a primary mass provided in the inputs. Unable to return a binary fraction&quot;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="n">m1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span>
@@ -576,10 +588,10 @@
     <span class="c1"># Input parameter checks</span>
     <span class="k">if</span> <span class="n">binary_fraction_scheme</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">binary_fraction_scheme_options</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must provide an allowed binary fraction scheme.&quot;</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">binary_fraction_scheme</span> <span class="o">==</span> <span class="s1">&#39;const&#39;</span><span class="p">:</span> 
+
+    <span class="k">if</span> <span class="n">binary_fraction_scheme</span> <span class="o">==</span> <span class="s1">&#39;const&#39;</span><span class="p">:</span>
         <span class="n">binary_fraction</span> <span class="o">=</span> <span class="n">binary_fraction_const</span>
-    
+
     <span class="k">elif</span> <span class="n">binary_fraction_scheme</span> <span class="o">==</span> <span class="s1">&#39;Moe+17-massdependent&#39;</span><span class="p">:</span>
         <span class="n">binary_fraction</span><span class="p">[(</span><span class="n">m1</span> <span class="o">&gt;</span> <span class="mi">16</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.94</span>
         <span class="n">binary_fraction</span><span class="p">[(</span><span class="n">m1</span> <span class="o">&lt;=</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">m1</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.84</span>
@@ -587,11 +599,10 @@
         <span class="n">binary_fraction</span><span class="p">[(</span><span class="n">m1</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">m1</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.59</span>
         <span class="n">binary_fraction</span><span class="p">[(</span><span class="n">m1</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.4</span>
 
-    <span class="k">else</span><span class="p">:</span> 
+    <span class="k">else</span><span class="p">:</span>
         <span class="k">pass</span>
 
     <span class="k">return</span> <span class="n">binary_fraction</span></div>
-
 
 </pre></div>
 
@@ -614,7 +625,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

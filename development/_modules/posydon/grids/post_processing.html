@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.grids.post_processing &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.grids.post_processing &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -114,22 +118,24 @@
   <h1>Source code for posydon.grids.post_processing</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Module for post-processing POSYDON grids.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.binarystar</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinaryStar</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.singlestar</span><span class="w"> </span><span class="kn">import</span> <span class="n">SingleStar</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.SN.step_SN</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepSN</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.flow_chart</span><span class="w"> </span><span class="kn">import</span> <span class="n">STAR_STATES_CC</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">calculate_Patton20_values_at_He_depl</span><span class="p">,</span>
-    <span class="n">CEE_parameters_from_core_abundance_thresholds</span><span class="p">,</span>
-    <span class="n">check_state_of_star</span><span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.SN_MODELS</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_SN_MODEL</span><span class="p">,</span> <span class="n">SN_MODELS</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.combine_TF</span><span class="w"> </span><span class="kn">import</span> <span class="n">combine_TF12</span><span class="p">,</span> <span class="n">TF1_POOL_STABLE</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.plot_defaults</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_MARKERS_COLORS_LEGENDS</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">Pwarn</span><span class="p">,</span> <span class="n">Catch_POSYDON_Warnings</span><span class="p">)</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.binarystar</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinaryStar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.flow_chart</span><span class="w"> </span><span class="kn">import</span> <span class="n">STAR_STATES_CC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.singlestar</span><span class="w"> </span><span class="kn">import</span> <span class="n">SingleStar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.SN.step_SN</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepSN</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.SN_MODELS</span><span class="w"> </span><span class="kn">import</span> <span class="n">SN_MODELS</span><span class="p">,</span> <span class="n">get_SN_MODEL</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CEE_parameters_from_core_abundance_thresholds</span><span class="p">,</span>
+    <span class="n">calculate_Patton20_values_at_He_depl</span><span class="p">,</span>
+    <span class="n">check_state_of_star</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Catch_POSYDON_Warnings</span><span class="p">,</span> <span class="n">Pwarn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.combine_TF</span><span class="w"> </span><span class="kn">import</span> <span class="n">TF1_POOL_STABLE</span><span class="p">,</span> <span class="n">combine_TF12</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.visualization.plot_defaults</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_MARKERS_COLORS_LEGENDS</span>
 
 <span class="n">__authors__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;Simone Bavera &lt;Simone.Bavera@unige.ch&gt;&quot;</span><span class="p">,</span>
@@ -367,7 +373,7 @@
                     <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;pure_He_star_10&#39;</span><span class="p">]:</span>
                         <span class="n">EXTRA_COLUMNS</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">quantity</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">cent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                             <span class="nb">getattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">quantity</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">cent&#39;</span><span class="p">))</span>
-                
+
                 <span class="c1"># abundances</span>
                 <span class="c1"># now that np.nan is used as default, this won&#39;t throw TypeError</span>
                 <span class="c1">#try:</span>
@@ -379,12 +385,12 @@
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">s_o</span><span class="p">):</span>
                     <span class="n">s_o</span> <span class="o">=</span> <span class="mf">0.</span>
                     <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;While accessing abundances in star_</span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, surface abundances&#39;</span><span class="o">+</span>\
-                      <span class="sa">f</span><span class="s1">&#39;were NaN. We have set s_o to 0.&#39;</span><span class="p">,</span> 
+                      <span class="sa">f</span><span class="s1">&#39;were NaN. We have set s_o to 0.&#39;</span><span class="p">,</span>
                       <span class="s2">&quot;ReplaceValueWarning&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">c_o</span><span class="p">):</span>
                     <span class="n">c_o</span> <span class="o">=</span> <span class="mf">0.</span>
                     <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;While accessing abundances in star_</span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, central abundances&#39;</span><span class="o">+</span>\
-                      <span class="sa">f</span><span class="s1">&#39;were NaN. We have set c_o to 0.&#39;</span><span class="p">,</span> 
+                      <span class="sa">f</span><span class="s1">&#39;were NaN. We have set c_o to 0.&#39;</span><span class="p">,</span>
                       <span class="s2">&quot;ReplaceValueWarning&quot;</span><span class="p">)</span>
 
                 <span class="n">EXTRA_COLUMNS</span><span class="p">[</span><span class="s1">&#39;S</span><span class="si">%s</span><span class="s1">_surface_other&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s_o</span><span class="p">)</span>
@@ -667,7 +673,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

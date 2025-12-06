@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.popsyn.synthetic_population &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.popsyn.synthetic_population &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -146,43 +150,39 @@
     <span class="s2">&quot;Max Briel &lt;max.briel@unige.ch&gt;&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Zsun</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">binarypop_kwargs_from_ini</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.simulationproperties</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationProperties</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">posydon.visualization.plot_pop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plot_pop</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_metallicity_to_string</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.cosmology</span><span class="w"> </span><span class="kn">import</span> <span class="n">Planck15</span> <span class="k">as</span> <span class="n">cosmology</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">astropy</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.norm_pop</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_model_weights</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.cosmology</span><span class="w"> </span><span class="kn">import</span> <span class="n">Planck15</span> <span class="k">as</span> <span class="n">cosmology</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.rate_calculation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">get_shell_comoving_volume</span><span class="p">,</span>
-    <span class="n">get_comoving_distance_from_redshift</span><span class="p">,</span>
-    <span class="n">get_cosmic_time_from_redshift</span><span class="p">,</span>
-    <span class="n">redshift_from_cosmic_time_interpolator</span><span class="p">,</span>
-    <span class="n">DEFAULT_SFH_MODEL</span><span class="p">,</span>
-    <span class="n">get_redshift_bin_edges</span><span class="p">,</span>
-    <span class="n">get_redshift_bin_centers</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.star_formation_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">SFR_per_met_at_z</span>
-
+<span class="kn">import</span><span class="w"> </span><span class="nn">posydon.visualization.plot_pop</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plot_pop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.simulationproperties</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationProperties</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.binarypopulation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">BinaryPopulation</span><span class="p">,</span>
     <span class="n">HISTORY_MIN_ITEMSIZE</span><span class="p">,</span>
     <span class="n">ONELINE_MIN_ITEMSIZE</span><span class="p">,</span>
+    <span class="n">BinaryPopulation</span><span class="p">,</span>
     <span class="n">saved_ini_parameters</span><span class="p">,</span>
 <span class="p">)</span>
-
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">binarypop_kwargs_from_ini</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.norm_pop</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_model_weights</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.rate_calculation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DEFAULT_SFH_MODEL</span><span class="p">,</span>
+    <span class="n">get_comoving_distance_from_redshift</span><span class="p">,</span>
+    <span class="n">get_cosmic_time_from_redshift</span><span class="p">,</span>
+    <span class="n">get_redshift_bin_centers</span><span class="p">,</span>
+    <span class="n">get_redshift_bin_edges</span><span class="p">,</span>
+    <span class="n">get_shell_comoving_volume</span><span class="p">,</span>
+    <span class="n">redshift_from_cosmic_time_interpolator</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.star_formation_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">SFR_per_met_at_z</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_metallicity_to_string</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Zsun</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
 
 <span class="c1">###############################################################################</span>
 
@@ -275,12 +275,12 @@
         <span class="k">for</span> <span class="n">pop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">binary_populations</span><span class="p">:</span>
             <span class="c1"># check if the temp directory exists</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">pop</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;temp_directory&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> directory already exists! Please remove it or rename it before running the population.&quot;</span><span class="p">)</span> 
+                <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">pop</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;temp_directory&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> directory already exists! Please remove it or rename it before running the population.&quot;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removing pre-existing </span><span class="si">{</span><span class="n">pop</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;temp_directory&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> directory...&quot;</span><span class="p">)</span>
-                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">])</span>    
-                
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">])</span>
+
             <span class="n">pop</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">optimize_ram</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">pop</span><span class="o">.</span><span class="n">comm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">merge_parallel_runs</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">)</span></div>
@@ -307,10 +307,10 @@
         <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removing pre-exisiting </span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>                
-                
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+
         <span class="n">path_to_batch</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;temp_directory&quot;</span><span class="p">]</span>
-        
+
         <span class="n">tmp_files</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_to_batch</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path_to_batch</span><span class="p">)</span>
@@ -318,7 +318,7 @@
         <span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Merging </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tmp_files</span><span class="p">)</span><span class="si">}</span><span class="s2"> files...&quot;</span><span class="p">)</span>
-        
+
         <span class="n">pop</span><span class="o">.</span><span class="n">combine_saved_files</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">tmp_files</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
@@ -342,7 +342,7 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.DFInterface">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DFInterface</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A class to handle the interface between the population file and the History and Oneline classes.&quot;&quot;&quot;</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chunksize</span> <span class="o">=</span> <span class="kc">None</span>
@@ -368,7 +368,7 @@
         <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">store</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">n</span><span class="p">)</span></div>
 
-        
+
 <div class="viewcode-block" id="DFInterface.tail">
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.DFInterface.tail">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">tail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
@@ -390,13 +390,13 @@
         <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">store</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">start</span><span class="o">=-</span><span class="n">n</span><span class="p">)</span></div>
 
-        
-    
+
+
 <div class="viewcode-block" id="DFInterface.select">
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.DFInterface.select">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Select a subset of the key table based on the given conditions.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        key : str</span>
@@ -409,7 +409,7 @@
 <span class="sd">            The ending index of the data to select.</span>
 <span class="sd">        columns : list, optional</span>
 <span class="sd">            A list of column names to select.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pandas.DataFrame</span>
@@ -425,37 +425,37 @@
             <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out</span></div>
 
-    
+
 <div class="viewcode-block" id="DFInterface.get_repr">
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.DFInterface.get_repr">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return a string representation of the key table.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        key : str</span>
 <span class="sd">            The key of the table to return the string representation of.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
 <span class="sd">            The string representation of the key table.</span>
-<span class="sd">        </span>
+
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">store</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span></div>
 
-        
+
 <div class="viewcode-block" id="DFInterface.get_html_repr">
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.DFInterface.get_html_repr">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_html_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the HTML representation of the key table.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        key : str</span>
 <span class="sd">            The key of the table to return the HTML representation of.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
@@ -598,18 +598,18 @@
                 <span class="n">chunk</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">stop</span> <span class="o">-</span> <span class="n">pre</span>
             <span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">pre</span> <span class="o">+</span> <span class="n">chunk</span><span class="p">))</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">where</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;index in </span><span class="si">{</span><span class="n">indices</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-            
+
         <span class="c1"># single index</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">where</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;index == </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                
+
         <span class="c1"># list of indices</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">key</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">where</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;index in </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                
+
         <span class="c1"># numpy array</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -617,7 +617,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">indices</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">where</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;index in </span><span class="si">{</span><span class="n">indices</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                
+
         <span class="c1"># boolean mask</span>
         <span class="k">elif</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">dtypes</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">)):</span>
             <span class="c1"># return empty if no values</span>
@@ -631,14 +631,14 @@
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterator</span><span class="p">):</span>
                     <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunksize</span><span class="p">]])</span>
                 <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        
+
         <span class="c1"># single column</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> is not a valid column name!&quot;</span><span class="p">)</span>
-            
+
         <span class="c1"># multiple columns</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">key</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">key</span><span class="p">):</span>
@@ -703,7 +703,7 @@
 <span class="sd">            str: A string representation of the object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="s2">&quot;history&quot;</span><span class="p">)</span>
-        
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_repr_html_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the HTML representation of the history dataframe.</span>
 
@@ -734,7 +734,7 @@
 <span class="sd">        ----------</span>
 <span class="sd">        where : str, optional</span>
 <span class="sd">            A string representing the query condition to apply to the data.</span>
-<span class="sd">            It is only possible to query on the index or string columns. </span>
+<span class="sd">            It is only possible to query on the index or string columns.</span>
 <span class="sd">        start : int, optional</span>
 <span class="sd">            The starting index of the data to select.</span>
 <span class="sd">        stop : int, optional</span>
@@ -855,7 +855,7 @@
                 <span class="n">chunk</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">stop</span> <span class="o">-</span> <span class="n">pre</span>
             <span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">pre</span> <span class="o">+</span> <span class="n">chunk</span><span class="p">))</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">where</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;index in </span><span class="si">{</span><span class="n">indices</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        
+
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">where</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;index == </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">key</span><span class="p">):</span>
@@ -965,8 +965,8 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        where : str, optional</span>
-<span class="sd">            A condition to filter the rows of the oneline table. Default is None. </span>
-<span class="sd">            It is only possible to query on the index or string columns. </span>
+<span class="sd">            A condition to filter the rows of the oneline table. Default is None.</span>
+<span class="sd">            It is only possible to query on the index or string columns.</span>
 <span class="sd">        start : int, optional</span>
 <span class="sd">            The starting index of the subset. Default is None.</span>
 <span class="sd">        stop : int, optional</span>
@@ -1017,7 +1017,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
@@ -1277,12 +1277,12 @@
             <span class="n">mask</span> <span class="o">=</span> <span class="n">tmp_data</span><span class="p">[</span><span class="s2">&quot;state_i&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;initially_single_star&quot;</span>
             <span class="n">filtered_data_single</span> <span class="o">=</span> <span class="n">tmp_data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
             <span class="n">filtered_data_binaries</span> <span class="o">=</span> <span class="n">tmp_data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span>
-            
+
             <span class="n">simulated_mass_single</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">filtered_data_single</span><span class="p">[[</span><span class="s2">&quot;S1_mass_i&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
             <span class="n">simulated_mass_binaries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">filtered_data_binaries</span><span class="p">[[</span><span class="s2">&quot;S1_mass_i&quot;</span><span class="p">,</span> <span class="s2">&quot;S2_mass_i&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
             <span class="n">simulated_mass</span> <span class="o">=</span> <span class="n">simulated_mass_single</span> <span class="o">+</span> <span class="n">simulated_mass_binaries</span>
             <span class="k">del</span> <span class="n">tmp_data</span><span class="p">,</span> <span class="n">filtered_data_single</span><span class="p">,</span> <span class="n">filtered_data_binaries</span>
-            
+
             <span class="bp">self</span><span class="o">.</span><span class="n">mass_per_metallicity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
                     <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="n">metallicity</span><span class="p">],</span>
                     <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;simulated_mass&quot;</span><span class="p">:</span> <span class="n">simulated_mass</span><span class="p">,</span>
@@ -1305,7 +1305,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">history_lengths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">lengths</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">number_of_systems</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneline</span><span class="o">.</span><span class="n">number_of_systems</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">indices</span>
-        
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the object.</span>
 
@@ -1322,7 +1322,7 @@
             <span class="n">base_str</span> <span class="o">+=</span> <span class="s2">&quot;mass_per_metallicity:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">mpmt_table</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">base_str</span> <span class="o">+=</span> <span class="s2">&quot;mass_per_metallicity: Not set.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        
+
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;ini_params&quot;</span><span class="p">):</span>
             <span class="c1"># Create a DataFrame from ini_params with two columns: Parameter and Value.</span>
             <span class="n">ini_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ini_params</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Parameter&quot;</span><span class="p">,</span> <span class="s2">&quot;Value&quot;</span><span class="p">])</span>
@@ -1341,8 +1341,8 @@
 <span class="sd">        The selected systems are specified by their indices in the population.</span>
 
 <span class="sd">        By default the selected systems will overwrite the file if it already exists.</span>
-<span class="sd">        If overwrite is set to False, the selected systems will be appended to </span>
-<span class="sd">        the existing file if it already exists and the indices will be shifted </span>
+<span class="sd">        If overwrite is set to False, the selected systems will be appended to</span>
+<span class="sd">        the existing file if it already exists and the indices will be shifted</span>
 <span class="sd">        based on the current length of data in the file that is being appended to.</span>
 
 
@@ -1390,15 +1390,15 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> does not contain .h5 in the se.</span><span class="se">\n</span><span class="s2"> Is this a valid population file?&quot;</span>
             <span class="p">)</span>
-        
+
         <span class="c1"># overwrite and append cannot both be True</span>
         <span class="k">if</span> <span class="n">append</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Both overwrite and append cannot be True!&quot;</span><span class="p">)</span>
-        
+
         <span class="c1"># check for file existence</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">append</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> already exists! Set overwrite or append to True to continue!&quot;</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="n">overwrite</span><span class="p">:</span>
             <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
         <span class="k">elif</span> <span class="n">append</span><span class="p">:</span>
@@ -1474,7 +1474,7 @@
                 <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunksize</span><span class="p">,</span>
                 <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
             <span class="p">):</span>
-                
+
                 <span class="n">tmp_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneline</span><span class="p">[</span><span class="n">selection</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunksize</span><span class="p">]]</span>
                 <span class="k">if</span> <span class="s2">&quot;metallicity&quot;</span> <span class="ow">in</span> <span class="n">tmp_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                     <span class="n">tmp_df</span><span class="p">[</span><span class="s2">&quot;metallicity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_df</span><span class="p">[</span><span class="s2">&quot;metallicity&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
@@ -1717,14 +1717,14 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_write_formation_channels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
             <span class="k">del</span> <span class="n">df</span>
-            
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;formation_channels written to population file!&quot;</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_write_formation_channels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the formation channels to the population file</span>
-<span class="sd">        </span>
+
 <span class="sd">        This will append the formation channels to the population file, while restricting the maximum</span>
 <span class="sd">        length of the channel and channel_debug columns to 100 characters.</span>
 
@@ -1736,7 +1736,7 @@
 <span class="sd">            The dataframe containing the formation channels.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">str_length</span> <span class="o">=</span> <span class="mi">100</span>
-        
+
         <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
             <span class="n">df</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">str_length</span><span class="p">)</span>
             <span class="n">df</span><span class="p">[</span><span class="s1">&#39;channel_debug&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;channel_debug&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">str_length</span><span class="p">)</span>
@@ -1879,13 +1879,13 @@
                 <span class="n">formation_channels_chunk</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="n">syn_df</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">history_chunk</span><span class="p">,</span> <span class="n">oneline_chunk</span><span class="p">,</span> <span class="n">formation_channels_chunk</span><span class="p">)</span>
-            
+
             <span class="c1"># check if required columns are present</span>
             <span class="k">if</span> <span class="s2">&quot;time&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">syn_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Transient population requires a time column!&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="s2">&quot;metallicity&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">syn_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Transient population requires a metallicity column!&quot;</span><span class="p">)</span>
-            
+
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">syn_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">syn_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Transient population contains duplicate columns!&quot;</span><span class="p">)</span>
 
@@ -1903,7 +1903,7 @@
                 <span class="p">)</span>
 
             <span class="n">previous</span> <span class="o">=</span> <span class="n">end</span>
-            
+
         <span class="c1"># it can happen that no systems are selected, in which case nothing has been appended to the file in the loop</span>
         <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
             <span class="k">if</span> <span class="s1">&#39;/transients/&#39;</span><span class="o">+</span><span class="n">transient_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">store</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -2072,10 +2072,10 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.TransientPopulation.calculate_model_weights">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_model_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_weights_identifier</span><span class="p">,</span> <span class="n">population_parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">simulation_parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the model weights of the transient population based on the provided model parameters.</span>
-<span class="sd">        </span>
+
 <span class="sd">        This method calculates the model weights of each event in the transient population based on the provided model parameters.</span>
 <span class="sd">        It performs various calculations and stores the results in an HDF5 file at the location &#39;/transients/{transient_name}/weights/{model_weights_identifier}&#39;.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        model_weights_identifier : str</span>
@@ -2084,7 +2084,7 @@
 <span class="sd">            Dictionary containing the simulation parameters. If None, the simulation parameters in the file will be used.</span>
 <span class="sd">        population_parameters : dict, optional</span>
 <span class="sd">            Dictionary containing the population parameters. If None, the default population parameters will be used.</span>
-<span class="sd">        </span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">population_parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">population_parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;number_of_binaries&#39;</span><span class="p">:</span> <span class="mi">1000000</span><span class="p">,</span>
@@ -2103,7 +2103,7 @@
                                     <span class="s1">&#39;orbital_period_min&#39;</span><span class="p">:</span><span class="mf">0.35</span><span class="p">,</span>
                                     <span class="s1">&#39;orbital_period_max&#39;</span><span class="p">:</span><span class="mf">6e3</span><span class="p">,</span>
                                     <span class="s1">&#39;eccentricity_scheme&#39;</span><span class="p">:</span><span class="s1">&#39;zero&#39;</span><span class="p">,}</span>
-        
+
         <span class="k">if</span> <span class="n">simulation_parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">simulation_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ini_params</span>
         <span class="k">else</span><span class="p">:</span>
@@ -2111,7 +2111,7 @@
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">simulation_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ini_params</span><span class="p">:</span>
                     <span class="n">Pwarn</span><span class="p">((</span><span class="sa">f</span><span class="s2">&quot;Parameter </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> not found in the population&quot;</span>
-                            <span class="s2">&quot; parameters! Make sure this is intended&quot;</span><span class="p">),</span> 
+                            <span class="s2">&quot; parameters! Make sure this is intended&quot;</span><span class="p">),</span>
                           <span class="s2">&quot;POSYDONWarning&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
@@ -2119,7 +2119,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">simulation_parameters</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Population parameters:&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">population_parameters</span><span class="p">)</span>
-        
+
         <span class="n">tmp_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">]]</span>
         <span class="n">model_weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
                     <span class="p">{</span><span class="n">model_weights_identifier</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tmp_data</span><span class="p">))},</span>
@@ -2127,14 +2127,16 @@
         <span class="c1"># loop over each metallicity since we sample each metallicity indivivually</span>
         <span class="c1"># Looping per metallicity to reduce memory usage?</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mass_per_metallicity</span><span class="p">)):</span>
-            <span class="c1"># calculate weights </span>
+            <span class="c1"># calculate weights</span>
             <span class="n">met_mask</span> <span class="o">=</span> <span class="n">tmp_data</span><span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass_per_metallicity</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="n">met_indices</span> <span class="o">=</span> <span class="n">tmp_data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">met_mask</span><span class="p">]</span>
             <span class="n">met_indices</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">met_indices</span><span class="p">)</span>
             <span class="n">M_sim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass_per_metallicity</span><span class="p">[</span><span class="s1">&#39;simulated_mass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">met_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
             <span class="n">pop_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneline</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">where</span><span class="o">=</span><span class="s1">&#39;index in &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">met_indices</span><span class="o">.</span><span class="n">tolist</span><span class="p">()),</span>
                                            <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;S1_mass_i&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_mass_i&#39;</span><span class="p">,</span> <span class="s1">&#39;orbital_period_i&#39;</span><span class="p">,</span> <span class="s1">&#39;eccentricity_i&#39;</span><span class="p">,</span> <span class="s1">&#39;state_i&#39;</span><span class="p">])</span>
-            
+
             <span class="c1"># For some reason some binaries might be flipped in the sampling</span>
             <span class="c1"># S2_mass_i &gt; S1_mass_i; Unclear why this happens</span>
             <span class="n">S1_tmp</span> <span class="o">=</span> <span class="n">pop_data</span><span class="p">[</span><span class="s1">&#39;S1_mass_i&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -2142,7 +2144,7 @@
             <span class="n">pop_data</span><span class="p">[</span><span class="s1">&#39;S1_mass_i&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">S1_tmp</span><span class="p">,</span> <span class="n">S2_tmp</span><span class="p">)</span>
             <span class="n">pop_data</span><span class="p">[</span><span class="s1">&#39;S2_mass_i&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">S1_tmp</span><span class="p">,</span> <span class="n">S2_tmp</span><span class="p">)</span>
             <span class="k">del</span> <span class="n">S1_tmp</span><span class="p">,</span> <span class="n">S2_tmp</span>
-            
+
             <span class="n">calculated_weights</span> <span class="o">=</span>  <span class="n">calculate_model_weights</span><span class="p">(</span>
                                                     <span class="n">pop_data</span><span class="o">=</span><span class="n">pop_data</span><span class="p">,</span>
                                                     <span class="n">M_sim</span><span class="o">=</span><span class="n">M_sim</span><span class="p">,</span>
@@ -2151,16 +2153,16 @@
             <span class="n">weight_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">met_indices</span><span class="p">,</span> <span class="n">calculated_weights</span><span class="p">))</span>
             <span class="n">model_weights</span><span class="p">[</span><span class="n">model_weights_identifier</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">model_weights</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">weight_mapping</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">model_weights</span><span class="p">[</span><span class="n">model_weights_identifier</span><span class="p">]))</span>
-        
+
         <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
             <span class="k">if</span> <span class="s1">&#39;/transients/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">transient_name</span> <span class="o">+</span> <span class="s1">&#39;/weights/&#39;</span> <span class="o">+</span> <span class="n">model_weights_identifier</span> <span class="ow">in</span> <span class="n">store</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;Model weights already exist! Overwriting them!&quot;</span><span class="p">,</span> <span class="s2">&quot;OverwriteWarning&quot;</span><span class="p">)</span>
                 <span class="k">del</span> <span class="n">store</span><span class="p">[</span><span class="s1">&#39;transients/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">transient_name</span> <span class="o">+</span> <span class="s1">&#39;/weights/&#39;</span> <span class="o">+</span> <span class="n">model_weights_identifier</span><span class="p">]</span>
-                
+
             <span class="n">store</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s1">&#39;transients/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">transient_name</span> <span class="o">+</span> <span class="s1">&#39;/weights/&#39;</span> <span class="o">+</span> <span class="n">model_weights_identifier</span><span class="p">,</span> <span class="n">model_weights</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">model_weights</span></div>
 
-    
+
 <div class="viewcode-block" id="TransientPopulation.model_weights">
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.TransientPopulation.model_weights">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">model_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_weights_identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -2168,18 +2170,18 @@
 
 <span class="sd">        This method retrieves the model weights of the transient population based on the provided model weights identifier.</span>
 <span class="sd">        The model weights are stored in an HDF5 file</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        model_weights_identifier : str (optional)</span>
 <span class="sd">            Identifier for the model weights. If None, all model weights models are returned.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pd.DataFrame</span>
-<span class="sd">            The model weights of the transient population. </span>
+<span class="sd">            The model weights of the transient population.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="k">if</span> <span class="n">model_weights_identifier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
                 <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">store</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/transients/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">transient_name</span> <span class="o">+</span> <span class="s1">&#39;/weights/&#39;</span><span class="p">)]</span>
@@ -2187,7 +2189,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
                 <span class="n">model_weights</span> <span class="o">=</span> <span class="n">store</span><span class="p">[</span><span class="s1">&#39;transients/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">transient_name</span> <span class="o">+</span> <span class="s1">&#39;/weights/&#39;</span> <span class="o">+</span> <span class="n">model_weights_identifier</span><span class="p">]</span>
-        
+
         <span class="k">return</span> <span class="n">model_weights</span></div>
 
 
@@ -2251,9 +2253,9 @@
         <span class="n">path_in_file</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;/transients/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">transient_name</span> <span class="o">+</span> <span class="s2">&quot;/rates/&quot;</span> <span class="o">+</span> <span class="n">SFH_identifier</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
         <span class="p">)</span>
- 
+
         <span class="k">if</span> <span class="n">model_weights</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_weights</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Model weights not present in the population file!&quot;</span><span class="p">)</span>       
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Model weights not present in the population file!&quot;</span><span class="p">)</span>
 
 
         <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">HDFStore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
@@ -2289,12 +2291,12 @@
         <span class="n">met_edges</span> <span class="o">=</span> <span class="n">rates</span><span class="o">.</span><span class="n">edges_metallicity_bins</span>
         <span class="c1"># sample the SFH for only the events that are within the Hubble time</span>
         <span class="c1"># only need to sample the SFH at each metallicity and z_birth</span>
-        <span class="c1"># Not for every event!        </span>
+        <span class="c1"># Not for every event!</span>
         <span class="n">SFR_per_met_at_z_birth</span> <span class="o">=</span> <span class="n">SFR_per_met_at_z</span><span class="p">(</span><span class="n">z_birth</span><span class="p">,</span> <span class="n">met_edges</span><span class="p">,</span> <span class="n">rates</span><span class="o">.</span><span class="n">MODEL</span><span class="p">)</span>
-        
+
         <span class="c1"># the weight per model</span>
         <span class="n">M_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_weights</span><span class="p">(</span><span class="n">model_weights_identifier</span><span class="o">=</span><span class="n">model_weights</span><span class="p">)</span>
-        
+
         <span class="c1">#rates.mass_per_metallicity.loc[rates.centers_metallicity_bins / Zsun][</span>
         <span class="c1">#    &quot;underlying_mass&quot;</span>
         <span class="c1">#].values</span>
@@ -2343,9 +2345,9 @@
                 <span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
                 <span class="o">*</span> <span class="n">Zsun</span>
             <span class="p">)</span>
-            
+
             <span class="n">tmp_model_weights</span> <span class="o">=</span> <span class="n">M_model</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">chunksize</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-            
+
             <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">met_events</span><span class="p">),</span> <span class="n">nr_of_birth_bins</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">met</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rates</span><span class="o">.</span><span class="n">centers_metallicity_bins</span><span class="p">):</span>
                 <span class="n">mask</span> <span class="o">=</span> <span class="n">met_events</span> <span class="o">==</span> <span class="n">met</span>
@@ -2388,10 +2390,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">model_weight_identifier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Model weight identifier not provided!&quot;</span><span class="p">)</span>
-        
+
         <span class="n">efficiency</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">efficiency</span><span class="p">(</span><span class="n">model_weight_identifier</span><span class="p">,</span> <span class="n">channels</span><span class="p">)</span>
-        
-        
+
+
         <span class="n">plot_pop</span><span class="o">.</span><span class="n">plot_merger_efficiency</span><span class="p">(</span>
             <span class="n">efficiency</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">*</span> <span class="n">Zsun</span><span class="p">,</span> <span class="n">efficiency</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">channels</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span></div>
@@ -2400,19 +2402,24 @@
 <div class="viewcode-block" id="TransientPopulation.plot_delay_time_distribution">
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.TransientPopulation.plot_delay_time_distribution">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">plot_delay_time_distribution</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">metallicity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">model_weights_identifier</span><span class="p">,</span> <span class="n">metallicity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span>
         <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the delay time distribution of the transient population.</span>
 
-<span class="sd">        This method plots the delay time distribution of the transient population. If a specific metallicity is provided,</span>
-<span class="sd">        the delay time distribution of the population at that metallicity will be plotted. Otherwise, the delay time distribution</span>
-<span class="sd">        of the entire population will be plotted.</span>
+<span class="sd">        This method plots the delay time distribution of the transient population</span>
+<span class="sd">        using model weights for normalization. If a specific metallicity is</span>
+<span class="sd">        provided, the delay time distribution of the population at that metallicity</span>
+<span class="sd">        will be plotted. Otherwise, the delay time distribution of the entire</span>
+<span class="sd">        population will be plotted.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
+<span class="sd">        model_weights_identifier : str</span>
+<span class="sd">            Identifier for the model weights to use for normalization.</span>
 <span class="sd">        metallicity : float or None</span>
-<span class="sd">            The metallicity value to select a specific population. If None, the delay time distribution of the entire population will be plotted.</span>
+<span class="sd">            The metallicity value to select a specific population. If None, the delay time distribution</span>
+<span class="sd">            of the entire population will be plotted.</span>
 <span class="sd">        ax : matplotlib.axes.Axes or None</span>
 <span class="sd">            The axes object to plot the distribution on. If None, a new figure and axes will be created.</span>
 <span class="sd">        bins : int</span>
@@ -2424,38 +2431,47 @@
 <span class="sd">        ------</span>
 <span class="sd">        ValueError</span>
 <span class="sd">            If the specified metallicity is not present in the population.</span>
+<span class="sd">            If model_weights_identifier is not found in the population file.</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        - The delay time distribution is normalized by the total mass of the population if no metallicity is specified.</span>
-<span class="sd">        Otherwise, it is normalized by the mass of the population at the specified metallicity.</span>
+<span class="sd">        The delay time distribution is normalized by the total model weight of the population if no metallicity</span>
+<span class="sd">        is specified. Otherwise, it is normalized by the model weight of the population at the specified metallicity.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="s1">&#39;underlying_mass&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass_per_metallicity</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Underlying mass not calculated! Please calculate the underlying mass first!&quot;</span><span class="p">)</span>
-        
         <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+        <span class="c1"># Validate model weights</span>
+        <span class="k">if</span> <span class="n">model_weights_identifier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_weights</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model weights identifier &#39;</span><span class="si">{</span><span class="n">model_weights_identifier</span><span class="si">}</span><span class="s2">&#39; not found in the population file!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get model weights for normalization</span>
+        <span class="n">model_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_weights</span><span class="p">(</span><span class="n">model_weights_identifier</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">metallicity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
             <span class="n">time</span> <span class="o">=</span> <span class="n">time</span> <span class="o">*</span> <span class="mf">1e6</span>  <span class="c1"># yr</span>
-            <span class="n">h</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
-            <span class="n">h</span> <span class="o">=</span> <span class="n">h</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass_per_metallicity</span><span class="p">[</span><span class="s2">&quot;underlying_mass&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+            <span class="c1"># Create histogram with model weights</span>
+            <span class="n">h</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">model_weights</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">h</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">metallicity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">solar_metallicities</span><span class="p">)):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The metallicity is not present in the population!&quot;</span><span class="p">)</span>
 
-            <span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">])</span>
-            <span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="n">time</span><span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">metallicity</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">time_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">])</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="n">time_df</span><span class="p">[</span><span class="n">time_df</span><span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">metallicity</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
             <span class="n">time</span> <span class="o">=</span> <span class="n">time</span> <span class="o">*</span> <span class="mf">1e6</span>  <span class="c1"># yr</span>
-            <span class="n">h</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
-            <span class="n">h</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">h</span>
-                <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">)</span>
-                <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass_per_metallicity</span><span class="p">[</span><span class="s2">&quot;underlying_mass&quot;</span><span class="p">][</span><span class="n">metallicity</span><span class="p">]</span>
-            <span class="p">)</span>
+
+            <span class="c1"># Get weights for the specific metallicity</span>
+            <span class="n">metallicity_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">metallicity</span>
+            <span class="n">weights_for_met</span> <span class="o">=</span> <span class="n">model_weights</span><span class="p">[</span><span class="n">metallicity_mask</span><span class="p">]</span>
+
+            <span class="c1"># Create histogram with metallicity-specific weights</span>
+            <span class="n">h</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights_for_met</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">h</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">)</span>
 
         <span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">h</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
@@ -2512,9 +2528,9 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.TransientPopulation.efficiency">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">efficiency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_weights_identifier</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the efficiency of events per Msun for each solar metallicity.</span>
-<span class="sd">        </span>
+
 <span class="sd">        This method retrieves the efficiency of events per Msun for each solar metallicity value in the transient population.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        model_weights_identifier : str</span>
@@ -2522,20 +2538,20 @@
 <span class="sd">        channels : bool, optional</span>
 <span class="sd">            If True, the efficiency will be calculated for each formation channel.</span>
 <span class="sd">            Default is False.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pd.DataFrame</span>
 <span class="sd">            A DataFrame containing the efficiency of events per Msun for each solar metallicity.</span>
-<span class="sd">        </span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="n">efficiency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mass_per_metallicity</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">])</span>
         <span class="n">model_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_weights</span><span class="p">(</span><span class="n">model_weights_identifier</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">metallicity</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mass_per_metallicity</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
             <span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">metallicity</span>
             <span class="n">efficiency</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">metallicity</span><span class="p">,</span> <span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">model_weights</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
-            
+
         <span class="k">if</span> <span class="n">channels</span><span class="p">:</span>
             <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[[</span><span class="s1">&#39;metallicity&#39;</span><span class="p">,</span> <span class="s1">&#39;channel&#39;</span><span class="p">]]</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">model_weight</span><span class="o">=</span><span class="n">model_weights</span><span class="p">)</span>
@@ -2543,12 +2559,12 @@
 
             <span class="k">for</span> <span class="p">(</span><span class="n">met</span><span class="p">,</span> <span class="n">ch</span><span class="p">),</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">grouped</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">efficiency</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">met</span><span class="p">,</span> <span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
-        
+
         <span class="n">efficiency</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">efficiency</span></div>
 </div>
 
-        
+
 
 <div class="viewcode-block" id="Rates">
 <a class="viewcode-back" href="../../../api_reference/posydon.popsyn.html#posydon.popsyn.synthetic_population.Rates">[docs]</a>
@@ -3130,7 +3146,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

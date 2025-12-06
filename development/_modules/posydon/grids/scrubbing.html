@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.grids.scrubbing &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.grids.scrubbing &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -122,9 +126,12 @@
 
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.limits_thresholds</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">RL_RELATIVE_OVERFLOW_THRESHOLD</span><span class="p">,</span> <span class="n">LG_MTRANSFER_RATE_THRESHOLD</span><span class="p">,</span>
-    <span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span><span class="p">,</span> <span class="n">THRESHOLD_CENTRAL_ABUNDANCE_LOOSE_C</span>
+    <span class="n">LG_MTRANSFER_RATE_THRESHOLD</span><span class="p">,</span>
+    <span class="n">RL_RELATIVE_OVERFLOW_THRESHOLD</span><span class="p">,</span>
+    <span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span><span class="p">,</span>
+    <span class="n">THRESHOLD_CENTRAL_ABUNDANCE_LOOSE_C</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
 
@@ -326,7 +333,7 @@
                 <span class="p">(</span><span class="s2">&quot;star_age&quot;</span> <span class="ow">in</span> <span class="n">h2</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">)))):</span>
         <span class="c1">#at least one histroy doesn&#39;t contain an age column</span>
         <span class="k">return</span> <span class="n">bh</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
-    
+
     <span class="n">h1_colnames</span> <span class="o">=</span> <span class="n">h1</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span>
     <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;center_he4&quot;</span> <span class="ow">in</span> <span class="n">h1_colnames</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;center_c12&quot;</span> <span class="ow">in</span> <span class="n">h1_colnames</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">h1</span><span class="p">[</span><span class="s2">&quot;center_he4&quot;</span><span class="p">])</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">h1</span><span class="p">[</span><span class="s2">&quot;center_c12&quot;</span><span class="p">])</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
@@ -347,7 +354,7 @@
     <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">depleted1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">depleted2</span><span class="p">):</span>
         <span class="c1">#none of the stars reached He depletion</span>
         <span class="k">return</span> <span class="n">bh</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
-    
+
     <span class="k">if</span> <span class="n">depleted1</span><span class="p">:</span>
 <span class="c1">#        where_conditions_met1 = np.where((h1[&quot;center_he4&quot;]&lt;Ystop) and (h1[&quot;center_c12&quot;]&lt;XCstop))[0]</span>
         <span class="n">where_conditions_met1</span> <span class="o">=</span> <span class="p">[]</span>
@@ -388,15 +395,15 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">last_index</span> <span class="o">=</span> <span class="n">where_conditions_met2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">newTF1</span> <span class="o">=</span> <span class="s1">&#39;Secondary got stopped before central carbon depletion&#39;</span>
-    
+
     <span class="c1"># include the point above the stopping criteria so that the last inferred</span>
     <span class="c1"># stellar state will be XXX_Central_He_depleted. This is essential to find</span>
     <span class="c1"># the core mass at He depletion with the calculate_Patton20_values_at_He_depl</span>
-    <span class="c1"># method used to calculate the core collapse properties with the </span>
+    <span class="c1"># method used to calculate the core collapse properties with the</span>
     <span class="c1"># Patton&amp;Sukhbold mechanism.</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bh</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">last_index</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span>
         <span class="n">last_index</span> <span class="o">+=</span> <span class="mi">1</span>
-        
+
     <span class="n">new_bh</span> <span class="o">=</span> <span class="n">bh</span><span class="p">[:</span><span class="n">last_index</span><span class="p">]</span>
     <span class="n">new_h1</span> <span class="o">=</span> <span class="n">h1</span><span class="p">[:</span><span class="n">last_index</span><span class="p">]</span>
     <span class="n">new_h2</span> <span class="o">=</span> <span class="n">h2</span><span class="p">[:</span><span class="n">last_index</span><span class="p">]</span>
@@ -424,7 +431,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon_run_pipeline &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon_run_pipeline &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -239,7 +243,7 @@
 <span class="sd">    overwrite_psygrid : bool</span>
 <span class="sd">        Whether existing file(s) should be overwritten.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c1"># read csv file</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">)</span>
@@ -270,10 +274,10 @@
                   <span class="sa">f</span><span class="s1">&#39; grid: </span><span class="si">{</span><span class="n">grid_type</span><span class="si">}</span><span class="s1"> in </span><span class="si">{</span><span class="n">grid_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s2">&quot;ReplaceValueWarning&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">stop_before_carbon_depletion</span> <span class="o">=</span> <span class="kc">False</span>
-    
+
     <span class="n">grid_output</span> <span class="o">=</span> <span class="n">get_new_grid_name</span><span class="p">(</span><span class="n">grid_path</span><span class="p">,</span> <span class="n">compression</span><span class="p">,</span>
                                     <span class="n">create_missing_directories</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    
+
     <span class="c1"># get compression dependent attributes</span>
     <span class="n">pure_compression</span> <span class="o">=</span> <span class="n">compression</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">pure_compression</span> <span class="ow">in</span> <span class="n">COMPRESSIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -285,12 +289,12 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pure_compression = </span><span class="si">{</span><span class="n">pure_compression</span><span class="si">}</span><span class="s1"> not &#39;</span>
                          <span class="sa">f</span><span class="s1">&#39;supported! (compression=</span><span class="si">{</span><span class="n">compression</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="s1">&#39;RLO&#39;</span> <span class="ow">in</span> <span class="n">compression</span><span class="p">:</span>
         <span class="n">start_at_RLO</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">start_at_RLO</span> <span class="o">=</span> <span class="kc">False</span>
-    
+
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;processing: </span><span class="si">{</span><span class="n">grid_path</span><span class="si">}</span><span class="s1"> with compression: </span><span class="si">{</span><span class="n">compression</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">grid_output</span><span class="p">):</span>
@@ -300,7 +304,7 @@
                 <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;file </span><span class="si">{</span><span class="n">grid_output</span><span class="si">}</span><span class="s1"> already exists!&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;saving to file: </span><span class="si">{</span><span class="n">grid_output</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    
+
     <span class="c1"># create the new PSyGrid</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
     <span class="n">grid</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">grid_path</span><span class="p">,</span>
@@ -333,7 +337,7 @@
 <span class="sd">    verbose : bool</span>
 <span class="sd">        Enable/Disable additional output.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c1"># read csv file</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">)</span>
@@ -366,7 +370,7 @@
 <span class="sd">    verbose : bool</span>
 <span class="sd">        Enable/Disable additional output.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c1"># read csv file</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">)</span>
@@ -395,20 +399,20 @@
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">grid_ORIGINAL_path</span><span class="si">}</span><span class="s1"> not found!&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No path_to_grid_ORIGINAL in </span><span class="si">{</span><span class="n">path_to_csv_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compute processed quantities for </span><span class="si">{</span><span class="n">grid_path</span><span class="si">}</span><span class="s1"> ...&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="s1">&#39;CO&#39;</span> <span class="ow">in</span> <span class="n">grid_type</span><span class="p">:</span>
         <span class="n">star_2_CO</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">star_2_CO</span> <span class="o">=</span> <span class="kc">False</span>
-    
+
     <span class="c1"># load grid with ORIGINAL compression and get extra colums</span>
     <span class="n">grid_ORIGINAL</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="n">grid_ORIGINAL_path</span><span class="p">)</span>
     <span class="n">MESA_dirs_EXTRA_COLUMNS</span><span class="p">,</span> <span class="n">EXTRA_COLUMNS</span> <span class="o">=</span> <span class="n">post_process_grid</span><span class="p">(</span><span class="n">grid_ORIGINAL</span><span class="p">,</span>
                                               <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">star_2_CO</span><span class="o">=</span><span class="n">star_2_CO</span><span class="p">,</span>
                                               <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
-    
+
     <span class="c1"># post processed quantities are appended to the grid object, hence</span>
     <span class="c1"># we create a copy of it and append back to it</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">processed_grid_path</span><span class="p">):</span>
@@ -416,7 +420,7 @@
               <span class="s2">&quot;OverwriteWarning&quot;</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">processed_grid_path</span><span class="p">)</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">grid_path</span><span class="p">,</span> <span class="n">processed_grid_path</span><span class="p">)</span>
-    
+
     <span class="c1"># load processed grid and append values</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="n">processed_grid_path</span><span class="p">)</span>
     <span class="n">add_post_processed_quantities</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">MESA_dirs_EXTRA_COLUMNS</span><span class="p">,</span> <span class="n">EXTRA_COLUMNS</span><span class="p">)</span>
@@ -440,7 +444,7 @@
 <span class="sd">    verbose : bool</span>
 <span class="sd">        Enable/Disable additional output.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c1"># read csv file</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">)</span>
@@ -467,23 +471,23 @@
         <span class="n">interpolator_path</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;path_to_interpolator&#39;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No path_to_interpolator in </span><span class="si">{</span><span class="n">path_to_csv_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    
+
     <span class="n">method</span> <span class="o">=</span> <span class="n">interpolation_method</span>
     <span class="k">if</span> <span class="s1">&#39;_RLO&#39;</span> <span class="ow">in</span> <span class="n">method</span><span class="p">:</span>
         <span class="n">method</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_RLO&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    
+
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Train interpolators on </span><span class="si">{</span><span class="n">grid_path</span><span class="si">}</span><span class="s1"> with method </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    
+
     <span class="c1"># check interpolation_objects directory exists</span>
     <span class="n">interp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">interpolator_path</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">interp_path</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">interp_path</span><span class="p">)</span>
-    
+
     <span class="c1"># load grid</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
     <span class="n">grid</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">grid_path</span><span class="p">)</span>
-    
+
     <span class="n">interp_method</span> <span class="o">=</span> <span class="p">[</span><span class="n">method</span><span class="p">,</span> <span class="n">method</span><span class="p">]</span>
     <span class="n">interp_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;stable_MT&quot;</span><span class="p">,</span> <span class="s2">&quot;unstable_MT&quot;</span><span class="p">]</span>
     <span class="k">if</span> <span class="s1">&#39;_RLO&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interpolation_method</span><span class="p">:</span>
@@ -492,7 +496,7 @@
     <span class="k">if</span> <span class="s1">&#39;CO&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grid_type</span><span class="p">:</span>
         <span class="n">interp_method</span> <span class="o">+=</span> <span class="p">[</span><span class="n">method</span><span class="p">]</span>
         <span class="n">interp_classes</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;stable_reverse_MT&quot;</span><span class="p">]</span>
-    
+
     <span class="c1"># all magnitues that are not model numbers, supernova properites or strings</span>
     <span class="c1"># are interpolated with respect to interpolation_class</span>
     <span class="n">out_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span> <span class="k">if</span> <span class="p">(</span>
@@ -500,21 +504,21 @@
                                    <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">)</span>
                                    <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
                                    <span class="ow">and</span> <span class="s2">&quot;SN_MODEL&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)]</span>
-    
+
 
     <span class="n">out_nan_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span> <span class="k">if</span> <span class="p">(</span>
                              <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;model_number&quot;</span> <span class="ow">and</span>
                             <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">)</span>
                             <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
                             <span class="ow">and</span> <span class="s2">&quot;SN_MODEL&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)]</span>
-    
+
     <span class="c1"># define all string keys in final values</span>
     <span class="n">c_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;interpolation_class&#39;</span><span class="p">,</span> <span class="s1">&#39;S1_state&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_state&#39;</span><span class="p">,</span> <span class="s1">&#39;mt_history&#39;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">SN_MODEL_NAME</span> <span class="ow">in</span> <span class="n">SN_MODELS</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
             <span class="n">c_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">SN_MODEL_NAME</span><span class="si">}</span><span class="s1">_SN_type&#39;</span><span class="p">)</span>
             <span class="n">c_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">SN_MODEL_NAME</span><span class="si">}</span><span class="s1">_CO_type&#39;</span><span class="p">)</span>
-    
+
     <span class="c1"># specify the interpolation methods</span>
     <span class="n">interpolators</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">{</span>
@@ -527,7 +531,7 @@
             <span class="s2">&quot;c_key&quot;</span><span class="p">:</span> <span class="s2">&quot;interpolation_class&quot;</span>
         <span class="p">},</span>
     <span class="p">]</span>
-    
+
     <span class="c1"># core collapse quantities are interpolated with respect to the</span>
     <span class="c1"># compact object type</span>
     <span class="c1"># TODO: we need to train core collapse for secondary star as well</span>
@@ -540,13 +544,13 @@
                                    <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">)</span>
                                    <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
                                    <span class="ow">and</span> <span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">SN_MODEL_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)]</span>
-            
+
             <span class="n">out_nan_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span> <span class="k">if</span> <span class="p">(</span>
-                                <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;model_number&quot;</span> 
+                                <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;model_number&quot;</span>
                                 <span class="ow">and</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">)</span>
                                 <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">final_values</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
                                 <span class="ow">and</span> <span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">SN_MODEL_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)]</span>
-            
+
             <span class="c1"># get interpolations classes dynamically</span>
             <span class="n">interp_method</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">interp_classes</span> <span class="o">=</span> <span class="p">[]</span>
@@ -562,13 +566,13 @@
                     <span class="s2">&quot;out_keys&quot;</span><span class="p">:</span> <span class="n">out_keys</span><span class="p">,</span>
                     <span class="s2">&quot;out_nan_keys&quot;</span><span class="p">:</span> <span class="n">out_nan_keys</span><span class="p">,</span>
                     <span class="s2">&quot;class_method&quot;</span><span class="p">:</span> <span class="s2">&quot;kNN&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;c_keys&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">SN_MODEL_NAME</span><span class="si">}</span><span class="s1">_CO_interpolation_class&#39;</span><span class="p">,</span> 
+                    <span class="s2">&quot;c_keys&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">SN_MODEL_NAME</span><span class="si">}</span><span class="s1">_CO_interpolation_class&#39;</span><span class="p">,</span>
                                <span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">SN_MODEL_NAME</span><span class="si">}</span><span class="s1">_CO_type&#39;</span><span class="p">,</span>
                                <span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">SN_MODEL_NAME</span><span class="si">}</span><span class="s1">_SN_type&#39;</span><span class="p">],</span>
                     <span class="s2">&quot;c_key&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">SN_MODEL_NAME</span><span class="si">}</span><span class="s1">_CO_interpolation_class&#39;</span>
-                <span class="p">},</span>   
+                <span class="p">},</span>
             <span class="p">)</span>
-    
+
     <span class="c1"># initialize initial to final interpolator</span>
     <span class="n">interp</span> <span class="o">=</span> <span class="n">IFInterpolator</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">interpolators</span><span class="o">=</span><span class="n">interpolators</span><span class="p">)</span>
 
@@ -631,12 +635,12 @@
         <span class="n">profile_interpolator_path</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;path_to_profile_interpolator&#39;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No path_to_profile_interpolator in </span><span class="si">{</span><span class="n">path_to_csv_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Train profile interpolators on </span><span class="si">{</span><span class="n">grid_path</span><span class="si">}</span><span class="s1"> with the &#39;</span>
               <span class="sa">f</span><span class="s1">&#39;initial-final interpolator </span><span class="si">{</span><span class="n">IF_interpolator_path</span><span class="si">}</span><span class="s1"> to get &#39;</span>
               <span class="sa">f</span><span class="s1">&#39;profiles of </span><span class="si">{</span><span class="n">profile_names</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    
+
     <span class="c1"># check interpolation_objects directory exists</span>
     <span class="n">interp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">profile_interpolator_path</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">interp_path</span><span class="p">):</span>
@@ -660,7 +664,7 @@
     <span class="c1"># saving</span>
     <span class="n">interp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">profile_interpolator_path</span><span class="p">)</span></div>
 
-    
+
     <span class="c1"># TODO: consider to remove the temporary pickle with the grid profiles</span>
     <span class="c1"># os.remove(tmp_profile_interpolator_path)</span>
 
@@ -680,7 +684,7 @@
 <span class="sd">    verbose : bool</span>
 <span class="sd">        Enable/Disable additional output.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c1"># read csv file</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">)</span>
@@ -699,7 +703,7 @@
         <span class="n">export_path</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;export_path&#39;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No export_path in </span><span class="si">{</span><span class="n">path_to_csv_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">export_path</span><span class="p">):</span>
         <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Replace </span><span class="si">{</span><span class="n">export_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s2">&quot;OverwriteWarning&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
@@ -724,7 +728,7 @@
 <span class="sd">    str</span>
 <span class="sd">        Name of ZAMS file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="k">if</span> <span class="s1">&#39;2e+00_Zsun&#39;</span> <span class="ow">in</span> <span class="n">metallicity</span><span class="p">:</span>
         <span class="n">zams_filename</span> <span class="o">=</span> <span class="s1">&#39;zams_z2.84m2_y0.2915.data&#39;</span>
     <span class="k">elif</span> <span class="p">((</span><span class="s1">&#39;1e+00_Zsun&#39;</span> <span class="ow">in</span> <span class="n">metallicity</span><span class="p">)</span><span class="ow">or</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">metallicity</span><span class="p">))):</span>
@@ -851,7 +855,7 @@
         <span class="k">return</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unsupported rerun type </span><span class="si">{</span><span class="n">rerun_type</span><span class="si">}</span><span class="s1">!&#39;</span><span class="p">)</span>
-    
+
     <span class="c1"># make replacements in ini file</span>
     <span class="n">search_text1</span> <span class="o">=</span> <span class="s2">&quot;main-18710e943edd926a5653c4cdb7d6e18e5bdb35a2&quot;</span>
     <span class="n">search_text2</span> <span class="o">=</span> <span class="s2">&quot;main-a060b7bf1a4d94d693f77be9a1b0b3a522c1eadf&quot;</span>
@@ -896,7 +900,7 @@
     <span class="n">runs_to_rerun</span><span class="o">=</span><span class="kc">None</span>
     <span class="n">termination_flags</span><span class="o">=</span><span class="kc">None</span>
     <span class="n">new_mesa_flag</span> <span class="o">=</span> <span class="kc">None</span>
-    
+
     <span class="c1"># handle different rerun types</span>
     <span class="k">if</span> <span class="n">rerun_type</span> <span class="o">==</span> <span class="s1">&#39;opacity_max&#39;</span> <span class="ow">or</span> <span class="n">rerun_type</span> <span class="o">==</span> <span class="s1">&#39;opacity_max_hms-hms&#39;</span><span class="p">:</span>
         <span class="c1"># TODO: consider using TF1_POOL_ERROR</span>
@@ -1023,7 +1027,7 @@
     <span class="k">elif</span> <span class="p">((</span><span class="n">rerun_type</span> <span class="o">==</span> <span class="s1">&#39;dedt_energy_eqn&#39;</span><span class="p">)</span> <span class="ow">or</span>
           <span class="p">(</span><span class="n">rerun_type</span> <span class="o">==</span> <span class="s1">&#39;LBV_wind+dedt_energy_eqn&#39;</span><span class="p">)</span> <span class="ow">or</span>
           <span class="p">(</span><span class="n">rerun_type</span> <span class="o">==</span> <span class="s1">&#39;no_age_limit+dedt_energy_eqn&#39;</span><span class="p">)):</span>
-        <span class="n">termination_flags</span> <span class="o">=</span> <span class="n">TF1_POOL_ERROR</span>    
+        <span class="n">termination_flags</span> <span class="o">=</span> <span class="n">TF1_POOL_ERROR</span>
     <span class="k">elif</span> <span class="p">((</span><span class="n">rerun_type</span> <span class="o">==</span> <span class="s1">&#39;dedt_hepulse&#39;</span><span class="p">)</span>
           <span class="ow">or</span> <span class="p">(</span><span class="n">rerun_type</span> <span class="o">==</span> <span class="s1">&#39;LBV_wind+dedt_hepulse&#39;</span><span class="p">)):</span>
         <span class="n">termination_flags</span> <span class="o">=</span> <span class="n">TF1_POOL_ERROR</span>
@@ -1080,10 +1084,10 @@
         <span class="n">runs_to_rerun</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># implement logic</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unsupported rerun type </span><span class="si">{</span><span class="n">rerun_type</span><span class="si">}</span><span class="s1">!&#39;</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="p">(</span><span class="n">runs_to_rerun</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">termination_flags</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Undefined rerun!&#39;</span><span class="p">)</span>
-    
+
     <span class="k">return</span> <span class="n">runs_to_rerun</span><span class="p">,</span> <span class="n">termination_flags</span><span class="p">,</span> <span class="n">new_mesa_flag</span></div>
 
 
@@ -1102,7 +1106,7 @@
 <span class="sd">    verbose : bool</span>
 <span class="sd">        Enable/Disable additional output.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c1"># read csv file</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">)</span>
@@ -1139,11 +1143,11 @@
         <span class="n">Pwarn</span><span class="p">(</span><span class="s1">&#39;Cluster not specified, use quest as cluster&#39;</span><span class="p">,</span>
               <span class="s2">&quot;ReplaceValueWarning&quot;</span><span class="p">)</span>
         <span class="n">cluster</span> <span class="o">=</span> <span class="s1">&#39;quest&#39;</span>
-    
+
     <span class="c1"># load grid</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
     <span class="n">grid</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">grid_path</span><span class="p">)</span>
-    
+
     <span class="c1"># export point to rerun</span>
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rerun </span><span class="si">{</span><span class="n">grid_path</span><span class="si">}</span><span class="s1"> in </span><span class="si">{</span><span class="n">rerun_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -1154,7 +1158,7 @@
     <span class="n">grid</span><span class="o">.</span><span class="n">rerun</span><span class="p">(</span><span class="n">path_to_file</span><span class="o">=</span><span class="n">rerun_path</span><span class="p">,</span> <span class="n">runs_to_rerun</span><span class="o">=</span><span class="n">runs_to_rerun</span><span class="p">,</span>
                <span class="n">termination_flags</span><span class="o">=</span><span class="n">termination_flags</span><span class="p">,</span>
                <span class="n">new_mesa_flag</span><span class="o">=</span><span class="n">new_mesa_flag</span><span class="p">)</span>
-    
+
     <span class="c1"># copy ini file and set the new inlist commit</span>
     <span class="n">copy_ini_file</span><span class="p">(</span><span class="n">grid_type</span><span class="p">,</span> <span class="n">rerun_metallicity</span><span class="p">,</span> <span class="n">rerun_type</span><span class="p">,</span>
                   <span class="n">destination</span><span class="o">=</span><span class="n">rerun_path</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">)</span></div>
@@ -1201,14 +1205,14 @@
             <span class="s1">&#39;step&#39;</span> <span class="p">:</span> <span class="mf">0.0777432239326138</span><span class="p">,</span>
         <span class="p">}</span>
     <span class="p">}</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_nbin</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
             <span class="n">nbin</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x_max</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x_min</span><span class="p">))</span><span class="o">/</span><span class="n">step</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">nbin</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_max</span><span class="o">-</span><span class="n">x_min</span><span class="p">)</span><span class="o">/</span><span class="n">step</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">nbin</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
-    
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_range</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">x_n</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
             <span class="nb">vars</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x_min</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x_max</span><span class="p">),</span> <span class="n">x_n</span><span class="p">)</span>
@@ -1218,7 +1222,7 @@
             <span class="n">vars_edges</span> <span class="o">=</span> <span class="p">(</span><span class="nb">vars</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="nb">vars</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="mf">0.5</span>
         <span class="n">vars_edges</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]</span><span class="o">+</span><span class="n">vars_edges</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="o">+</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)]</span>
         <span class="k">return</span> <span class="nb">vars</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">vars_edges</span>
-    
+
     <span class="c1"># read csv file</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">)</span>
@@ -1226,7 +1230,7 @@
         <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_to_csv_file</span><span class="si">}</span><span class="s1"> not found!&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Index=</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> not available in </span><span class="si">{</span><span class="n">path_to_csv_file</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
-    
+
     <span class="n">check_dirs</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="c1"># get values from csv file</span>
     <span class="k">if</span> <span class="s1">&#39;path_to_grid&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -1265,23 +1269,23 @@
         <span class="n">path_to_interpolator</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;path_to_interpolator&#39;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">path_to_interpolator</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    
+
     <span class="c1"># check that plots/ directories exist</span>
     <span class="k">for</span> <span class="n">dir_</span> <span class="ow">in</span> <span class="n">check_dirs</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_</span><span class="p">)</span>
-        
+
     <span class="c1"># load grid</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
     <span class="n">grid</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">grid_path</span><span class="p">)</span>
-    
+
     <span class="k">for</span> <span class="n">quantity_to_plot</span> <span class="ow">in</span> <span class="n">quantities_to_plot</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;plotting: </span><span class="si">{</span><span class="n">quantity_to_plot</span><span class="si">}</span><span class="s1"> from </span><span class="si">{</span><span class="n">grid_path</span><span class="si">}</span><span class="s1"> to &#39;</span>
                   <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">plot_dir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        
+
         <span class="c1"># load interpolator and evaluate interp errors</span>
-        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;INTERP_ERROR&#39;</span> <span class="ow">in</span> <span class="n">quantity_to_plot</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;INTERP_ERROR&#39;</span> <span class="ow">in</span> <span class="n">quantity_to_plot</span>
             <span class="ow">and</span> <span class="n">path_to_interpolator</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">IFInterpolator</span><span class="p">()</span>
             <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path_to_interpolator</span><span class="p">)</span>
@@ -1289,7 +1293,7 @@
             <span class="n">interp_error</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">interp_error</span> <span class="o">=</span> <span class="kc">False</span>
-        
+
         <span class="c1"># get attributes for plotting</span>
         <span class="n">plot_attributes</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;plot_dir_name&#39;</span> <span class="p">:</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span>
@@ -1350,7 +1354,7 @@
                 <span class="n">plot_attributes</span><span class="p">[</span><span class="s1">&#39;zvar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">quantity_to_plot</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">quantity_to_plot</span><span class="si">}</span><span class="s1"> should be a string!&#39;</span><span class="p">)</span>
-        
+
         <span class="c1"># check that plots/ directories exist</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">plot_attributes</span><span class="p">[</span><span class="s1">&#39;plot_dir_name&#39;</span><span class="p">]</span>
         <span class="n">dir_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_dir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
@@ -1359,7 +1363,7 @@
             <span class="n">dir_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">dir_</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dir_</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;CO&#39;</span> <span class="ow">in</span> <span class="n">grid_type</span><span class="p">):</span>
             <span class="c1"># skip plotting CO properties</span>
             <span class="k">if</span> <span class="s1">&#39;S2_&#39;</span> <span class="ow">in</span> <span class="n">quantity_to_plot</span><span class="p">:</span>
@@ -1385,10 +1389,10 @@
                                       <span class="n">log</span><span class="o">=</span><span class="n">smpl</span><span class="p">[</span><span class="s1">&#39;log&#39;</span><span class="p">])</span>
             <span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;grid_m_</span><span class="si">%1.2f</span><span class="s1">.&#39;</span> <span class="o">+</span> <span class="n">plot_extension</span>
             <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;$m_\mathrm</span><span class="si">{CO}</span><span class="s1">=</span><span class="si">%1.2f</span><span class="s1">\,M_\odot$&#39;</span>
-        <span class="k">elif</span> <span class="s1">&#39;HMS-HMS&#39;</span> <span class="ow">in</span> <span class="n">grid_type</span><span class="p">:</span>        
+        <span class="k">elif</span> <span class="s1">&#39;HMS-HMS&#39;</span> <span class="ow">in</span> <span class="n">grid_type</span><span class="p">:</span>
             <span class="c1"># mass ratio slices</span>
             <span class="n">smpl</span> <span class="o">=</span> <span class="n">grid_sample</span><span class="p">[</span><span class="s1">&#39;HMS-HMS&#39;</span><span class="p">]</span>
-            <span class="n">slice_3D_var_str</span> <span class="o">=</span> <span class="s1">&#39;mass_ratio&#39;</span> 
+            <span class="n">slice_3D_var_str</span> <span class="o">=</span> <span class="s1">&#39;mass_ratio&#39;</span>
             <span class="nb">vars</span><span class="p">,</span> <span class="n">vars_edges</span> <span class="o">=</span> <span class="n">_range</span><span class="p">(</span><span class="n">smpl</span><span class="p">[</span><span class="s1">&#39;qmin&#39;</span><span class="p">],</span> <span class="n">smpl</span><span class="p">[</span><span class="s1">&#39;qmax&#39;</span><span class="p">],</span> <span class="n">smpl</span><span class="p">[</span><span class="s1">&#39;nbin&#39;</span><span class="p">],</span>
                                       <span class="n">log</span><span class="o">=</span><span class="n">smpl</span><span class="p">[</span><span class="s1">&#39;log&#39;</span><span class="p">])</span>
             <span class="k">if</span> <span class="nb">vars</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mf">1.0</span><span class="p">:</span>
@@ -1397,7 +1401,7 @@
             <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;$q=</span><span class="si">%1.2f</span><span class="s1">$&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Grid type not supported!&#39;</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="n">multipage</span><span class="p">:</span>
             <span class="n">pdf_handler</span> <span class="o">=</span> <span class="n">PdfPages</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plot_dir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="o">+</span>\
                                    <span class="s1">&#39;_all_slices.&#39;</span> <span class="o">+</span> <span class="n">plot_extension</span><span class="p">,</span>
@@ -1418,7 +1422,7 @@
                     <span class="s1">&#39;log10_y&#39;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
                     <span class="s1">&#39;legend2D&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;bbox_to_anchor&#39;</span> <span class="p">:</span> <span class="p">(</span><span class="mf">1.03</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)}</span>
                 <span class="p">}</span>
-            
+
                 <span class="n">PLOT_PROPERTIES</span> <span class="o">=</span> <span class="n">PLOT_PROPERTIES_DEFAULT</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">plot_attributes</span><span class="p">[</span><span class="s1">&#39;zvar&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="c1"># default plot properties with colorbar</span>
@@ -1431,7 +1435,7 @@
                         <span class="n">PLOT_PROPERTIES</span><span class="p">[</span><span class="s1">&#39;colorbar&#39;</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">quantity_to_plot</span>
                 <span class="k">if</span> <span class="n">multipage</span><span class="p">:</span>
                     <span class="n">PLOT_PROPERTIES</span><span class="p">[</span><span class="s1">&#39;PdfPages&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdf_handler</span>
-                
+
                 <span class="k">if</span> <span class="s1">&#39;INTERP_ERROR&#39;</span> <span class="ow">in</span> <span class="n">quantity_to_plot</span><span class="p">:</span>
                     <span class="c1"># initial/final error all points in one plot</span>
                     <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -1445,9 +1449,9 @@
                             <span class="n">PLOT_PROPERTIES_ALL</span><span class="p">[</span><span class="s1">&#39;fname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_all.&#39;</span> <span class="o">+</span>\
                                                            <span class="n">plot_extension</span>
                             <span class="n">PLOT_PROPERTIES_ALL</span><span class="p">[</span><span class="s1">&#39;PdfPages&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-                        <span class="n">evalIFerr</span><span class="o">.</span><span class="n">plot2D</span><span class="p">(</span><span class="n">plot_attributes</span><span class="p">[</span><span class="s1">&#39;zvar&#39;</span><span class="p">],</span> 
-                                         <span class="n">slice_3D_var_str</span><span class="p">,</span> 
-                                         <span class="p">(</span><span class="n">vars_edges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vars_edges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> 
+                        <span class="n">evalIFerr</span><span class="o">.</span><span class="n">plot2D</span><span class="p">(</span><span class="n">plot_attributes</span><span class="p">[</span><span class="s1">&#39;zvar&#39;</span><span class="p">],</span>
+                                         <span class="n">slice_3D_var_str</span><span class="p">,</span>
+                                         <span class="p">(</span><span class="n">vars_edges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vars_edges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
                                          <span class="n">PLOT_PROPERTIES_ALL</span><span class="p">)</span>
                     <span class="c1"># initial/final error slices</span>
                     <span class="n">evalIFerr</span><span class="o">.</span><span class="n">plot2D</span><span class="p">(</span><span class="n">plot_attributes</span><span class="p">[</span><span class="s1">&#39;zvar&#39;</span><span class="p">],</span> <span class="n">slice_3D_var_str</span><span class="p">,</span>
@@ -1471,7 +1475,7 @@
                                 <span class="n">slice_3D_var_str</span><span class="o">=</span><span class="n">slice_3D_var_str</span><span class="p">,</span>
                                 <span class="n">slice_3D_var_range</span><span class="o">=</span><span class="n">slice_3D_var_range</span><span class="p">,</span>
                                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">PLOT_PROPERTIES</span><span class="p">)</span>
-            
+
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;FAILED TO PLOT &#39;</span><span class="o">+</span><span class="n">title</span><span class="o">%</span><span class="n">var</span><span class="o">+</span><span class="s1">&#39; to &#39;</span><span class="o">+</span><span class="n">fname</span><span class="o">%</span><span class="n">var</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -1506,7 +1510,7 @@
 <span class="sd">    verbose : bool</span>
 <span class="sd">        Enable/Disable additional output.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c1"># read csv file</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_to_csv_file</span><span class="p">)</span>
@@ -1514,7 +1518,7 @@
         <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_to_csv_file</span><span class="si">}</span><span class="s1"> not found!&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Index=</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> not available in </span><span class="si">{</span><span class="n">path_to_csv_file</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
-    
+
     <span class="c1"># get values from csv file</span>
     <span class="k">if</span> <span class="s1">&#39;path_to_grid&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="n">grid_path</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;path_to_grid&#39;</span><span class="p">]</span>
@@ -1533,11 +1537,11 @@
         <span class="n">path_to_interpolator</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;path_to_interpolator&#39;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">path_to_interpolator</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    
+
     <span class="c1"># load grid</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
     <span class="n">grid</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">grid_path</span><span class="p">)</span>
-    
+
     <span class="c1"># do the checks</span>
     <span class="k">for</span> <span class="n">check_to_do</span> <span class="ow">in</span> <span class="n">checks_to_do</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">check_to_do</span><span class="o">==</span><span class="s1">&#39;failure_rate&#39;</span><span class="p">:</span>
@@ -1571,7 +1575,7 @@
 
     <span class="c1"># read command line arguments</span>
     <span class="n">n_args</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">n_args</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># path to grids</span>
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">==</span><span class="s1">&#39;--help&#39;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Program to run a pipeline step&#39;</span><span class="p">)</span>
@@ -1592,7 +1596,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;No path to the grids given. It should be specified &#39;</span>
                        <span class="s1">&#39;as first commandline argument.&#39;</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">n_args</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span> <span class="c1"># path to csv file</span>
         <span class="n">PATH_TO_CSV_FILE</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">PATH_TO_CSV_FILE</span><span class="p">):</span> <span class="c1"># check given path</span>
@@ -1601,7 +1605,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;No csv file given. It should be specified as &#39;</span>
                        <span class="s1">&#39;second commandline argument.&#39;</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">n_args</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span> <span class="c1"># slurm index</span>
         <span class="n">SLURM_I</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">SLURM_I</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># check value</span>
@@ -1609,7 +1613,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">Pwarn</span><span class="p">(</span><span class="s1">&#39;No slurm index given, use 0&#39;</span><span class="p">,</span> <span class="s2">&quot;ReplaceValueWarning&quot;</span><span class="p">)</span>
         <span class="n">SLURM_I</span> <span class="o">=</span> <span class="mi">0</span>
-    
+
     <span class="k">if</span> <span class="n">n_args</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span> <span class="c1"># verbose flag</span>
         <span class="n">VERBOSE</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">4</span><span class="p">]))</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1645,7 +1649,7 @@
 
     <span class="k">if</span> <span class="n">STEP</span><span class="o">==</span><span class="s1">&#39;rerun&#39;</span><span class="p">:</span> <span class="c1"># export rerun</span>
         <span class="n">rerun</span><span class="p">(</span><span class="n">SLURM_I</span><span class="p">,</span> <span class="n">PATH_TO_CSV_FILE</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">VERBOSE</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="s1">&#39;plot&#39;</span> <span class="ow">in</span> <span class="n">STEP</span><span class="p">:</span> <span class="c1"># plot grid slices</span>
         <span class="n">plot_grid</span><span class="p">(</span><span class="n">SLURM_I</span><span class="p">,</span> <span class="n">PATH_TO_CSV_FILE</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">VERBOSE</span><span class="p">)</span>
 
@@ -1674,7 +1678,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

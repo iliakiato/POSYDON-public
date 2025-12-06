@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.MESA.step_mesa &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.binary_evol.MESA.step_mesa &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -129,22 +133,25 @@
 
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.interpolation.interpolation</span><span class="w"> </span><span class="kn">import</span> <span class="n">psyTrackInterp</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.binarystar</span><span class="w"> </span><span class="kn">import</span> <span class="n">BINARYPROPERTIES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.binarystar</span><span class="w"> </span><span class="kn">import</span> <span class="n">BINARYPROPERTIES</span><span class="p">,</span> <span class="n">BinaryStar</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.singlestar</span><span class="w"> </span><span class="kn">import</span> <span class="n">STARPROPERTIES</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">common_functions</span> <span class="k">as</span> <span class="n">cf</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.binarystar</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinaryStar</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.interpolation.IF_interpolation</span><span class="w"> </span><span class="kn">import</span> <span class="n">IFInterpolator</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">flip_stars</span><span class="p">,</span>
-                                            <span class="n">convert_metallicity_to_string</span><span class="p">,</span>
-                                            <span class="n">CO_radius</span><span class="p">,</span> <span class="n">infer_star_state</span><span class="p">,</span>
-                                            <span class="n">set_binary_to_failed</span><span class="p">,)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">PATH_TO_POSYDON_DATA</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.data_download</span><span class="w"> </span><span class="kn">import</span> <span class="n">data_download</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.SN_MODELS</span><span class="w"> </span><span class="kn">import</span> <span class="n">SN_MODELS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.interpolation.IF_interpolation</span><span class="w"> </span><span class="kn">import</span> <span class="n">IFInterpolator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.interpolation.interpolation</span><span class="w"> </span><span class="kn">import</span> <span class="n">psyTrackInterp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">common_functions</span> <span class="k">as</span> <span class="n">cf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CO_radius</span><span class="p">,</span>
+    <span class="n">convert_metallicity_to_string</span><span class="p">,</span>
+    <span class="n">flip_stars</span><span class="p">,</span>
+    <span class="n">infer_star_state</span><span class="p">,</span>
+    <span class="n">set_binary_to_failed</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.data_download</span><span class="w"> </span><span class="kn">import</span> <span class="n">data_download</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonerror</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlowError</span><span class="p">,</span> <span class="n">GridError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
 
@@ -436,7 +443,7 @@
             <span class="n">max_MESA_sim_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_values</span><span class="p">[</span><span class="n">POSYDON_TO_MESA</span><span class="p">[</span><span class="s1">&#39;binary&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;unknown interpolation method: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interpolation_method</span><span class="p">))</span>
-        
+
         <span class="k">return</span> <span class="n">max_MESA_sim_time</span></div>
 
 
@@ -452,7 +459,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must be an instance of BinaryStar&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;step&#39;</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No step defined for </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flip_stars_before_step</span><span class="p">:</span>
             <span class="n">flip_stars</span><span class="p">(</span><span class="n">binary</span><span class="p">)</span>
         <span class="n">max_MESA_sim_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_final_MESA_step_time</span><span class="p">()</span>
@@ -467,7 +474,7 @@
                                     <span class="o">&gt;</span> <span class="n">binary</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">max_simulation_time</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">step_will_exceed_max_time</span>
                 <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_method</span> <span class="o">==</span> <span class="s1">&#39;stop_at_max_time&#39;</span><span class="p">):</span>
-            
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpolation_method</span> <span class="o">!=</span> <span class="s1">&#39;nearest_neighbour&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">closest_binary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearest_neighbour_distance</span><span class="p">,</span> \
                     <span class="bp">self</span><span class="o">.</span><span class="n">termination_flags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_psyTrackInterp</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="p">)</span>
@@ -513,7 +520,7 @@
                              <span class="n">interpolate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_interpolate</span><span class="p">,</span>
                              <span class="n">star_1_CO</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">star_1_CO</span><span class="p">,</span>
                              <span class="n">star_2_CO</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">star_2_CO</span><span class="p">)</span>
-            
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flip_stars_before_step</span><span class="p">:</span>
             <span class="n">flip_stars</span><span class="p">(</span><span class="n">binary</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">binary</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;</span> <span class="n">binary</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">max_simulation_time</span><span class="p">:</span>
@@ -585,7 +592,7 @@
         <span class="n">cb_bh</span> <span class="o">=</span> <span class="n">cb</span><span class="o">.</span><span class="n">binary_history</span>
         <span class="n">cb_hs</span> <span class="o">=</span> <span class="p">[</span><span class="n">cb</span><span class="o">.</span><span class="n">history1</span><span class="p">,</span> <span class="n">cb</span><span class="o">.</span><span class="n">history2</span><span class="p">]</span>
         <span class="n">cb_fps</span> <span class="o">=</span> <span class="p">[</span><span class="n">cb</span><span class="o">.</span><span class="n">final_profile1</span><span class="p">,</span> <span class="n">cb</span><span class="o">.</span><span class="n">final_profile2</span><span class="p">]</span>
-        
+
         <span class="k">if</span> <span class="p">(</span><span class="n">cb_bh</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">cb_bh</span><span class="p">[</span><span class="s1">&#39;star_1_mass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;initial_RLOF&quot;</span><span class="p">)</span>
             <span class="k">return</span>
@@ -594,7 +601,7 @@
         <span class="n">interpolation_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">binary_state</span><span class="p">,</span> <span class="n">binary_event</span><span class="p">,</span> <span class="n">MT_case</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">cf</span><span class="o">.</span><span class="n">get_binary_state_and_event_and_mt_case</span><span class="p">(</span>
-                <span class="n">binary</span><span class="p">,</span> <span class="n">interpolation_class</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">))</span>       
+                <span class="n">binary</span><span class="p">,</span> <span class="n">interpolation_class</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">))</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="n">binary_state</span><span class="p">)</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="n">binary_event</span><span class="p">)</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;mass_transfer_case&#39;</span><span class="p">,</span> <span class="n">MT_case</span><span class="p">)</span>
@@ -863,7 +870,7 @@
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">stars</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;state_history&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">state2_hist</span><span class="p">)</span>
                 <span class="n">binary_state</span><span class="p">,</span> <span class="n">binary_event</span><span class="p">,</span> <span class="n">MT_case</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="n">cf</span><span class="o">.</span><span class="n">get_binary_state_and_event_and_mt_case_array</span><span class="p">(</span>
-                        <span class="n">binary</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">length_hist</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">))</span>               
+                        <span class="n">binary</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">length_hist</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">))</span>
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s2">&quot;state_history&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">binary_state</span><span class="p">)</span>
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s2">&quot;event_history&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">binary_event</span><span class="p">)</span>
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="s2">&quot;mass_transfer_case_history&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">MT_case</span><span class="p">)</span>
@@ -1043,7 +1050,7 @@
                         <span class="c1"># calculate new spin based on masses</span>
                         <span class="n">spin</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">spin_stable_mass_transfer</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">prev_mass</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">fv</span><span class="p">[</span><span class="n">key_p</span><span class="p">])</span>
                         <span class="nb">setattr</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">spin</span><span class="p">)</span>
-                        
+
                     <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;log_R&#39;</span><span class="p">:</span>
                         <span class="n">mass</span> <span class="o">=</span> <span class="n">fv</span><span class="p">[</span><span class="s1">&#39;star_</span><span class="si">%d</span><span class="s1">_mass&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
                         <span class="n">st</span> <span class="o">=</span> <span class="n">infer_star_state</span><span class="p">(</span><span class="n">star_mass</span><span class="o">=</span><span class="n">mass</span><span class="p">,</span> <span class="n">star_CO</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1084,7 +1091,7 @@
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="n">binary_event</span><span class="p">)</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="p">,</span> <span class="s1">&#39;mass_transfer_case&#39;</span><span class="p">,</span> <span class="n">MT_case</span><span class="p">)</span>
 
-        
+
         <span class="k">if</span> <span class="n">binary</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;initial_RLOF&#39;</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -1175,11 +1182,11 @@
         <span class="k">if</span> <span class="n">binary</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">max_simulation_time</span> <span class="o">-</span> <span class="n">binary</span><span class="o">.</span><span class="n">time</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
             <span class="n">binary</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="s1">&#39;MaxTime_exceeded&#39;</span>
             <span class="k">return</span>
-        
-        <span class="c1"># In cases where we are using IF or kNN interpolation, </span>
-        <span class="c1"># we may track interpolate if the final track time exceeds </span>
-        <span class="c1"># the Hubble time, and we may envounter a new binary event </span>
-        <span class="c1"># during that intepolation. In these cases, we still need </span>
+
+        <span class="c1"># In cases where we are using IF or kNN interpolation,</span>
+        <span class="c1"># we may track interpolate if the final track time exceeds</span>
+        <span class="c1"># the Hubble time, and we may envounter a new binary event</span>
+        <span class="c1"># during that intepolation. In these cases, we still need</span>
         <span class="c1"># to check if we should flush the history.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flush_history</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">flush_entries</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">STARPROPERTIES</span><span class="p">:</span>
@@ -2018,7 +2025,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

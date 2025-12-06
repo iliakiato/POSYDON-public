@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.utils.common_functions &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.utils.common_functions &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -131,24 +135,29 @@
 <span class="p">]</span>
 
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">newton</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">quad</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.limits_thresholds</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span><span class="p">,</span>
-    <span class="n">THRESHOLD_HE_NAKED_ABUNDANCE</span><span class="p">,</span> <span class="n">REL_LOG10_BURNING_THRESHOLD</span><span class="p">,</span>
-    <span class="n">LOG10_BURNING_THRESHOLD</span><span class="p">,</span> <span class="n">STATE_WD_STARMASS_UPPER_LIMIT</span><span class="p">,</span>
-    <span class="n">STATE_NS_STARMASS_LOWER_LIMIT</span><span class="p">,</span> <span class="n">STATE_NS_STARMASS_UPPER_LIMIT</span><span class="p">,</span>
-    <span class="n">RL_RELATIVE_OVERFLOW_THRESHOLD</span><span class="p">,</span> <span class="n">LG_MTRANSFER_RATE_THRESHOLD</span>
-<span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.interpolators</span><span class="w"> </span><span class="kn">import</span> <span class="n">interp1d</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.flow_chart</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">STAR_STATES_H_RICH</span><span class="p">,</span>
-                                            <span class="n">STAR_STATES_HE_RICH</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">newton</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.flow_chart</span><span class="w"> </span><span class="kn">import</span> <span class="n">STAR_STATES_H_RICH</span><span class="p">,</span> <span class="n">STAR_STATES_HE_RICH</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.interpolators</span><span class="w"> </span><span class="kn">import</span> <span class="n">interp1d</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.limits_thresholds</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LG_MTRANSFER_RATE_THRESHOLD</span><span class="p">,</span>
+    <span class="n">LOG10_BURNING_THRESHOLD</span><span class="p">,</span>
+    <span class="n">REL_LOG10_BURNING_THRESHOLD</span><span class="p">,</span>
+    <span class="n">RL_RELATIVE_OVERFLOW_THRESHOLD</span><span class="p">,</span>
+    <span class="n">STATE_NS_STARMASS_LOWER_LIMIT</span><span class="p">,</span>
+    <span class="n">STATE_NS_STARMASS_UPPER_LIMIT</span><span class="p">,</span>
+    <span class="n">STATE_WD_STARMASS_UPPER_LIMIT</span><span class="p">,</span>
+    <span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span><span class="p">,</span>
+    <span class="n">THRESHOLD_HE_NAKED_ABUNDANCE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
 
 <span class="c1"># Constants related to inferring star states</span>
 <span class="n">STATE_UNDETERMINED</span> <span class="o">=</span> <span class="s2">&quot;undetermined_evolutionary_state&quot;</span>
@@ -231,10 +240,10 @@
 <span class="sd">        np.ndarray</span>
 <span class="sd">            The processed array with negative values set to zero.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">arr</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;A &quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot; value is negative. Setting to zero.&quot;</span><span class="p">,</span> 
+        <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;A &quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot; value is negative. Setting to zero.&quot;</span><span class="p">,</span>
               <span class="s2">&quot;ReplaceValueWarning&quot;</span><span class="p">)</span>
 
     <span class="n">arr</span><span class="p">[</span><span class="n">arr</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -375,19 +384,19 @@
                   <span class="s2">&quot; separation&quot;</span><span class="p">,</span> <span class="s2">&quot;EvolutionWarning&quot;</span><span class="p">)</span>
             <span class="n">a_orb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">([</span><span class="mi">1</span> <span class="k">if</span> <span class="n">s</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">a_orb</span><span class="o">.</span><span class="n">shape</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
                             <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-        <span class="c1">## if array contains invalid values, replace with NaN </span>
+        <span class="c1">## if array contains invalid values, replace with NaN</span>
         <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">a_orb</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;Trying to compute RL radius for binary with invalid&quot;</span>
                   <span class="s2">&quot; separation&quot;</span><span class="p">,</span> <span class="s2">&quot;EvolutionWarning&quot;</span><span class="p">)</span>
             <span class="n">a_orb</span><span class="p">[</span><span class="n">a_orb</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="c1">## catching if a_orb is a float with invalid separation value</span>
-    <span class="k">elif</span> <span class="n">a_orb</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> 
+    <span class="k">elif</span> <span class="n">a_orb</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;Trying to compute RL radius for binary with invalid separation&quot;</span><span class="p">,</span>
               <span class="s2">&quot;EvolutionWarning&quot;</span><span class="p">)</span>
         <span class="n">a_orb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">m1</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>                  
+        <span class="k">if</span> <span class="n">m1</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;Trying to compute RL radius for nonexistent object&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;EvolutionWarning&quot;</span><span class="p">)</span>
             <span class="n">m1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">([</span><span class="mi">1</span> <span class="k">if</span> <span class="n">s</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">m1</span><span class="o">.</span><span class="n">shape</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
@@ -400,9 +409,9 @@
         <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;Trying to compute RL radius for nonexistent object&quot;</span><span class="p">,</span>
               <span class="s2">&quot;EvolutionWarning&quot;</span><span class="p">)</span>
         <span class="n">m1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-    
+
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">m2</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>                  
+        <span class="k">if</span> <span class="n">m2</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;Trying to compute RL radius for nonexistent companion&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;EvolutionWarning&quot;</span><span class="p">)</span>
             <span class="n">m2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">([</span><span class="mi">1</span> <span class="k">if</span> <span class="n">s</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">m2</span><span class="o">.</span><span class="n">shape</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
@@ -415,7 +424,7 @@
         <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;Trying to compute RL radius for nonexistent companion&quot;</span><span class="p">,</span>
               <span class="s2">&quot;EvolutionWarning&quot;</span><span class="p">)</span>
         <span class="n">m2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-   
+
     <span class="n">q</span> <span class="o">=</span> <span class="n">m1</span><span class="o">/</span><span class="n">m2</span>
     <span class="n">RL</span> <span class="o">=</span> <span class="n">a_orb</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.49</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="p">(</span><span class="mf">2.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
         <span class="mf">0.6</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="p">(</span><span class="mf">2.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">q</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="mi">3</span><span class="p">))</span>
@@ -1681,7 +1690,7 @@
             <span class="n">burning</span> <span class="o">=</span> <span class="s2">&quot;Shell_H_burning&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">burning</span> <span class="o">=</span> <span class="s2">&quot;non_burning&quot;</span>
-        
+
     <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rich_in</span><span class="p">,</span> <span class="n">burning</span><span class="p">)</span></div>
 
 
@@ -1867,7 +1876,7 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.utils.html#posydon.utils.common_functions.cumulative_mass_transfer_flag">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cumulative_mass_transfer_flag</span><span class="p">(</span><span class="n">MT_cases</span><span class="p">,</span> <span class="n">shift_cases</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the cumulative MT string from a list of integer MT casses.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Arguments</span>
 <span class="sd">    ----------</span>
 <span class="sd">    MT_cases: list of integers</span>
@@ -1879,7 +1888,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    str</span>
 <span class="sd">        A string summarizing the mass transfer cases.</span>
-<span class="sd">    </span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">shift_cases</span><span class="p">:</span>
         <span class="n">case_1_min</span> <span class="o">=</span> <span class="n">MT_CASE_NO_RLO</span>
@@ -1921,12 +1930,12 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.utils.html#posydon.utils.common_functions.get_i_He_depl">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_i_He_depl</span><span class="p">(</span><span class="n">history</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the index of He depletion in the history</span>
-<span class="sd">    </span>
+
 <span class="sd">    Arguments</span>
 <span class="sd">    ---------</span>
 <span class="sd">    history: numpy-array</span>
 <span class="sd">        Stellar history from MESA</span>
-<span class="sd">    </span>
+
 <span class="sd">    Return</span>
 <span class="sd">    ------</span>
 <span class="sd">    int</span>
@@ -1950,7 +1959,7 @@
                                      <span class="n">log_Lnuc</span><span class="o">=</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;log_Lnuc&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
                                      <span class="n">star_CO</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="k">if</span> <span class="s2">&quot;Core_He_depleted&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">i</span> 
+                <span class="k">return</span> <span class="n">i</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
 
 
@@ -2301,7 +2310,7 @@
         <span class="n">ind_core</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">donor_mass</span> <span class="o">&gt;=</span> <span class="n">mc1_i</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not possible to calculate the core boundary of the donor in CE&quot;</span><span class="p">)</span>
-    
+
     <span class="k">return</span> <span class="n">ind_core</span></div>
 
 
@@ -2684,7 +2693,7 @@
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">donor_mass</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">m1_i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tolerance</span><span class="p">:</span>
             <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;Donor mass from the binary class object &quot;</span>
                           <span class="s2">&quot;and the profile do not agree&quot;</span><span class="p">,</span> <span class="s2">&quot;ClassificationWarning&quot;</span><span class="p">)</span>
-            
+
         <span class="c1"># checking if radius of profile agrees with the radius of the binary</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">donor_radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">radius1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tolerance</span><span class="p">:</span>
             <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;Donor radius from the binary class object &quot;</span>
@@ -2983,7 +2992,7 @@
     <span class="c1"># (thermal+radiation) for</span>
     <span class="c1"># &quot;lambda_from_profile_gravitational_plus_internal_minus_recombination&quot;</span>
     <span class="n">U_i</span> <span class="o">=</span> <span class="mf">0.0</span>
-    
+
     <span class="c1"># sum from surface to the core. Your core boundary is in element [ind_core]</span>
     <span class="c1"># in a normal MESA (and POSYDON) profile</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ind_core</span><span class="p">):</span>
@@ -2998,7 +3007,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">Grav_energy</span> <span class="o">&lt;</span> <span class="n">tolerance</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;CEE problem calculating gravitational energy, &quot;</span>
                             <span class="s2">&quot;giving positive values.&quot;</span><span class="p">)</span>
-        
+
     <span class="c1"># binding energy of the enevelope equals its gravitational energy +</span>
     <span class="c1"># an a_th fraction of its internal energy</span>
     <span class="n">Ebind_i</span> <span class="o">=</span> <span class="n">Grav_energy</span> <span class="o">+</span> <span class="n">factor_internal_energy</span> <span class="o">*</span> <span class="n">U_i</span>
@@ -3068,7 +3077,7 @@
     <span class="n">ind_threshold</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span>
 
     <span class="k">if</span> <span class="n">donor_mass</span><span class="p">[</span><span class="n">ind_threshold</span><span class="p">]</span><span class="o">&lt;</span> <span class="n">mc1_i</span> <span class="ow">or</span>  <span class="n">donor_radius</span><span class="p">[</span><span class="n">ind_threshold</span><span class="p">]</span><span class="o">&lt;</span><span class="n">rc1_i</span><span class="p">:</span>
-        <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;partial mass ejected is greater than the envelope mass&quot;</span><span class="p">,</span> <span class="s2">&quot;EvolutionWarning&quot;</span><span class="p">)</span>   
+        <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;partial mass ejected is greater than the envelope mass&quot;</span><span class="p">,</span> <span class="s2">&quot;EvolutionWarning&quot;</span><span class="p">)</span>
         <span class="n">mass_threshold</span> <span class="o">=</span> <span class="n">mc1_i</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">mass_threshold</span> <span class="o">=</span> <span class="n">donor_mass</span><span class="p">[</span><span class="n">ind_threshold</span><span class="p">]</span>
@@ -3116,7 +3125,7 @@
     <span class="k">if</span> <span class="n">norm</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;axis is a point&quot;</span><span class="p">)</span>
     <span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span> <span class="o">/</span> <span class="n">norm</span>
-        
+
     <span class="c1"># calculate the cosine and sine of the angle</span>
     <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
     <span class="n">sin_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
@@ -3157,7 +3166,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

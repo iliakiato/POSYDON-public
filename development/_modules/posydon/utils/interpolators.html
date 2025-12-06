@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.utils.interpolators &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.utils.interpolators &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -121,9 +125,10 @@
 <span class="p">]</span>
 
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">PchipInterpolator</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
 
 
 <div class="viewcode-block" id="interp1d">
@@ -157,7 +162,7 @@
 <span class="sd">                    - size 1 : use y-value for below and above</span>
 <span class="sd">                    - size 2 : use first y-value for below and second for above</span>
 
-<span class="sd">        &quot;&quot;&quot;</span> 
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;kind = </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2"> is not supported&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="o">=</span> <span class="n">kind</span>
@@ -174,7 +179,7 @@
                 <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
-                
+
         <span class="bp">self</span><span class="o">.</span><span class="n">below</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">above</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extrapolate</span> <span class="o">=</span> <span class="kc">False</span>
@@ -237,65 +242,117 @@
 
 
 
-<div class="viewcode-block" id="PchipInterpolator2">
-<a class="viewcode-back" href="../../../api_reference/posydon.utils.html#posydon.utils.interpolators.PchipInterpolator2">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">PchipInterpolator2</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interpolation class.&quot;&quot;&quot;</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">positive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">derivative</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SingleStarInterpolator">
+<a class="viewcode-back" href="../../../api_reference/posydon.utils.html#posydon.utils.interpolators.SingleStarInterpolator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SingleStarInterpolator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interpolation class for stellar evolution tracks.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">y_keys</span><span class="p">,</span> <span class="n">positives</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">derivatives</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the interpolator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        positive : bool (default: False)</span>
-<span class="sd">            If `True` request all y-values to be positive.</span>
-<span class="sd">        *args, **kwargs : dict (optional)</span>
-<span class="sd">            Arguments passed to original PchipInterpolator init.</span>
+<span class="sd">        t : 1D-ndarray</span>
+<span class="sd">            Time coordinates of the data to interpolate.</span>
+<span class="sd">        y_data : list of 1D-ndarray</span>
+<span class="sd">            List of Y-coordinates of the data to interpolate. Each entry</span>
+<span class="sd">            needs to have the same length as `t`.</span>
+<span class="sd">        y_keys : list of str</span>
+<span class="sd">            List of keys corresponding to each y_data entry.</span>
+<span class="sd">        positives : list of bool (default: None)</span>
+<span class="sd">            List indicating for each y_data entry whether to request positive</span>
+<span class="sd">            y-values. If `None`, all entries are assumed to be non-positive.</span>
+<span class="sd">        derivatives : list of bool (default: None)</span>
+<span class="sd">            List indicating for each y_data entry whether to return the</span>
+<span class="sd">            derivative of the interpolator. If `None`, all entries are assumed</span>
+<span class="sd">            to return the interpolated y-values.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># get all positive flags</span>
+        <span class="k">if</span> <span class="n">positives</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">positives</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">y_data</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">derivatives</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">derivatives</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">y_data</span><span class="p">]</span>
 
+        <span class="c1"># Create interpolators for each combination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interpolators</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">is_positive</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">is_derivative</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+                <span class="c1"># Filter data for this combination</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="p">[(</span><span class="n">p</span> <span class="o">==</span> <span class="n">is_positive</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">==</span> <span class="n">is_derivative</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">positives</span><span class="p">,</span> <span class="n">derivatives</span><span class="p">)]</span>
+                <span class="n">filtered_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">filtered_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">y_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_keys</span><span class="p">))</span> <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
 
-        <span class="c1"># this will set whether or not the __call__ should return the y(x) or y&#39;(x)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">derivative</span> <span class="o">=</span> <span class="n">derivative</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">filtered_data</span><span class="p">:</span>
+                    <span class="k">continue</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">derivative</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">interpolator</span> <span class="o">=</span> <span class="n">PchipInterpolator</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">derivative</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">interpolator</span> <span class="o">=</span> <span class="n">PchipInterpolator</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            
-        <span class="bp">self</span><span class="o">.</span><span class="n">positive</span> <span class="o">=</span> <span class="n">positive</span>
+                <span class="c1"># Create interpolator only if there is data for this combination</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">is_positive</span><span class="p">,</span> <span class="n">is_derivative</span><span class="p">)</span>
+                <span class="n">base_interp</span> <span class="o">=</span> <span class="n">PchipInterpolator</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_keys</span>
+                <span class="k">if</span> <span class="n">is_derivative</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_interpolators</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_interp</span><span class="o">.</span><span class="n">derivative</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_interpolators</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_interp</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">t_max</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t0</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m0</span> <span class="o">=</span> <span class="mf">0.0</span>
 
         <span class="c1"># potential offset (for example, we&#39;ve matched a MESA sim to another</span>
         <span class="c1"># but need to offset the matched track&#39;s age to fast forward to current</span>
         <span class="c1"># age in the evolution)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positives</span> <span class="o">=</span> <span class="n">positives</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_derivatives</span> <span class="o">=</span> <span class="n">derivatives</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List of all keys in the interpolator.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key_list</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">key_list</span><span class="p">]</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Use the interpolator.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        *args, **kwargs : dict (optional)</span>
-<span class="sd">            Arguments passed to original PchipInterpolator call.</span>
+<span class="sd">        t : float or ndarray</span>
+<span class="sd">            Time coordinate(s) to get interpolated y-value(s) for.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ndarray-like</span>
-<span class="sd">            Interpolated values.</span>
+<span class="sd">        list of ndarray-like</span>
+<span class="sd">            List of interpolated y-values for each y_data entry.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="c1"># offset x (the offset is 0 unless otherwise set)</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
-        <span class="n">args_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-        <span class="n">args_copy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">args_copy</span><span class="p">)</span>
+        <span class="c1"># offset t</span>
 
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpolator</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">positive</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">for</span> <span class="p">(</span><span class="n">is_positive</span><span class="p">,</span> <span class="n">is_derivative</span><span class="p">),</span> <span class="n">interp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolators</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Evaluate interpolator</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 
+            <span class="c1"># Apply positive constraint if needed</span>
+            <span class="k">if</span> <span class="n">is_positive</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+            <span class="c1"># Map values to keys</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="p">[(</span><span class="n">is_positive</span><span class="p">,</span> <span class="n">is_derivative</span><span class="p">)]</span>
+
+            <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">results</span></div>
 
 </pre></div>
 
@@ -318,7 +375,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

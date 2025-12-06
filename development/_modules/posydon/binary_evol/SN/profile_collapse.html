@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.SN.profile_collapse &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.binary_evol.SN.profile_collapse &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -120,8 +124,8 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">const</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">const</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.gridutils</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_index_nearest_neighbour</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.limits_thresholds</span><span class="w"> </span><span class="kn">import</span> <span class="n">NEUTRINO_MASS_LOSS_UPPER_LIMIT</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
@@ -387,10 +391,10 @@
     <span class="c1">#        = iint 2pi Omega(r) r^4 sin^3(t) rho(r) dt dr</span>
     <span class="c1">#        = 2pi int_0^pi sin^3(t) dt int_0^M_core Omega(r) r^4 rho(r) dr</span>
     <span class="c1">#        =: 2pi * temp1 * temp2</span>
-    
+
     <span class="c1"># Analytic integral of int_0^pi sin^3(t) dt is 4/3</span>
     <span class="n">temp1</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span>
-    
+
     <span class="c1"># f_nu_AM is a rescaling the J_initial_BH. This account for the</span>
     <span class="c1"># angular momentum lost thorugh neutrinos, which under the assumption</span>
     <span class="c1"># of efficient AM transport is really low.</span>
@@ -518,7 +522,7 @@
 <span class="sd">            The mass of the disk radiated away in M_sun.</span>
 <span class="sd">        &#39;BZ_jet_power_total&#39; : float</span>
 <span class="sd">            The total Blandford-Znajek jet power in erg/s.</span>
-<span class="sd">            </span>
+
 <span class="sd">        # Additional keys that are not used in the current implementation:</span>
 <span class="sd">        # &#39;BZ_jet_power_array&#39; : np.array(BZ_jet_power_array),</span>
 <span class="sd">        #       Blandford-Znajek jet power at each shell collapse in erg/s</span>
@@ -759,7 +763,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;We got a=</span><span class="si">{:.5g}</span><span class="s2"> from shell </span><span class="si">{}</span><span class="s2"> containing </span><span class="si">{:.5g}</span><span class="s2"> M_sun&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">a_BH</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">dm_shell</span> <span class="o">/</span> <span class="n">Mo</span><span class="p">))</span>
-               
+
         <span class="c1"># calculate the potential BZ jet power at this moment of the collapse</span>
         <span class="c1"># We assume full efficiency for the magnetic flux and a BH spin</span>
         <span class="c1"># dependence of a^2 for the BH spin efficiency.</span>
@@ -850,11 +854,11 @@
 <span class="sd">    efficiency factor for the BH spin.</span>
 <span class="sd">    This is based on the decomposition of the jet power in terms of the</span>
 <span class="sd">    magnetic flux and the BH spin, see Gottlieb et al. (2023, 2024).</span>
-<span class="sd">    We do not assume any disk state in this calculation, i.e. </span>
+<span class="sd">    We do not assume any disk state in this calculation, i.e.</span>
 <span class="sd">    magnetically arrested disk (MAD), Neutrino dominated accretion flow (NDAF),</span>
 <span class="sd">    or advection dominated accretion flow (ADAF).</span>
-<span class="sd">    However, the functions for eta_phi and eta_a can be dependent on the disk </span>
-<span class="sd">    type. Moreover, the efficiency factors are not constant and </span>
+<span class="sd">    However, the functions for eta_phi and eta_a can be dependent on the disk</span>
+<span class="sd">    type. Moreover, the efficiency factors are not constant and</span>
 <span class="sd">    can change with the magnetic field and BH spin.</span>
 
 <span class="sd">    Parameters</span>
@@ -865,7 +869,7 @@
 <span class="sd">        Efficiency factor for the magnetic flux.</span>
 <span class="sd">    eta_a : float</span>
 <span class="sd">        Efficiency factor for the BH spin.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    P_jet : float</span>
@@ -895,7 +899,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

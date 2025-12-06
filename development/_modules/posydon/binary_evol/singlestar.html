@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.singlestar &mdash; posydon 0+untagged.80.g03690af documentation</title>
+  <title>posydon.binary_evol.singlestar &mdash; posydon 0+untagged.123.g17e0b2a documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d66fa8e6" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=0a757c66"></script>
+      <script src="../../../_static/documentation_options.js?v=9afea0b4"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -60,6 +60,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials-examples/MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -135,16 +139,21 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">check_state_of_star</span><span class="p">,</span>
-                                            <span class="n">infer_star_state</span><span class="p">,</span>
-                                            <span class="n">CO_radius</span><span class="p">)</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.SN_MODELS</span><span class="w"> </span><span class="kn">import</span> <span class="n">SN_MODELS</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">STARPROPERTIES_DTYPES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.io</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">EXTRA_STAR_COLUMNS_DTYPES</span><span class="p">,</span>
+    <span class="n">SCALAR_NAMES_DTYPES</span><span class="p">,</span>
+    <span class="n">STARPROPERTIES_DTYPES</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.common_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CO_radius</span><span class="p">,</span>
+    <span class="n">check_state_of_star</span><span class="p">,</span>
+    <span class="n">infer_star_state</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Zsun</span><span class="p">,</span> <span class="n">zams_table</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.limits_thresholds</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.limits_thresholds</span><span class="w"> </span><span class="kn">import</span> <span class="n">THRESHOLD_CENTRAL_ABUNDANCE</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.utils.posydonwarning</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pwarn</span>
-
-
 
 <span class="n">STARPROPERTIES</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;state&#39;</span><span class="p">,</span>            <span class="c1"># the evolutionary state of the star. For more info see</span>
@@ -262,9 +271,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Initialize composition and radius at least.</span>
-        <span class="c1"># This is needed to match to a star and for </span>
-        <span class="c1"># evolution to be possible. Ideally the matcher </span>
-        <span class="c1"># would check things like burning luminosity and more </span>
+        <span class="c1"># This is needed to match to a star and for</span>
+        <span class="c1"># evolution to be possible. Ideally the matcher</span>
+        <span class="c1"># would check things like burning luminosity and more</span>
         <span class="c1"># elements beyong He. So, in the future we might</span>
         <span class="c1"># consider making more robust matching criteria.</span>
 
@@ -272,17 +281,25 @@
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;metallicity&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;metallicity&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
         <span class="n">state</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;H-rich_Core_H_burning&#39;</span><span class="p">)</span>
         <span class="n">CO_states</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;massless_remnant&#39;</span><span class="p">,</span> <span class="s1">&#39;WD&#39;</span><span class="p">,</span> <span class="s1">&#39;NS&#39;</span><span class="p">,</span> <span class="s1">&#39;BH&#39;</span><span class="p">]</span>
-        
+
+        <span class="k">if</span> <span class="s2">&quot;natal_kick_array&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;natal_kick_array&#39;</span><span class="p">]</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;natal_kick_velocity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;natal_kick_azimuthal_angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;natal_kick_polar_angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;natal_kick_mean_anomaly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;natal_kick_array&#39;</span><span class="p">]</span>
+
         <span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">CO_states</span><span class="p">:</span>
             <span class="n">Z_div_Zsun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metallicity</span>
             <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-            <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>     
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
             <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
             <span class="n">LOW_ABUNDANCE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
             <span class="c1"># a low/high value to guess with, seems to work well</span>
             <span class="n">LOW_LOGR_GUESS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
             <span class="n">HIGH_LOGR_GUESS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-    
+
             <span class="c1"># start by guessing a smallish radius and no He core</span>
             <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
             <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
@@ -292,7 +309,7 @@
                 <span class="n">Y</span> <span class="o">=</span> <span class="n">zams_table</span><span class="p">[</span><span class="n">Z_div_Zsun</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Z_div_Zsun</span><span class="si">}</span><span class="s2"> is a not defined metallicity&quot;</span><span class="p">)</span>
-            <span class="n">Z</span> <span class="o">=</span> <span class="n">Z_div_Zsun</span><span class="o">*</span><span class="n">Zsun</span>        
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">Z_div_Zsun</span><span class="o">*</span><span class="n">Zsun</span>
             <span class="n">X</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">Y</span> <span class="o">-</span> <span class="n">Z</span>
             <span class="n">LOW_ABUNDANCE</span> <span class="o">=</span> <span class="mf">1e-6</span>
             <span class="c1"># a low/high value to guess with, seems to work well</span>
@@ -302,7 +319,7 @@
             <span class="c1"># start by guessing a smallish radius and no He core</span>
             <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">LOW_LOGR_GUESS</span>
             <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="mf">0.0</span>
-        
+
         <span class="c1"># MAIN SEQUENCE</span>
         <span class="k">if</span> <span class="s2">&quot;Core_H_burning&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
             <span class="c1"># default HMS ZAMS</span>
@@ -315,8 +332,8 @@
             <span class="n">default_core_Y</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">default_core_X</span> <span class="o">-</span> <span class="n">Z</span>
             <span class="k">if</span> <span class="s2">&quot;stripped_He&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
                 <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
-                <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>  
-                <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">)</span>             
+                <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
+                <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">)</span>
 
         <span class="c1"># ADVANCED BURNING</span>
         <span class="k">elif</span> <span class="s2">&quot;Core_He_burning&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
@@ -337,11 +354,11 @@
             <span class="c1"># make radius big to encourage match to giant</span>
             <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">HIGH_LOGR_GUESS</span>
             <span class="c1"># This stays big after He core forms</span>
-            <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">)</span>     
+            <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="p">(</span><span class="s2">&quot;Core_&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;_depleted&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">):</span>
             <span class="c1"># core He or heavier depleted</span>
             <span class="c1"># default to end of He burn. Matching does not check</span>
-            <span class="c1"># other elements havier than He, so this is best </span>
+            <span class="c1"># other elements havier than He, so this is best</span>
             <span class="c1"># we can do.</span>
             <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
             <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">LOW_ABUNDANCE</span>
@@ -353,13 +370,13 @@
             <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
             <span class="n">default_log_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">CO_radius</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">),</span> <span class="n">state</span><span class="p">))</span>
             <span class="n">default_He_core_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-            <span class="c1"># If a user gives a mass that does not comply with our </span>
+            <span class="c1"># If a user gives a mass that does not comply with our</span>
             <span class="c1"># CO star state logic, you can get weird stuff like a</span>
             <span class="c1"># BH or NS turning into a WD.</span>
-            <span class="n">inferred_state</span> <span class="o">=</span> <span class="n">infer_star_state</span><span class="p">(</span><span class="n">star_mass</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">),</span> 
-                             <span class="n">surface_h1</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;surface_h1&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span> 
-                             <span class="n">center_h1</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;center_h1&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span> 
-                             <span class="n">center_he4</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;center_he4&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span> 
+            <span class="n">inferred_state</span> <span class="o">=</span> <span class="n">infer_star_state</span><span class="p">(</span><span class="n">star_mass</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">),</span>
+                             <span class="n">surface_h1</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;surface_h1&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+                             <span class="n">center_h1</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;center_h1&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
+                             <span class="n">center_he4</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;center_he4&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
                              <span class="n">center_c12</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;center_c12&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>
                              <span class="n">star_CO</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">state</span> <span class="o">!=</span> <span class="n">inferred_state</span><span class="p">:</span>
@@ -373,7 +390,7 @@
             <span class="c1"># some state not caught above, default HMS ZAMS</span>
             <span class="n">Pwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The initial state </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2"> was not caught in &quot;</span>
                   <span class="s2">&quot;SingleStar.__init__() so it was initialized &quot;</span> \
-                  <span class="s2">&quot;as an H-rich_Core_H_burning star.&quot;</span><span class="p">,</span> 
+                  <span class="s2">&quot;as an H-rich_Core_H_burning star.&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;InitializationWarning&quot;</span><span class="p">)</span>
             <span class="n">default_core_X</span> <span class="o">=</span> <span class="n">X</span>
             <span class="n">default_core_Y</span> <span class="o">=</span> <span class="n">Y</span>
@@ -396,10 +413,10 @@
                 <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">default_core_Y</span><span class="p">))</span>
             <span class="k">elif</span> <span class="s1">&#39;core_mass&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
                 <span class="c1"># intiailize all core_mass values to 0</span>
-                <span class="c1"># they are used in matching, but we will rely on </span>
+                <span class="c1"># they are used in matching, but we will rely on</span>
                 <span class="c1"># abundances set above to find a good match</span>
                 <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">&#39;he_core_mass&#39;</span><span class="p">:</span>
-                    <span class="n">default_core_mass</span> <span class="o">=</span> <span class="n">default_He_core_mass</span> 
+                    <span class="n">default_core_mass</span> <span class="o">=</span> <span class="n">default_He_core_mass</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">CO_states</span><span class="p">:</span>
                         <span class="n">default_core_mass</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -427,13 +444,22 @@
 
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="c1"># do not create history for scalar values</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">SCALAR_NAMES_DTYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">EXTRA_STAR_COLUMNS_DTYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">continue</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;_history&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">val</span><span class="p">])</span>
 
         <span class="c1"># store extra values in the star object without a history</span>
 
         <span class="c1"># these quantities are updated in step_SN.py</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;natal_kick_array&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">natal_kick_array</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;natal_kick_velocity&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">natal_kick_velocity</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;natal_kick_azimuthal_angle&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">natal_kick_azimuthal_angle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;natal_kick_polar_angle&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">natal_kick_polar_angle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;natal_kick_mean_anomaly&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">natal_kick_mean_anomaly</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;spin_orbit_tilt_first_SN&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spin_orbit_tilt_first_SN</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;spin_orbit_tilt_second_SN&#39;</span><span class="p">):</span>
@@ -660,14 +686,34 @@
                                       <span class="n">columns</span><span class="o">=</span><span class="n">oneline_names</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">oneline_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">scalar_names</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+                <span class="c1"># Handle legacy natal_kick_array for backward compatibility</span>
                 <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;natal_kick_array&#39;</span><span class="p">:</span>
-                    <span class="n">natal_kick_array</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="n">Pwarn</span><span class="p">(</span><span class="s2">&quot;The &#39;natal_kick_array&#39; attribute will be deprecated. &quot;</span>
+                            <span class="s2">&quot;Please use &#39;natal_kick_velocity&#39;, &quot;</span>
+                            <span class="s2">&quot;&#39;natal_kick_azimuthal_angle&#39;, &quot;</span>
+                            <span class="s2">&quot;&#39;natal_kick_polar_angle&#39;, and &quot;</span>
+                            <span class="s2">&quot;&#39;natal_kick_mean_anomaly&#39; instead. &quot;</span>
+                            <span class="s2">&quot;Adding both properties to the DataFrame.&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;DeprecationWarning&quot;</span>
+                    <span class="p">)</span>
+                    <span class="c1"># Create array from individual properties</span>
+                    <span class="n">natal_kick_array</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;natal_kick_velocity&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                        <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;natal_kick_azimuthal_angle&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                        <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;natal_kick_polar_angle&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                        <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;natal_kick_mean_anomaly&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                    <span class="p">]</span>
                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
                         <span class="n">col_name</span> <span class="o">=</span> <span class="n">prefix</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-                        <span class="n">oneline_df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">natal_kick_array</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                        <span class="n">oneline_df</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">natal_kick_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+                    <span class="c1"># also output better named columns</span>
+                    <span class="n">oneline_df</span><span class="p">[</span><span class="n">prefix</span><span class="o">+</span><span class="s1">&#39;natal_kick_velocity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">natal_kick_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">oneline_df</span><span class="p">[</span><span class="n">prefix</span><span class="o">+</span><span class="s1">&#39;natal_kick_azimuthal_angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">natal_kick_array</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">oneline_df</span><span class="p">[</span><span class="n">prefix</span><span class="o">+</span><span class="s1">&#39;natal_kick_polar_angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">natal_kick_array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">oneline_df</span><span class="p">[</span><span class="n">prefix</span><span class="o">+</span><span class="s1">&#39;natal_kick_mean_anomaly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">natal_kick_array</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">oneline_df</span><span class="p">[</span><span class="n">prefix</span><span class="o">+</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">oneline_df</span></div>
@@ -757,7 +803,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.80.g03690af
+      Version: 0+untagged.123.g17e0b2a
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
