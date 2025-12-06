@@ -448,11 +448,13 @@ class StepSN(object):
                 else:
                     binary.star_1.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_1.mass)
                 binary.star_1.state = 'BH'
-                binary.update_star_states()
+                
             else:
                 self.collapse_star(star=binary.star_1)
-                self._reset_other_star_properties(star=binary.star_2)
-                binary.update_star_states()
+                
+                
+            self._reset_other_star_properties(star=binary.star_2)
+            binary.update_star_states()
 
         #MODIFIED#
         
@@ -463,11 +465,13 @@ class StepSN(object):
                 else:
                     binary.star_2.mass = np.random.uniform(low = self.max_NS_mass, high = binary.star_2.mass)
                 binary.star_2.state = 'BH'
-                binary.update_star_states()
+                
+                
             else:
                 self.collapse_star(star=binary.star_2)
-                self._reset_other_star_properties(star=binary.star_1)
-                binary.update_star_states()
+                
+            self._reset_other_star_properties(star=binary.star_1)
+            binary.update_star_states()
             
             
         else:
