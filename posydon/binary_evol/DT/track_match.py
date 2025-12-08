@@ -19,7 +19,6 @@ import types
 import numpy as np
 import pandas as pd
 import scipy
-from scipy.interpolate import PchipInterpolator
 from scipy.optimize import minimize, root
 
 import posydon.utils.constants as const
@@ -44,7 +43,7 @@ from posydon.utils.common_functions import (
     convert_metallicity_to_string,
     set_binary_to_failed,
 )
-from posydon.utils.interpolators import PchipInterpolator2
+from posydon.utils.interpolators import SingleStarInterpolator
 from posydon.utils.posydonerror import MatchingError, NumericalError, POSYDONError
 from posydon.utils.posydonwarning import Pwarn
 
@@ -124,7 +123,7 @@ class TrackMatcher:
 
     KEYS_POSITIVE : list[str]
         Keys in this list are forced to be positive or else 0 by the
-        posydon.utils.PchipInterpolator2 class following interpolation
+        posydon.utils.SingleStarInterpolator class following interpolation
         of the associated quantity.
 
     path : str
@@ -1466,7 +1465,9 @@ class TrackMatcher:
 
         # check if m0 is in the grid bounds
         outside_low = match_m0 < self.grid.grid_mass.min()
+        outside_low = outside_low and not star.co
         outside_high = match_m0 > self.grid.grid_mass.max()
+        outside_high = outside_high and not star.co
         if outside_low or outside_high:
             set_binary_to_failed(binary)
             raise MatchingError(f"The mass {match_m0} is out of "
@@ -1480,62 +1481,78 @@ class TrackMatcher:
         assert max_time > 0.0, "max_time is non-positive"
 
         # getting track of mass match_m0's age data
-        age = get_track("age", match_m0)
+        # try/except logic required to avoid errors with compact objects
+        try:
+            age = np.array(get_track("age", match_m0))
+        except ValueError:
+            age = np.array([0.0, max_time])
+
         # max timelength of the track
         t_max = age.max()
-        interp1d = dict()
+
+        # Getting the other track values
+        # and setting up the interpolator
         kvalue = dict()
         for key in self.KEYS[1:]:
-            kvalue[key] = get_track(key, match_m0)
-        try:
-            for key in self.KEYS[1:]:
-                if key in self.KEYS_POSITIVE:
-                    positive = True
-                    interp1d[key] = PchipInterpolator2(age, kvalue[key],
-                                                       positive=positive)
-                else:
-                    interp1d[key] = PchipInterpolator2(age, kvalue[key])
-        except ValueError:
-            i_bad = [None]
-            while len(i_bad) != 0:
-                i_bad = np.where(np.diff(age) <= 0)[0]
-                age = np.delete(age, i_bad)
-                for key in self.KEYS[1:]:
-                    kvalue[key] = np.delete(kvalue[key], i_bad)
+            # try/except logic required to avoid errors with compact objects
+            try:
+                kvalue[key] = get_track(key, match_m0)
+            except ValueError:
+                kvalue[key] = np.array([0.0, 0.0])
 
-            for key in self.KEYS[1:]:
-                if key in self.KEYS_POSITIVE:
-                    positive = True
-                    interp1d[key] = PchipInterpolator2(age, kvalue[key],
-                                                       positive=positive)
-                else:
-                    interp1d[key] = PchipInterpolator2(age, kvalue[key])
+        # change data types
+        kvalue["inertia"] = kvalue["inertia"] / (const.msol * const.rsol**2)
+        kvalue['conv_env_turnover_time_l_b'] = kvalue['conv_env_turnover_time_l_b'] / const.secyer
+        kvalue["L"] = 10 ** kvalue["log_L"]
+        kvalue["R"] = 10 ** kvalue["log_R"]
 
-        interp1d["inertia"] = PchipInterpolator2(age,
-                                                kvalue["inertia"] / (const.msol * const.rsol**2))
-
-        interp1d["Idot"] = PchipInterpolator2(age,
-                                              kvalue["inertia"] / (const.msol * const.rsol**2),
-                                              derivative=True)
-
-        interp1d["conv_env_turnover_time_l_b"] = PchipInterpolator2(
-            age, kvalue['conv_env_turnover_time_l_b'] / const.secyer)
-
-        interp1d["L"] = PchipInterpolator2(age, 10 ** kvalue["log_L"])
-        interp1d["R"] = PchipInterpolator2(age, 10 ** kvalue["log_R"])
-        interp1d["t_max"] = t_max
-        interp1d["max_time"] = max_time
-        interp1d["t0"] = match_t0
-        interp1d["m0"] = match_m0
-
+        # overwrite certain values for compact objects
         if star.co:
             kvalue["mass"] = np.zeros_like(kvalue["mass"]) + star.mass
-            kvalue["R"] = np.zeros_like(kvalue["log_R"])
             kvalue["mdot"] = np.zeros_like(kvalue["mdot"])
-            interp1d["mass"] = PchipInterpolator2(age, kvalue["mass"])
-            interp1d["R"] = PchipInterpolator2(age, kvalue["R"])
-            interp1d["mdot"] = PchipInterpolator2(age, kvalue["mdot"])
-            interp1d["Idot"] = PchipInterpolator2(age, kvalue["mdot"])
+            kvalue["R"] = np.zeros_like(kvalue["log_R"])
+
+        y_keys = [key for key in kvalue.keys() ]
+        y_data = [kvalue[key] for key in y_keys]
+        positives = [key in self.KEYS_POSITIVE for key in y_keys]
+        derivatives = [False]*len(y_keys)
+
+        # Add derivatives where needed
+        if star.co:
+            # for compact objects, set Idot to zero
+            y_data.append(np.zeros_like(kvalue["inertia"]))
+        else:
+            y_data.append(kvalue["inertia"])
+
+        y_keys.append("Idot")
+        positives.append(False)
+        derivatives.append(True)
+        y_data = np.array(y_data)
+
+        # validate age data
+        i_bad = np.diff(age) <= 0
+        if np.any(i_bad):
+            if self.verbose:
+                print(f"Warning: found non-monotonic age data "
+                      f"while matching star (m0={match_m0}). ")
+            bad = [None]
+            while len(bad) != 0:
+                bad = np.where(i_bad)[0]
+                age = np.delete(age, bad)
+                y_data = np.delete(y_data, bad, axis=1)
+                i_bad = np.diff(age) <= 0
+
+        interp1d = SingleStarInterpolator(age,
+                            y_data,
+                            y_keys,
+                            positives=positives,
+                            derivatives=derivatives)
+
+        # store additional info in SingleStarInterpolator object
+        interp1d.t_max = t_max
+        interp1d.max_time = max_time
+        interp1d.t0 = match_t0
+        interp1d.m0 = match_m0
 
         # update star with interp1d object built from matched values
         star.interp1d = interp1d
@@ -1618,8 +1635,11 @@ class TrackMatcher:
                     omega_in_rad_per_yr = omega_div_omega_c * omega_c
 
                 else:
-                    radius_interp = star.interp1d["R"](star.interp1d["t0"])
-                    mass_interp = star.interp1d["mass"](star.interp1d["t0"])
+                    interp_res = star.interp1d(star.interp1d.t0)
+                    radius_interp = interp_res["R"]
+                    mass_interp = interp_res["mass"]
+                    #radius_interp = star.interp1d["R"](star.interp1d["t0"])
+                    #mass_interp = star.interp1d["mass"](star.interp1d["t0"])
 
                     numerator = const.standard_cgrav * mass_interp * const.msol
                     denominator = (radius_interp * const.rsol) ** 3
@@ -1822,8 +1842,9 @@ class TrackMatcher:
 
         # determine star states for matching
         primary, secondary, only_CO = self.determine_star_states(binary)
-        if only_CO:
-            return (None, None, None), (None, None, None), only_CO
+
+        #if only_CO:
+        #    return binary.star_1, binary.star_2, only_CO
 
         # record which star we performed matching on for reporting purposes
         self.match_secondary = match_secondary
@@ -1839,40 +1860,70 @@ class TrackMatcher:
         all_exist = binary.non_existent_companion == 0
         self.primary_not_normal = primary.co or has_non_existent
         self.primary_normal = not primary.co and all_exist
+        self.secondary_not_normal = secondary.co
+        self.secondary_normal = not secondary.co
 
         # get the matched data of binary components
         # match secondary:
         if self.match_secondary:
             if self.verbose:
-                print("\nMatching secondary star...")
+                print(f"\nMatching secondary star (state = {secondary.state})...")
 
-            m0, t0 = self.get_star_match_data(binary, secondary)
+            if self.secondary_not_normal:
+                m0, t0 = self.get_star_match_data(binary, secondary,
+                                        copy_prev_m0 = secondary.mass,
+                                        copy_prev_t0 = binary.time)
+            elif self.secondary_normal:
+                m0, t0 = self.get_star_match_data(binary, secondary)
+                # record which star got matched
+                if secondary == binary.star_2:
+                    self.matched_s2 = True
+                elif secondary == binary.star_1:
+                    self.matched_s1 = True
+            else:
+                raise ValueError("During matching, the secondary should either be "
+                                "normal (stellar object) or "
+                                "not normal (a CO or nonexistent companion).",
+                                f"\nsecondary.co = {secondary.co}",
+                                "\nnon_existent_companion = "
+                                f"{binary.non_existent_companion}",
+                                "\ncompanion_1_exists = "
+                                f"{binary.companion_1_exists}",
+                                "\ncompanion_2_exists = "
+                                f"{binary.companion_2_exists}")
 
-        if self.match_primary and self.primary_normal:
+        if self.match_primary:
             # match primary
             if self.verbose:
-                print("\nMatching primary star...")
+                print(f"\nMatching primary star (state = {primary.state})...")
 
-            self.get_star_match_data(binary, primary)
+            if self.primary_not_normal:
+                # copy the secondary star except mass which is of the primary,
+                # and radius, mdot, Idot = 0
+                self.get_star_match_data(binary, primary,
+                                        copy_prev_m0 = m0,
+                                        copy_prev_t0 = t0)
 
-        elif self.match_primary and self.primary_not_normal:
-            # copy the secondary star except mass which is of the primary,
-            # and radius, mdot, Idot = 0
-            self.get_star_match_data(binary, primary,
-                                     copy_prev_m0 = m0,
-                                     copy_prev_t0 = t0)
+            elif self.primary_normal:
 
-        elif not (self.primary_normal or self.primary_not_normal):
-            raise ValueError("During matching, the primary should either be "
-                             "normal (stellar object) or "
-                             "not normal (a CO or nonexistent companion).",
-                            f"\nprimary.co = {primary.co}",
-                            "\nnon_existent_companion = "
-                            f"{binary.non_existent_companion}",
-                            "\ncompanion_1_exists = "
-                            f"{binary.companion_1_exists}",
-                            "\ncompanion_2_exists = "
-                            f"{binary.companion_2_exists}")
+                self.get_star_match_data(binary, primary)
+
+                if primary == binary.star_2:
+                    self.matched_s2 = True
+                elif primary == binary.star_1:
+                    self.matched_s1 = True
+
+            elif not (self.primary_normal or self.primary_not_normal):
+                raise ValueError("During matching, the primary should either be "
+                                "normal (stellar object) or "
+                                "not normal (a CO or nonexistent companion).",
+                                f"\nprimary.co = {primary.co}",
+                                "\nnon_existent_companion = "
+                                f"{binary.non_existent_companion}",
+                                "\ncompanion_1_exists = "
+                                f"{binary.companion_1_exists}",
+                                "\ncompanion_2_exists = "
+                                f"{binary.companion_2_exists}")
 
 
         if (secondary.interp1d == None and self.match_secondary) or \
@@ -1880,7 +1931,9 @@ class TrackMatcher:
             failed_state = binary.state
             set_binary_to_failed(binary)
             raise MatchingError("Grid matching failed for "
-                                f"{failed_state} binary.")
+                                f"{failed_state} binary. "
+                                f"\nsecondary.interp1d = {secondary.interp1d}"
+                                f"\nprimary.interp1d = {primary.interp1d}")
 
         # recalculate rotation quantities after matching
         omega0_pri, omega0_sec = self.update_rotation_info(primary, secondary)
@@ -1888,7 +1941,7 @@ class TrackMatcher:
         # update binary history with matched values
         # (only shown in history if record_matching = True)
         # (this gets overwritten after detached evolution)
-        if secondary.matched:
+        if self.secondary_normal and secondary.matched:
             self.update_star_properties(secondary, secondary.htrack)
         if self.primary_normal and primary.matched:
             self.update_star_properties(primary, primary.htrack)
@@ -2019,9 +2072,14 @@ class TrackMatcher:
                 secondary.htrack = s_htrack[~CO_mask].item()
 
             else:
-                # both stars are compact objects, should redirect to step_dco
-                only_CO = True
-                return None, None, only_CO
+                # both stars are compact objects
+                primary = s_arr[0]
+                primary.co = s_CO[0]
+                primary.htrack = s_htrack[0]
+
+                secondary = s_arr[1]
+                secondary.co = s_CO[1]
+                secondary.htrack = s_htrack[1]
 
         # In case a star is a massless remnant:
         # We force primary.co = True for all isolated evolution
@@ -2085,8 +2143,8 @@ class TrackMatcher:
         """
 
         # initial mass and age at point of closest match
-        m0 = star.interp1d["m0"]
-        t0 = star.interp1d["t0"]
+        m0 = star.interp1d.m0
+        t0 = star.interp1d.t0
 
         for key in self.KEYS:
 
@@ -2124,7 +2182,7 @@ class TrackMatcher:
 
         """
 
-        m0 = star.interp1d["m0"]
+        m0 = star.interp1d.m0
         htrack = star.htrack
 
         grid = self.grid_Hrich if htrack else self.grid_strippedHe
@@ -2157,7 +2215,7 @@ class TrackMatcher:
 
         """
 
-        m0 = star.interp1d["m0"]
+        m0 = star.interp1d.m0
         htrack = star.htrack
 
         grid = self.grid_Hrich if htrack else self.grid_strippedHe
