@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.simulationproperties &mdash; posydon 0+untagged.129.g1d3d368 documentation</title>
+  <title>posydon.binary_evol.simulationproperties &mdash; posydon 0+untagged.171.g2879e25 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=e9947d26"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=da003d52"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -63,7 +63,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-2025-School-Labs">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -166,7 +166,7 @@
                        <span class="n">step_CE</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
                        <span class="n">step_end</span> <span class="o">=</span> <span class="p">(</span><span class="n">NullStep</span><span class="p">(),</span> <span class="p">{}),</span>
                        <span class="n">extra_hooks</span> <span class="o">=</span> <span class="p">[],</span>
-                       <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                       <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct the simulation properties object.</span>
 
@@ -240,8 +240,11 @@
 <span class="sd">            &#39;extra_post_evolve&#39;) and the corresponding function.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="n">verbose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
         <span class="c1"># gather kwargs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;flow&quot;</span><span class="p">:</span> <span class="n">flow</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;flow&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow</span>
 
         <span class="n">step_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;step_HMS_HMS&quot;</span><span class="p">:</span> <span class="n">step_HMS_HMS</span><span class="p">,</span>
                        <span class="s2">&quot;step_CO_HeMS&quot;</span><span class="p">:</span> <span class="n">step_CO_HeMS</span><span class="p">,</span>
@@ -309,6 +312,27 @@
             <span class="k">elif</span> <span class="s2">&quot;step&quot;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">all_step_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">steps_loaded</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">preload_imports</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SimulationProperties.preload_imports">
+<a class="viewcode-back" href="../../../api_reference/posydon.binary_evol.html#posydon.binary_evol.simulationproperties.SimulationProperties.preload_imports">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preload_imports</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Preload the imports of detached_step and MesaGridStep to avoid</span>
+<span class="sd">        importing them when they are needed when `close()` is called. In</span>
+<span class="sd">        particular, detached_step imports sklearn, which in turn utilizes</span>
+<span class="sd">        loky, which invokes its own register.at_exit call. If this happens</span>
+<span class="sd">        during the `close()` call, which is invoked at shutdown, a</span>
+<span class="sd">        failure occurs, hence the need for something like this.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.DT.step_detached</span><span class="w"> </span><span class="kn">import</span> <span class="n">detached_step</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.MESA.step_mesa</span><span class="w"> </span><span class="kn">import</span> <span class="n">MesaGridStep</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detached_step</span> <span class="o">=</span> <span class="n">detached_step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_MesaGridStep</span> <span class="o">=</span> <span class="n">MesaGridStep</span></div>
+
 
 <div class="viewcode-block" id="SimulationProperties.from_ini">
 <a class="viewcode-back" href="../../../api_reference/posydon.binary_evol.html#posydon.binary_evol.simulationproperties.SimulationProperties.from_ini">[docs]</a>
@@ -475,14 +499,13 @@
 <a class="viewcode-back" href="../../../api_reference/posydon.binary_evol.html#posydon.binary_evol.simulationproperties.SimulationProperties.close">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Close hdf5 files before exiting.&quot;&quot;&quot;</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.DT.step_detached</span><span class="w"> </span><span class="kn">import</span> <span class="n">detached_step</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.binary_evol.MESA.step_mesa</span><span class="w"> </span><span class="kn">import</span> <span class="n">MesaGridStep</span>
+
         <span class="n">all_step_funcs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span>
                           <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="s1">&#39;step_&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">step_func</span> <span class="ow">in</span> <span class="n">all_step_funcs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">step_func</span><span class="p">,</span> <span class="n">MesaGridStep</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">step_func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MesaGridStep</span><span class="p">):</span>
                 <span class="n">step_func</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">step_func</span><span class="p">,</span> <span class="n">detached_step</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">step_func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detached_step</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">grid_interpolator</span> <span class="ow">in</span> <span class="p">[</span><span class="n">step_func</span><span class="o">.</span><span class="n">track_matcher</span><span class="o">.</span><span class="n">grid_Hrich</span><span class="p">,</span> <span class="n">step_func</span><span class="o">.</span><span class="n">track_matcher</span><span class="o">.</span><span class="n">grid_strippedHe</span><span class="p">]:</span>
                     <span class="n">grid_interpolator</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
@@ -787,7 +810,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, Tassos Fragos.</p>
+    <p>&#169; Copyright 2026, Tassos Fragos.</p>
   </div>
 
    
@@ -799,7 +822,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.129.g1d3d368
+      Version: 0+untagged.171.g2879e25
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

@@ -6,17 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon_setup_pipeline &mdash; posydon 0+untagged.129.g1d3d368 documentation</title>
+  <title>posydon_setup_pipeline &mdash; posydon 0+untagged.171.g2879e25 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9430f4b5" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=e9947d26"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/documentation_options.js?v=da003d52"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -66,7 +66,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">POSYDON school material</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-class-materials-2025">POSYDON School 2025</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-2025-School-Labs">POSYDON School 2025</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
 <ul>
@@ -144,13 +144,13 @@
 <span id="posydon-setup-pipeline"></span><h1>posydon_setup_pipeline<a class="headerlink" href="#module-posydon_setup_pipeline" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="posydon_setup_pipeline.PostProcessingPipeline">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">posydon_setup_pipeline.</span></span><span class="sig-name descname"><span class="pre">PostProcessingPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_inifile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/posydon_setup_pipeline.html#PostProcessingPipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#posydon_setup_pipeline.PostProcessingPipeline" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">posydon_setup_pipeline.</span></span><span class="sig-name descname"><span class="pre">PostProcessingPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_inifile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/posydon_setup_pipeline.html#PostProcessingPipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#posydon_setup_pipeline.PostProcessingPipeline" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A class to handle the post-processing pipeline.</p>
 <p>Initialize a pipeline</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path_to_inifile</strong> (<em>path</em>) – The location of an ini file to read the parameters for the pipeline
+<dd class="field-odd"><p><strong>path_to_inifile</strong> (<a class="reference internal" href="posydon.interpolation.html#posydon.interpolation.interpolation.GRIDInterpolator.path" title="posydon.interpolation.interpolation.GRIDInterpolator.path"><em>path</em></a>) – The location of an ini file to read the parameters for the pipeline
 (default: None)</p>
 </dd>
 </dl>
@@ -168,11 +168,11 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="posydon_setup_pipeline.PostProcessingPipeline.parse_setup_params">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_setup_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/posydon_setup_pipeline.html#PostProcessingPipeline.parse_setup_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#posydon_setup_pipeline.PostProcessingPipeline.parse_setup_params" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">parse_setup_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/posydon_setup_pipeline.html#PostProcessingPipeline.parse_setup_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#posydon_setup_pipeline.PostProcessingPipeline.parse_setup_params" title="Link to this definition"></a></dt>
 <dd><p>Parse inifile for running post-processing pipelines.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>path</em>) – The location of an ini file to read the parameters for the pipeline
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference internal" href="posydon.interpolation.html#posydon.interpolation.interpolation.GRIDInterpolator.path" title="posydon.interpolation.interpolation.GRIDInterpolator.path"><em>path</em></a>) – The location of an ini file to read the parameters for the pipeline
 (default: None)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -316,7 +316,7 @@ It requires MAILTYPE to be set, too.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, Tassos Fragos.</p>
+    <p>&#169; Copyright 2026, Tassos Fragos.</p>
   </div>
 
    
@@ -328,7 +328,7 @@ It requires MAILTYPE to be set, too.</p></li>
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.129.g1d3d368
+      Version: 0+untagged.171.g2879e25
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
