@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>POSYDON Population Synthesis Configuration Guide &mdash; posydon 0+untagged.171.g2879e25 documentation</title>
+  <title>POSYDON Population Synthesis Configuration Guide &mdash; posydon 0.1.dev370+ge60fa53e4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=9430f4b5" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=da003d52"></script>
+      <script src="../../_static/documentation_options.js?v=9102184b"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="The Flow Chart Object" href="flow_chart.html" />
-    <link rel="prev" title="The Binary Population Object" href="binary_population.html" /> 
+    <link rel="prev" title="The BinaryStar object" href="binary_star.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,20 +45,14 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">How-to (Getting Started)</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/installation-guide.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-grids.html">Quick Start: Examining the MESA Grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-population.html">Quick Start: Your First Population</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
@@ -68,37 +62,37 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-2025-School-Labs">POSYDON School 2025</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
+<p class="caption" role="heading"><span class="caption-text">Explanation</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../mesa-grids.html">MESA Grids API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/grid-types.html">Grid Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/data-releases.html">Data Releases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../processing-pipeline.html">Processing Pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../machine-learning-components.html">Machine Learning Components</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../stellar-binary-simulation.html">Stellar &amp; Binary-star Simulation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="single_star.html">The SingleStar object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="binary_star.html">The BinaryStar object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="binary_population.html">The Binary Population Object</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">POSYDON Population Synthesis Configuration Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="flow_chart.html">The Flow Chart Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="custom_hooks.html">Evolutionary Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="user_modules.html">User Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="synthetic_population.html">Synthetic Populations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="synthetic_population.html#the-structure-of-generated-population-files">The Structure of Generated Population Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="star_formation_history.html">Star Formation History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supernova_models.html">Supernova Models</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../population-synthesis.html">Population Synthesis</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../mesa-grids.html">MESA Grids API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api_reference/posydon.html">posydon</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api_reference/bin.html">executables</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Releases and Datasets</span></p>
+<p class="caption" role="heading"><span class="caption-text">Additional Information</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON/releases">Releases</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://zenodo.org/communities/posydon/">Datasets</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Support and Contact</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../contact-support/contact-information.html">Contact Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting-faqs/installation-issues.html">Common Installation Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting-faqs/code-questions.html">Code Usage Questions</a></li>
@@ -173,7 +167,7 @@ Note that the loading of the simulation steps is separate from creating the obje
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">simprop_kwargs_from_ini</span>
 
 <span class="c1"># read from file</span>
-<span class="n">sim_props</span> <span class="o">=</span> <span class="n">simprop_kwargs_from_ini</span><span class="p">(</span><span class="s1">&#39;population_params.ini&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sim_props</span> <span class="o">=</span> <span class="n">simprop_kwargs_from_ini</span><span class="p">(</span><span class="s1">'population_params.ini'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="c1"># create SimulationProperties object</span>
 <span class="n">sim</span> <span class="o">=</span> <span class="n">SimulationProperties</span><span class="p">(</span><span class="o">**</span><span class="n">sim_props</span><span class="p">)</span>
@@ -1252,7 +1246,7 @@ This includes, the number of binaries, the metallicity, how often to save the po
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.popsyn.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">binarypop_kwargs_from_ini</span>
 
 <span class="c1"># read from file</span>
-<span class="n">pop_params</span> <span class="o">=</span> <span class="n">binarypop_kwargs_from_ini</span><span class="p">(</span><span class="s1">&#39;population_params.ini&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">pop_params</span> <span class="o">=</span> <span class="n">binarypop_kwargs_from_ini</span><span class="p">(</span><span class="s1">'population_params.ini'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="c1"># create BinaryPopulation object</span>
 <span class="n">pop</span> <span class="o">=</span> <span class="n">BinaryPopulation</span><span class="p">(</span><span class="o">**</span><span class="n">pop_params</span><span class="p">)</span>
@@ -1584,7 +1578,7 @@ the parameters here determine what output of that class will be outputted into t
 <div class="line">Note: <code class="docutils literal notranslate"><span class="pre">'step_times'</span></code> requires <code class="docutils literal notranslate"><span class="pre">TimingHooks</span></code> from <code class="docutils literal notranslate"><span class="pre">posydon.binary_evol.simulationproperties</span></code>.</div>
 </div>
 </td>
-<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;step_names&#39;</span><span class="p">:</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="s1">&#39;step_times&#39;</span><span class="p">:</span><span class="s1">&#39;float64&#39;</span><span class="p">}</span>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">'step_names'</span><span class="p">:</span><span class="s1">'string'</span><span class="p">,</span> <span class="s1">'step_times'</span><span class="p">:</span><span class="s1">'float64'</span><span class="p">}</span>
 </pre></div>
 </div>
 </td>
@@ -1616,12 +1610,12 @@ the parameters here determine what output of that class will be outputted into t
 <li><p><code class="docutils literal notranslate"><span class="pre">'nearest_neighbour_distance'</span></code>: The distance to the nearest neighbour.</p></li>
 </ul>
 </td>
-<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">,</span>
-<span class="s1">&#39;event&#39;</span><span class="p">,</span>
-<span class="s1">&#39;time&#39;</span><span class="p">,</span>
-<span class="s1">&#39;orbital_period&#39;</span><span class="p">,</span>
-<span class="s1">&#39;eccentricity&#39;</span><span class="p">,</span>
-<span class="s1">&#39;lg_mtransfer_rate&#39;</span><span class="p">]</span>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">'state'</span><span class="p">,</span>
+<span class="s1">'event'</span><span class="p">,</span>
+<span class="s1">'time'</span><span class="p">,</span>
+<span class="s1">'orbital_period'</span><span class="p">,</span>
+<span class="s1">'eccentricity'</span><span class="p">,</span>
+<span class="s1">'lg_mtransfer_rate'</span><span class="p">]</span>
 </pre></div>
 </div>
 </td>
@@ -1642,14 +1636,14 @@ the parameters here determine what output of that class will be outputted into t
 <li><p><code class="docutils literal notranslate"><span class="pre">'mt_history_CO_HeMS_RLO'</span></code>: mass transfer history for CO-HeMS-RLO</p></li>
 </ul>
 </td>
-<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;interp_class_HMS_HMS&#39;</span><span class="p">,</span>
-<span class="s1">&#39;interp_class_CO_HMS_RLO&#39;</span><span class="p">,</span>
-<span class="s1">&#39;interp_class_CO_HeMS&#39;</span><span class="p">,</span>
-<span class="s1">&#39;interp_class_CO_HeMS_RLO&#39;</span><span class="p">,</span>
-<span class="s1">&#39;mt_history_HMS_HMS&#39;</span><span class="p">,</span>
-<span class="s1">&#39;mt_history_CO_HMS_RLO&#39;</span><span class="p">,</span>
-<span class="s1">&#39;mt_history_CO_HeMS&#39;</span><span class="p">,</span>
-<span class="s1">&#39;mt_history_CO_HeMS_RLO&#39;</span><span class="p">]</span>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">'interp_class_HMS_HMS'</span><span class="p">,</span>
+<span class="s1">'interp_class_CO_HMS_RLO'</span><span class="p">,</span>
+<span class="s1">'interp_class_CO_HeMS'</span><span class="p">,</span>
+<span class="s1">'interp_class_CO_HeMS_RLO'</span><span class="p">,</span>
+<span class="s1">'mt_history_HMS_HMS'</span><span class="p">,</span>
+<span class="s1">'mt_history_CO_HMS_RLO'</span><span class="p">,</span>
+<span class="s1">'mt_history_CO_HeMS'</span><span class="p">,</span>
+<span class="s1">'mt_history_CO_HeMS_RLO'</span><span class="p">]</span>
 </pre></div>
 </div>
 </td>
@@ -1747,21 +1741,21 @@ the parameters here determine what output of that class will be outputted into t
 <li><p><code class="docutils literal notranslate"><span class="pre">'total_mass_he4'</span></code>: The total Helium mass.</p></li>
 </ul>
 </td>
-<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">,</span>
-<span class="s1">&#39;mass&#39;</span><span class="p">,</span>
-<span class="s1">&#39;log_R&#39;</span><span class="p">,</span>
-<span class="s1">&#39;log_L&#39;</span><span class="p">,</span>
-<span class="s1">&#39;lg_mdot&#39;</span><span class="p">,</span>
-<span class="s1">&#39;he_core_mass&#39;</span><span class="p">,</span>
-<span class="s1">&#39;he_core_radius&#39;</span><span class="p">,</span>
-<span class="s1">&#39;co_core_mass&#39;</span><span class="p">,</span>
-<span class="s1">&#39;co_core_radius&#39;</span><span class="p">,</span>
-<span class="s1">&#39;center_h1&#39;</span><span class="p">,</span>
-<span class="s1">&#39;center_he4&#39;</span><span class="p">,</span>
-<span class="s1">&#39;surface_h1&#39;</span><span class="p">,</span>
-<span class="s1">&#39;surface_he4&#39;</span><span class="p">,</span>
-<span class="s1">&#39;surf_avg_omega_div_omega_crit&#39;</span><span class="p">,</span>
-<span class="s1">&#39;spin&#39;</span><span class="p">,]</span>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">'state'</span><span class="p">,</span>
+<span class="s1">'mass'</span><span class="p">,</span>
+<span class="s1">'log_R'</span><span class="p">,</span>
+<span class="s1">'log_L'</span><span class="p">,</span>
+<span class="s1">'lg_mdot'</span><span class="p">,</span>
+<span class="s1">'he_core_mass'</span><span class="p">,</span>
+<span class="s1">'he_core_radius'</span><span class="p">,</span>
+<span class="s1">'co_core_mass'</span><span class="p">,</span>
+<span class="s1">'co_core_radius'</span><span class="p">,</span>
+<span class="s1">'center_h1'</span><span class="p">,</span>
+<span class="s1">'center_he4'</span><span class="p">,</span>
+<span class="s1">'surface_h1'</span><span class="p">,</span>
+<span class="s1">'surface_he4'</span><span class="p">,</span>
+<span class="s1">'surf_avg_omega_div_omega_crit'</span><span class="p">,</span>
+<span class="s1">'spin'</span><span class="p">,]</span>
 </pre></div>
 </div>
 </td>
@@ -1769,11 +1763,11 @@ the parameters here determine what output of that class will be outputted into t
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scalar_names</span></code></p></td>
 <td><div class="line-block">
 <div class="line">Scalars to include in the output for SingleStar 1.</div>
-<div class="line">Example: <code class="docutils literal notranslate"><span class="pre">['natal_kick_array',</span> <span class="pre">'SN_type',</span> <span class="pre">'f_fb',</span> <span class="pre">'spin_orbit_tilt_first_SN',</span> <span class="pre">'spin_orbit_tilt_second_SN',</span> <span class="pre">'m_disk_accreted',</span> <span class="pre">'m_disk_radiated']</span></code></div>
+<div class="line">Example: <code class="docutils literal notranslate"><span class="pre">['natal_kick_velocity',</span> <span class="pre">'SN_type',</span> <span class="pre">'f_fb',</span> <span class="pre">'spin_orbit_tilt_first_SN',</span> <span class="pre">'spin_orbit_tilt_second_SN',</span> <span class="pre">'m_disk_accreted',</span> <span class="pre">'m_disk_radiated']</span></code></div>
 <div class="line">Options:</div>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">'natal_kick_array'</span></code>: The array of natal kicks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'natal_kick_velocity'</span></code>: The velocity of the natal kick.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">'SN_type'</span></code>: The type of supernova.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">'f_fb'</span></code>: The fallback fraction.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">'spin_orbit_tilt_first_SN'</span></code>: The spin-orbit tilt after the first supernova.</p></li>
@@ -1782,11 +1776,11 @@ the parameters here determine what output of that class will be outputted into t
 <li><p><code class="docutils literal notranslate"><span class="pre">'m_disk_radiated'</span></code>: The mass radiated from the disk.</p></li>
 </ul>
 </td>
-<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;natal_kick_array&#39;</span><span class="p">,</span>
-<span class="s1">&#39;SN_type&#39;</span><span class="p">,</span>
-<span class="s1">&#39;f_fb&#39;</span><span class="p">,</span>
-<span class="s1">&#39;spin_orbit_tilt_first_SN&#39;</span><span class="p">,</span>
-<span class="s1">&#39;spin_orbit_tilt_second_SN&#39;</span><span class="p">,]</span>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">'natal_kick_velocity'</span><span class="p">,</span>
+<span class="s1">'SN_type'</span><span class="p">,</span>
+<span class="s1">'f_fb'</span><span class="p">,</span>
+<span class="s1">'spin_orbit_tilt_first_SN'</span><span class="p">,</span>
+<span class="s1">'spin_orbit_tilt_second_SN'</span><span class="p">,]</span>
 </pre></div>
 </div>
 </td>
@@ -1801,7 +1795,7 @@ the parameters here determine what output of that class will be outputted into t
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="binary_population.html" class="btn btn-neutral float-left" title="The Binary Population Object" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="binary_star.html" class="btn btn-neutral float-left" title="The BinaryStar object" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="flow_chart.html" class="btn btn-neutral float-right" title="The Flow Chart Object" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
@@ -1820,7 +1814,7 @@ the parameters here determine what output of that class will be outputted into t
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.171.g2879e25
+      Version: 0.1.dev370+ge60fa53e4
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>posydon.binary_evol.DT.gravitational_radiation &mdash; posydon 0+untagged.171.g2879e25 documentation</title>
+  <title>posydon.binary_evol.DT.gravitational_radiation &mdash; posydon 0.1.dev370+ge60fa53e4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9430f4b5" />
@@ -14,7 +14,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=da003d52"></script>
+      <script src="../_static/documentation_options.js?v=9102184b"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -45,20 +45,14 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">How-to (Getting Started)</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/prerequisites.html">Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/installation-guide.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/first-grids.html">Quick Start: Examining the MESA Grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting-started/first-population.html">Quick Start: Your First Population</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials-examples/population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials-examples/generating-datasets/generating-datasets.html">Crafting the Core Datasets for POSYDON</a></li>
@@ -68,15 +62,18 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-2025-School-Labs">POSYDON School 2025</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
+<p class="caption" role="heading"><span class="caption-text">Explanation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../components-overview/mesa-grids.html">MESA Grids API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/grid-types.html">Grid Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations/data-releases.html">Data Releases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components-overview/processing-pipeline.html">Processing Pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components-overview/machine-learning-components.html">Machine Learning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components-overview/stellar-binary-simulation.html">Stellar &amp; Binary-star Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components-overview/population-synthesis.html">Population Synthesis</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../components-overview/mesa-grids.html">MESA Grids API</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="posydon.html">posydon</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="posydon.CLI.html">posydon.CLI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="posydon.active_learning.html">posydon.active_learning</a></li>
@@ -88,13 +85,11 @@
 <li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.tides.html">posydon.binary_evol.DT.tides</a></li>
 <li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.winds.html">posydon.binary_evol.DT.winds</a></li>
 <li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.html#module-posydon.binary_evol.DT.double_CO">posydon.binary_evol.DT.double_CO</a></li>
-<li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.html#module-posydon.binary_evol.DT.key_library">posydon.binary_evol.DT.key_library</a></li>
 <li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.html#module-posydon.binary_evol.DT.step_detached">posydon.binary_evol.DT.step_detached</a></li>
 <li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.html#module-posydon.binary_evol.DT.step_disrupted">posydon.binary_evol.DT.step_disrupted</a></li>
 <li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.html#module-posydon.binary_evol.DT.step_initially_single">posydon.binary_evol.DT.step_initially_single</a></li>
 <li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.html#module-posydon.binary_evol.DT.step_isolated">posydon.binary_evol.DT.step_isolated</a></li>
 <li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.html#module-posydon.binary_evol.DT.step_merged">posydon.binary_evol.DT.step_merged</a></li>
-<li class="toctree-l4"><a class="reference internal" href="posydon.binary_evol.DT.html#module-posydon.binary_evol.DT.track_match">posydon.binary_evol.DT.track_match</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="posydon.binary_evol.MESA.html">posydon.binary_evol.MESA</a></li>
@@ -104,6 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="posydon.binary_evol.html#module-posydon.binary_evol.simulationproperties">posydon.binary_evol.simulationproperties</a></li>
 <li class="toctree-l3"><a class="reference internal" href="posydon.binary_evol.html#module-posydon.binary_evol.singlestar">posydon.binary_evol.singlestar</a></li>
 <li class="toctree-l3"><a class="reference internal" href="posydon.binary_evol.html#module-posydon.binary_evol.step_end">posydon.binary_evol.step_end</a></li>
+<li class="toctree-l3"><a class="reference internal" href="posydon.binary_evol.html#module-posydon.binary_evol.track_match">posydon.binary_evol.track_match</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="posydon.grids.html">posydon.grids</a></li>
@@ -116,13 +112,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="bin.html">executables</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Releases and Datasets</span></p>
+<p class="caption" role="heading"><span class="caption-text">Additional Information</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON/releases">Releases</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://zenodo.org/communities/posydon/">Datasets</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Support and Contact</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../contact-support/contact-information.html">Contact Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../troubleshooting-faqs/installation-issues.html">Common Installation Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../troubleshooting-faqs/code-questions.html">Code Usage Questions</a></li>
@@ -174,13 +170,13 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The current orbital separation. [Rsolar]</p></li>
-<li><p><strong>e</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – The current orbital eccentricity.</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – The current orbital separation. [Rsolar]</p></li>
+<li><p><strong>e</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – The current orbital eccentricity.</p></li>
 <li><p><strong>primary</strong> (<em>SingleStar object</em>) – A single star object, representing the primary (more evolved) star
 in the binary and containing its properties.</p></li>
 <li><p><strong>secondary</strong> (<em>SingleStar object</em>) – A single star object, representing the secondary (less evolved) star
 in the binary and containing its properties.</p></li>
-<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – True if we want to print stuff.</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a>) – True if we want to print stuff.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -221,7 +217,7 @@ in the binary and containing its properties.</p></li>
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.171.g2879e25
+      Version: 0.1.dev370+ge60fa53e4
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

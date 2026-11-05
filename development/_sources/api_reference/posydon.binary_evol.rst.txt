@@ -57,3 +57,11 @@ posydon.binary\_evol.step\_end
    :members:
    :show-inheritance:
    :undoc-members:
+
+posydon.binary\_evol.track\_match
+---------------------------------
+
+.. automodule:: posydon.binary_evol.track_match
+   :members:
+   :show-inheritance:
+   :undoc-members:

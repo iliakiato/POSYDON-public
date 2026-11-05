@@ -32,6 +32,14 @@ posydon.grids.io
    :show-inheritance:
    :undoc-members:
 
+posydon.grids.lazy\_hdf
+-----------------------
+
+.. automodule:: posydon.grids.lazy_hdf
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 posydon.grids.post\_processing
 ------------------------------
 

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Export Rerun Grids with POSYDON Post Processing Pipeline &mdash; posydon 0+untagged.171.g2879e25 documentation</title>
+  <title>Export Rerun Grids with POSYDON Post Processing Pipeline &mdash; posydon 0.1.dev370+ge60fa53e4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=da003d52"></script>
+      <script src="../../_static/documentation_options.js?v=9102184b"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -48,29 +48,26 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">How-to (Getting Started)</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/installation-guide.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-grids.html">Quick Start: Examining the MESA Grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-population.html">Quick Start: Your First Population</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="generating-datasets.html">Crafting the Core Datasets for POSYDON</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="just_step_1.html">Processing MESA grids with the POSYDON pipeline API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run_full_pipeline.html">The full POSYDON Processing Pipeline experience</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_1D.html">1D Plotting Functionalities for POSYDON PSyGrids</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_2D.html">2D Plotting Functionalities for POSYDON PSyGrids</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Export Rerun Grids with POSYDON Post Processing Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processing_single_hms.html">Processing Single Stars with POSYDON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generating-datasets.html#getting-started-tutorials">Getting Started Tutorials</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="generating-datasets.html#advanced-tutorials">Advanced Tutorials</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="generating-datasets.html#export-mesa-simulation-points-to-rerun-using-the-processing-pipeline">Export MESA Simulation Points to Rerun Using the Processing Pipeline</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Export Rerun Grids with POSYDON Post Processing Pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generating-datasets.html#export-single-star-psygrid-datasets">Export Single Star PSyGrid Datasets</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
@@ -79,25 +76,28 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-2025-School-Labs">POSYDON School 2025</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
+<p class="caption" role="heading"><span class="caption-text">Explanation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../components-overview/mesa-grids.html">MESA Grids API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/grid-types.html">Grid Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/data-releases.html">Data Releases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../components-overview/processing-pipeline.html">Processing Pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../components-overview/machine-learning-components.html">Machine Learning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../components-overview/stellar-binary-simulation.html">Stellar &amp; Binary-star Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../components-overview/population-synthesis.html">Population Synthesis</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../components-overview/mesa-grids.html">MESA Grids API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api_reference/posydon.html">posydon</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api_reference/bin.html">executables</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Releases and Datasets</span></p>
+<p class="caption" role="heading"><span class="caption-text">Additional Information</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON/releases">Releases</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://zenodo.org/communities/posydon/">Datasets</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Support and Contact</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../contact-support/contact-information.html">Contact Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting-faqs/installation-issues.html">Common Installation Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting-faqs/code-questions.html">Code Usage Questions</a></li>
@@ -174,8 +174,8 @@ env: PATH_TO_POSYDON_DATA=/srv/beegfs/scratch/shares/astro/posydon/POSYDON_GRIDS
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">PATH_TO_POSYDON</span>
 
-<span class="n">path_to_ini</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PATH_TO_POSYDON</span><span class="p">,</span> <span class="s1">&#39;grid_params/pipeline_yggdrasil.ini&#39;</span><span class="p">)</span>
-<span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">path_to_ini</span><span class="p">,</span> <span class="s1">&#39;./pipeline.ini&#39;</span><span class="p">)</span>
+<span class="n">path_to_ini</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PATH_TO_POSYDON</span><span class="p">,</span> <span class="s1">'grid_params/pipeline_yggdrasil.ini'</span><span class="p">)</span>
+<span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">path_to_ini</span><span class="p">,</span> <span class="s1">'./pipeline.ini'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -198,7 +198,7 @@ env: PATH_TO_POSYDON_DATA=/srv/beegfs/scratch/shares/astro/posydon/POSYDON_GRIDS
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">posydon.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">PATH_TO_POSYDON_DATA</span>
 
-<span class="n">PATH_TO_GRIDS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PATH_TO_POSYDON_DATA</span><span class="p">,</span> <span class="s1">&#39;POSYDON_data/tutorials/processing-pipeline&#39;</span><span class="p">)</span>
+<span class="n">PATH_TO_GRIDS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PATH_TO_POSYDON_DATA</span><span class="p">,</span> <span class="s1">'POSYDON_data/tutorials/processing-pipeline'</span><span class="p">)</span>
 <span class="n">PATH_TO_GRIDS</span>
 </pre></div>
 </div>
@@ -222,13 +222,13 @@ env: PATH_TO_POSYDON_DATA=/srv/beegfs/scratch/shares/astro/posydon/POSYDON_GRIDS
 </pre></div>
 </div>
 <p>And edit the <code class="docutils literal notranslate"><span class="pre">[rerun]</span></code> section of the file to</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">GRID_TYPES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[&#39;HMS-HMS&#39;]</span>
-<span class="na">METALLICITIES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[[&#39;1e-01_Zsun&#39;]</span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">GRID_TYPES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">['HMS-HMS']</span>
+<span class="na">METALLICITIES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[['1e-01_Zsun']</span>
 <span class="w">                </span><span class="na">]</span>
-<span class="na">GRID_SLICES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[[&#39;test_grid&#39;]]</span>
-<span class="na">COMPRESSIONS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[[&#39;LITE&#39;]]</span>
+<span class="na">GRID_SLICES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[['test_grid']]</span>
+<span class="na">COMPRESSIONS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">[['LITE']]</span>
 <span class="na">DROP_MISSING_FILES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
-<span class="na">RERUN_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;opacity_max&#39;</span>
+<span class="na">RERUN_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'opacity_max'</span>
 </pre></div>
 </div>
 <p>Also remember to set</p>
@@ -362,7 +362,7 @@ grid.csv  HMS-HMS_yggdrasil.ini
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.171.g2879e25
+      Version: 0.1.dev370+ge60fa53e4
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

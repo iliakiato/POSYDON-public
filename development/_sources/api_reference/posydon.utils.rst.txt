@@ -80,6 +80,14 @@ posydon.utils.interpolators
    :show-inheritance:
    :undoc-members:
 
+posydon.utils.key\_library
+--------------------------
+
+.. automodule:: posydon.utils.key_library
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 posydon.utils.limits\_thresholds
 --------------------------------
 

@@ -26,14 +26,6 @@ posydon.binary\_evol.DT.double\_CO
    :show-inheritance:
    :undoc-members:
 
-posydon.binary\_evol.DT.key\_library
-------------------------------------
-
-.. automodule:: posydon.binary_evol.DT.key_library
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
 posydon.binary\_evol.DT.step\_detached
 --------------------------------------
 
@@ -70,14 +62,6 @@ posydon.binary\_evol.DT.step\_merged
 ------------------------------------
 
 .. automodule:: posydon.binary_evol.DT.step_merged
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-posydon.binary\_evol.DT.track\_match
-------------------------------------
-
-.. automodule:: posydon.binary_evol.DT.track_match
    :members:
    :show-inheritance:
    :undoc-members:

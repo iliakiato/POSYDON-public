@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Processing Single Stars with POSYDON &mdash; posydon 0+untagged.171.g2879e25 documentation</title>
+  <title>Processing Single Stars with POSYDON &mdash; posydon 0.1.dev370+ge60fa53e4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=da003d52"></script>
+      <script src="../../_static/documentation_options.js?v=9102184b"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -48,29 +48,26 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">How-to (Getting Started)</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/installation-guide.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-grids.html">Quick Start: Examining the MESA Grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-population.html">Quick Start: Your First Population</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="generating-datasets.html">Crafting the Core Datasets for POSYDON</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="just_step_1.html">Processing MESA grids with the POSYDON pipeline API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run_full_pipeline.html">The full POSYDON Processing Pipeline experience</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_1D.html">1D Plotting Functionalities for POSYDON PSyGrids</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_2D.html">2D Plotting Functionalities for POSYDON PSyGrids</a></li>
-<li class="toctree-l2"><a class="reference internal" href="step_rerun.html">Export Rerun Grids with POSYDON Post Processing Pipeline</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Processing Single Stars with POSYDON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generating-datasets.html#getting-started-tutorials">Getting Started Tutorials</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="generating-datasets.html#advanced-tutorials">Advanced Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="generating-datasets.html#export-mesa-simulation-points-to-rerun-using-the-processing-pipeline">Export MESA Simulation Points to Rerun Using the Processing Pipeline</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="generating-datasets.html#export-single-star-psygrid-datasets">Export Single Star PSyGrid Datasets</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Processing Single Stars with POSYDON</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
@@ -79,25 +76,28 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-2025-School-Labs">POSYDON School 2025</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
+<p class="caption" role="heading"><span class="caption-text">Explanation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../components-overview/mesa-grids.html">MESA Grids API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/grid-types.html">Grid Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/data-releases.html">Data Releases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../components-overview/processing-pipeline.html">Processing Pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../components-overview/machine-learning-components.html">Machine Learning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../components-overview/stellar-binary-simulation.html">Stellar &amp; Binary-star Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../components-overview/population-synthesis.html">Population Synthesis</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../components-overview/mesa-grids.html">MESA Grids API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api_reference/posydon.html">posydon</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api_reference/bin.html">executables</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Releases and Datasets</span></p>
+<p class="caption" role="heading"><span class="caption-text">Additional Information</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON/releases">Releases</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://zenodo.org/communities/posydon/">Datasets</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Support and Contact</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../contact-support/contact-information.html">Contact Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting-faqs/installation-issues.html">Common Installation Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting-faqs/code-questions.html">Code Usage Questions</a></li>
@@ -152,15 +152,15 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 
-<span class="n">grid_name</span> <span class="o">=</span> <span class="s1">&#39;single_hms_1e-01_Zsun&#39;</span>
-<span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span> <span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;../&#39;</span><span class="o">+</span><span class="n">grid_name</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;initial_mass&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">]</span>
+<span class="n">grid_name</span> <span class="o">=</span> <span class="s1">'single_hms_1e-01_Zsun'</span>
+<span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span> <span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">'../'</span><span class="o">+</span><span class="n">grid_name</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'initial_mass'</span> <span class="ow">in</span> <span class="n">d</span><span class="p">]</span>
 <span class="n">missing</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dirs</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dirs</span><span class="p">)):</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;../&#39;</span><span class="o">+</span><span class="n">grid_name</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;/LOGS1/history.data&#39;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">'../'</span><span class="o">+</span><span class="n">grid_name</span><span class="o">+</span><span class="s1">'/'</span><span class="o">+</span><span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s1">'/LOGS1/history.data'</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;./eeps/&#39;</span><span class="o">+</span><span class="n">grid_name</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;.data&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;.data&#39;</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">'./eeps/'</span><span class="o">+</span><span class="n">grid_name</span><span class="o">+</span><span class="s1">'/'</span><span class="o">+</span><span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s1">'.data'</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s1">'.data'</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">missing</span> <span class="o">+=</span> <span class="p">[</span><span class="n">filename</span><span class="p">]</span>
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
@@ -751,31 +751,31 @@ Writing input.single_hms_1e-01_Zsun
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.psygrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">PSyGrid</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.post_processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">post_process_grid</span><span class="p">,</span> <span class="n">add_post_processed_quantities</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
 
     <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Job array index:&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;single_hms_1e-01_Zsun&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Job array index:'</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'single_hms_1e-01_Zsun'</span><span class="p">]</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">inpath</span> <span class="o">=</span> <span class="s2">&quot;../</span><span class="si">%s</span><span class="s2">/&quot;</span><span class="o">%</span><span class="n">name</span>
-    <span class="n">eep_path</span> <span class="o">=</span> <span class="s2">&quot;./eeps/eeps_</span><span class="si">%s</span><span class="s2">/&quot;</span><span class="o">%</span><span class="n">name</span>
-    <span class="n">outpath</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span>
-    <span class="n">grid_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.h5&quot;</span><span class="o">%</span><span class="n">name</span>
+    <span class="n">inpath</span> <span class="o">=</span> <span class="s2">"../</span><span class="si">%s</span><span class="s2">/"</span><span class="o">%</span><span class="n">name</span>
+    <span class="n">eep_path</span> <span class="o">=</span> <span class="s2">"./eeps/eeps_</span><span class="si">%s</span><span class="s2">/"</span><span class="o">%</span><span class="n">name</span>
+    <span class="n">outpath</span> <span class="o">=</span> <span class="s2">"./"</span>
+    <span class="n">grid_name</span> <span class="o">=</span> <span class="s2">"</span><span class="si">%s</span><span class="s2">.h5"</span><span class="o">%</span><span class="n">name</span>
 
     <span class="n">grid</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">grid</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">inpath</span><span class="p">,</span> <span class="n">outpath</span><span class="o">+</span><span class="n">grid_name</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;gzip9&quot;</span><span class="p">,</span> <span class="n">max_number_of_runs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eep</span><span class="o">=</span><span class="n">eep_path</span><span class="p">,</span>
-               <span class="o">**</span><span class="p">{</span><span class="s1">&#39;star1_history_saved_columns&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;star_mdot&#39;</span><span class="p">,</span><span class="s1">&#39;conv_mx1_top_r&#39;</span><span class="p">,</span> <span class="s1">&#39;conv_mx1_bot_r&#39;</span><span class="p">,</span><span class="s1">&#39;mass_conv_reg_fortides&#39;</span><span class="p">,</span>
-                                                   <span class="s1">&#39;thickness_conv_reg_fortides&#39;</span><span class="p">,</span> <span class="s1">&#39;radius_conv_reg_fortides&#39;</span><span class="p">,</span> <span class="s1">&#39;surface_he3&#39;</span><span class="p">,</span>
-                                                   <span class="c1">#&#39;photosphere_cell_density&#39;, &#39;surface_mu&#39;</span>
+    <span class="n">grid</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">inpath</span><span class="p">,</span> <span class="n">outpath</span><span class="o">+</span><span class="n">grid_name</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">"gzip9"</span><span class="p">,</span> <span class="n">max_number_of_runs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eep</span><span class="o">=</span><span class="n">eep_path</span><span class="p">,</span>
+               <span class="o">**</span><span class="p">{</span><span class="s1">'star1_history_saved_columns'</span> <span class="p">:</span> <span class="p">[</span><span class="s1">'star_mdot'</span><span class="p">,</span><span class="s1">'conv_mx1_top_r'</span><span class="p">,</span> <span class="s1">'conv_mx1_bot_r'</span><span class="p">,</span><span class="s1">'mass_conv_reg_fortides'</span><span class="p">,</span>
+                                                   <span class="s1">'thickness_conv_reg_fortides'</span><span class="p">,</span> <span class="s1">'radius_conv_reg_fortides'</span><span class="p">,</span> <span class="s1">'surface_he3'</span><span class="p">,</span>
+                                                   <span class="c1">#'photosphere_cell_density', 'surface_mu'</span>
                                                   <span class="p">]})</span>
     <span class="n">grid</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done creating grid!&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Done creating grid!'</span><span class="p">)</span>
 
     <span class="n">path</span> <span class="o">=</span> <span class="n">outpath</span>
-    <span class="n">grid_name_processed</span> <span class="o">=</span> <span class="s1">&#39;processed_&#39;</span><span class="o">+</span><span class="n">grid_name</span>
+    <span class="n">grid_name_processed</span> <span class="o">=</span> <span class="s1">'processed_'</span><span class="o">+</span><span class="n">grid_name</span>
     <span class="c1"># copy file, it will be overwritten when we add columns</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">grid_name_processed</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Post processed grid file alredy exist, removing it...&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Post processed grid file alredy exist, removing it...'</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">grid_name_processed</span><span class="p">)</span>
     <span class="n">copyfile</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">grid_name</span><span class="p">,</span> <span class="n">path</span><span class="o">+</span><span class="n">grid_name_processed</span><span class="p">)</span>
 
@@ -786,7 +786,7 @@ Writing input.single_hms_1e-01_Zsun
     <span class="n">grid</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">del</span> <span class="n">MESA_dirs_EXTRA_COLUMNS</span>
     <span class="k">del</span> <span class="n">EXTRA_COLUMNS</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done appending columns!&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Done appending columns!'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -812,7 +812,7 @@ Overwriting ./script.py
 #SBATCH --cpus-per-task 1
 #SBATCH --ntasks-per-node 1
 #SBATCH --time=06:00:00
-#SBATCH --job-name=&quot;psygrid_\${SLURM_ARRAY_TASK_ID}&quot;
+#SBATCH --job-name="psygrid_\${SLURM_ARRAY_TASK_ID}"
 #SBATCH --output=./log.out
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=simone.bavera@unige.ch
@@ -857,7 +857,7 @@ srun python ./script.py $SLURM_ARRAY_TASK_ID
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">posydon.grids.psygrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">PSyGrid</span>
 
-<span class="n">grid</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="s1">&#39;./processed_single_hms_1e-01_Zsun.h5&#39;</span><span class="p">)</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">PSyGrid</span><span class="p">(</span><span class="s1">'./processed_single_hms_1e-01_Zsun.h5'</span><span class="p">)</span>
 <span class="n">grid</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -895,7 +895,7 @@ array([( 6277.99277501,  26.4097595 , 0., 0., 0., 0., 0., 0., 0.74661422, 0.2519
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#grid[0].history1.dtype.names</span>
-<span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">history1</span><span class="p">[</span><span class="s1">&#39;star_mass&#39;</span><span class="p">][:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">history1</span><span class="p">[</span><span class="s1">'star_mass'</span><span class="p">][:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -937,7 +937,7 @@ array([26.4095753 , 26.40956901, 26.40956272, 26.40955643, 26.40955013,
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.171.g2879e25
+      Version: 0.1.dev370+ge60fa53e4
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">

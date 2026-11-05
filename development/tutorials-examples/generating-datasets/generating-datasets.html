@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crafting the Core Datasets for POSYDON &mdash; posydon 0+untagged.171.g2879e25 documentation</title>
+  <title>Crafting the Core Datasets for POSYDON &mdash; posydon 0.1.dev370+ge60fa53e4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=9430f4b5" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=da003d52"></script>
+      <script src="../../_static/documentation_options.js?v=9102184b"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -45,29 +45,47 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">How-to (Getting Started)</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/installation-guide.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-grids.html">Quick Start: Examining the MESA Grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started/first-population.html">Quick Start: Your First Population</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tutorials and Examples</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../population-synthesis/binary-pop-syn.html">Binary-Star Population Synthesis with POSYDON</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Crafting the Core Datasets for POSYDON</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="just_step_1.html">Processing MESA grids with the POSYDON pipeline API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run_full_pipeline.html">The full POSYDON Processing Pipeline experience</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_1D.html">1D Plotting Functionalities for POSYDON PSyGrids</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_2D.html">2D Plotting Functionalities for POSYDON PSyGrids</a></li>
-<li class="toctree-l2"><a class="reference internal" href="step_rerun.html">Export Rerun Grids with POSYDON Post Processing Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processing_single_hms.html">Processing Single Stars with POSYDON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started-tutorials">Getting Started Tutorials</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#i-generating-a-posydon-psygrid-dataset">I. Generating a POSYDON PSyGrid Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="just_step_1.html">Processing MESA grids with the POSYDON pipeline API</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ii-the-full-posydon-processing-pipeline-experience">II. The Full POSYDON Processing Pipeline Experience</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="run_full_pipeline.html">The full POSYDON Processing Pipeline experience</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#iii-1d-plotting-functionalities-for-posydon-psygrids">III. 1D Plotting Functionalities for POSYDON PSyGrids</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plot_1D.html">1D Plotting Functionalities for POSYDON PSyGrids</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#iv-2d-plotting-functionalities-for-posydon-psygrids">IV. 2D Plotting Functionalities for POSYDON PSyGrids</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plot_2D.html">2D Plotting Functionalities for POSYDON PSyGrids</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-tutorials">Advanced Tutorials</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#export-mesa-simulation-points-to-rerun-using-the-processing-pipeline">Export MESA Simulation Points to Rerun Using the Processing Pipeline</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="step_rerun.html">Export Rerun Grids with POSYDON Post Processing Pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#export-single-star-psygrid-datasets">Export Single Star PSyGrid Datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="processing_single_hms.html">Processing Single Stars with POSYDON</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../MESA-grids/running-grids.html">Architecting MESA Simulation Grids with POSYDON</a></li>
@@ -76,25 +94,28 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON-2025-School-Labs">POSYDON School 2025</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">In-Depth Components Overview</span></p>
+<p class="caption" role="heading"><span class="caption-text">Explanation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../components-overview/mesa-grids.html">MESA Grids API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/grid-types.html">Grid Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanations/data-releases.html">Data Releases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../components-overview/processing-pipeline.html">Processing Pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../components-overview/machine-learning-components.html">Machine Learning Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../components-overview/stellar-binary-simulation.html">Stellar &amp; Binary-star Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../components-overview/population-synthesis.html">Population Synthesis</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../components-overview/mesa-grids.html">MESA Grids API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api_reference/posydon.html">posydon</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api_reference/bin.html">executables</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Releases and Datasets</span></p>
+<p class="caption" role="heading"><span class="caption-text">Additional Information</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction-acknowledgements/intro.html">Introduction, Objectives, and Scope</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://posydon.org/team.html">Collaborative Team</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ui.adsabs.harvard.edu/public-libraries/ZZsD9bzLTzWnLV3hwyJxbA">Publications</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/POSYDON-code/POSYDON/releases">Releases</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://zenodo.org/communities/posydon/">Datasets</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Support and Contact</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../contact-support/contact-information.html">Contact Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting-faqs/installation-issues.html">Common Installation Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting-faqs/code-questions.html">Code Usage Questions</a></li>
@@ -281,7 +302,7 @@
   </div>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
-      Version: 0+untagged.171.g2879e25
+      Version: 0.1.dev370+ge60fa53e4
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
